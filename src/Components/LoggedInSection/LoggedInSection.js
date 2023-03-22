@@ -1,9 +1,9 @@
 import "./LoggedInSection.css";
 import NavBar from "../NavBar/NavBar";
 import React, { useState } from 'react';
-import GeneralContractInfo from "../GeneralContractInfo/GeneralContractInfo";
-import GivingCircleFactory from "../GivingCircleFactory/GivingCircleFactory";
 import GivingCircle from "../GivingCircle/GivingCircle";
+import FactoryInfo from "../FactoryInfo/FactoryInfo";
+import FactoryInteractions from "../FactoryInteractions/FactoryInteractions";
 
 const LoggedInSection = (props)=> {
 
@@ -11,31 +11,21 @@ const LoggedInSection = (props)=> {
         props.onBoastMessage(message);
     }   
 
-    const [contractInfoTrigger, setContractInfoTrigger] = useState(0);
+    const [factoryInfoTrigger, setContractInfoTrigger] = useState(0);
     const [givingCircleTrigger, setGivingCircleTrigger] = useState(0);
 
     const [output, setOutput] = useState(<p>Welcome!</p>);
 
     const handleStateSet = (state)=> {
-
-        // if (state === 'mint') {
-        //     setOutput(<Minting onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></Minting>);
-
-        // } else if (state === 'distribute') {
-        //     setOutput(<Distributing onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></Distributing>);
-      
-        // } else if (state === 'roleGrant') {
-        //     setOutput(<GrantRoles onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></GrantRoles>);
-        // } 
-        if (state === 'contractInfo') {
-            setContractInfoTrigger((contractInfoTrigger) => {
-                contractInfoTrigger = contractInfoTrigger + 1;
-                setOutput(<GeneralContractInfo onBoastMessage={handleLogger} onContractPageSet={contractInfoTrigger} connectedWalletInfo={props.connectedWalletInfo}></GeneralContractInfo>);
-                return contractInfoTrigger;
+        if (state === 'factoryInfo') {
+            setContractInfoTrigger((factoryInfoTrigger) => {
+                factoryInfoTrigger = factoryInfoTrigger + 1;
+                setOutput(<FactoryInfo onBoastMessage={handleLogger} onPageSet={factoryInfoTrigger} connectedWalletInfo={props.connectedWalletInfo}></FactoryInfo>);
+                return factoryInfoTrigger;
             });
         }
-        else if (state === 'givingCircleFactory') {
-            setOutput(<GivingCircleFactory onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></GivingCircleFactory>);
+        else if (state === 'factoryInteractions') {
+            setOutput(<FactoryInteractions onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></FactoryInteractions>);
         }
         else if (state === "givingCircle") {
             setGivingCircleTrigger((givingCircleTrigger) => {
@@ -44,11 +34,6 @@ const LoggedInSection = (props)=> {
                 return givingCircleTrigger;
             });
         }
-        // } else if (state === 'balance') {
-        //     setOutput(<Balance onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></Balance>);
-        // } else if (state === 'SXSW') {
-        //     setOutput(<SXSW onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></SXSW>);
-        // }
     }
 
     return <div className="LoggedInSection">

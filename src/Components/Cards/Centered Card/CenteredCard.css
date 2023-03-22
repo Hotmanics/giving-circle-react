@@ -6,6 +6,10 @@
     margin-top: 1rem; 
   }
 
+.centeredCard h1 {
+  color:#ffffff;
+}
+
 .centeredCard h2 {
   color:#ffffff;
 }

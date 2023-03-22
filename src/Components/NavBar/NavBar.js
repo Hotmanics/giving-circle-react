@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
+import "./NavBar.css";
+import "../Buttons/buttons.css";
 
 const NavBar = (props)=> {
 
@@ -12,14 +14,14 @@ const NavBar = (props)=> {
     }   
 
     return <CenteredCard>
-        <button onClick={()=> {handleClick('contractInfo')}}>
-            Contract Info
+        <button className="bigButton" onClick={()=> {handleClick('factoryInfo')}}>
+            Factory Info
         </button>
-        <button onClick={()=> {handleClick('givingCircleFactory')}}>
-            Giving Circle Factory
+        <button className="bigButton" onClick={()=> {handleClick('factoryInteractions')}}>
+            Factory Interactions
         </button>
 
-        <button onClick={()=> {handleClick('givingCircle')}}>
+        <button className="bigButton"  onClick={()=> {handleClick('givingCircle')}}>
             Giving Circles
         </button>
 

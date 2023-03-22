@@ -1,11 +1,21 @@
 button {
     cursor: pointer;
+    border: 2px solid #ffffff;
+    background-color: #f48847;
+    color: white;
+    border-radius: 12px;
+    margin-bottom:10px;
+  }
+
+.bigButton {
+    cursor: pointer;
     padding: 1rem 2rem;
     border: 2px solid #ffffff;
     background-color: #f48847;
     color: white;
     border-radius: 12px;
-  }
+}
+
   
   button:hover,
   button:active {

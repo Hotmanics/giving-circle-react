@@ -1,0 +1,19 @@
+button {
+    cursor: pointer;
+    padding: .5rem .5rem;
+    border: 2px solid #ffffff;
+    background-color: #f48847;
+    color: white;
+    border-radius: 12px;
+    margin-bottom:10px;
+  }
+
+  #marginedButton {
+    cursor: pointer;
+    padding: .5rem .5rem;
+    border: 2px solid #ffffff;
+    background-color: #f48847;
+    color: white;
+    border-radius: 12px;
+    margin-top:10px;
+  }

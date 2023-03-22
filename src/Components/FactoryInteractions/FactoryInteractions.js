@@ -1,10 +1,10 @@
-// import "./GeneralContractInfo.css";
 import { ethers } from "ethers"
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
 import { factoryAddress, factoryABI } from "../../FactoryInfo";
+import "./FactoryInteractions.css";
 
-const GivingCircleFactory = (props)=> {
+const FactoryInteractions = (props)=> {
 
     const contract = new ethers.Contract(
         factoryAddress,
@@ -60,35 +60,6 @@ const GivingCircleFactory = (props)=> {
         setSpecialGiftRedeemerInputFields([...specialGiftRedeemerInputFields, newfield]);
     }
 
-    const submit = async (e) => {
-        e.preventDefault();
-        console.log(erc20Address);
-        console.log(kycAddress);
-        console.log(leaderInputFields);
-        console.log(specialBeanPlacerInputFields);
-        console.log(specialGiftRedeemerInputFields);
-        console.log(numOfBeansToDisperse);
-        console.log(fundingThreshold);
-
-        let tx = await contract.createGivingCircle({
-            beansToDispursePerAttendee: numOfBeansToDisperse,
-            fundingThreshold: fundingThreshold,
-            circleLeaders: leaderInputFields,
-            specialBeanPlacers: specialBeanPlacerInputFields,
-            specialGiftRedeemers: specialGiftRedeemerInputFields,
-            erc20Token: erc20Address, //0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747 - Mumbai USDC
-            kycController: kycAddress === '' ? "0x0000000000000000000000000000000000000000" : kycAddress, //0x0000000000000000000000000000000000000000 - Zero Address
-          });
-        
-        await tx.wait();
-        console.log("done!");
-    }
-
-    // const contract = new ethers.Contract(
-    //     address,
-    //     repTokensABI,
-    //     props.connectedWalletInfo.provider
-    // );
 
     const [ numOfBeansToDisperse, setNumOfBeansToDisperse] = useState(0);
     const handleNumberOfBeansDispersed = async (event) => {
@@ -105,17 +76,38 @@ const GivingCircleFactory = (props)=> {
         setImplementation(event.target.value);
     }
     const setImplemenetationToChain = async () => {
-        // let tx = await contract.setImplementation(implementation);
-        // await tx.wait();
+        let tx = await contract.setImplementation(implementation);
+        props.onBoastMessage("Setting implementation to: " + implementation + "...");
+        await tx.wait();
+        props.onBoastMessage("Set implementation to: " + implementation + "!");
     }
 
-    return <CenteredCard title="Giving Circle Factory">
 
-        <h1>Factory Settings</h1>
+    const submit = async (e) => {
+        e.preventDefault();
+
+        let tx = await contract.createGivingCircle({
+            beansToDispursePerAttendee: numOfBeansToDisperse,
+            fundingThreshold: fundingThreshold,
+            circleLeaders: leaderInputFields,
+            specialBeanPlacers: specialBeanPlacerInputFields,
+            specialGiftRedeemers: specialGiftRedeemerInputFields,
+            erc20Token: erc20Address, //0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747 - Mumbai USDC
+            kycController: kycAddress === '' ? "0x0000000000000000000000000000000000000000" : kycAddress, //0x0000000000000000000000000000000000000000 - Zero Address
+          });
+        
+        props.onBoastMessage("Creating Giving Circle...");
+        await tx.wait();
+        props.onBoastMessage("Created Giving Circle!");
+    }
+
+    return <CenteredCard title="Factory Interactions">
+
+        <h2>Settings</h2>
         <p>Implementation</p>
         <input type="text" onChange={handleImplementationChanged}/>
-        <div><button onClick={setImplemenetationToChain}>Set</button></div>
-        <h1>Create New Giving Circle</h1>
+        <div><button id="marginedButton" onClick={setImplemenetationToChain}>Set</button></div>
+        <h2>Create New Giving Circle</h2>
         <p>ERC20 Address</p>
         <input type="text" onChange={handleErc20AdressChanged}/>
 
@@ -184,4 +176,4 @@ const GivingCircleFactory = (props)=> {
         </CenteredCard>
 }
 
-export default GivingCircleFactory;
+export default FactoryInteractions;

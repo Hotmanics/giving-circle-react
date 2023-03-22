@@ -1,10 +1,10 @@
-// import "./GeneralContractInfo.css";
+// import "./FactoryInfo.css";
 import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
 import { factoryAddress, factoryABI } from "../../FactoryInfo";
 
-const GeneralContractInfo = (props)=> {
+const FactoryInfo = (props)=> {
 
     const [instancesCount, setInstancesCount] = useState(0);
     const [implementation, setImplementation] = useState('');
@@ -16,23 +16,21 @@ const GeneralContractInfo = (props)=> {
     );
 
     useEffect(()=> {
-
-        console.log("was set");
-        if (props.onContractPageSet) {
+        if (props.onPageSet) {
           getInfo();  
         }
-    }, [props.onContractPageSet]);
+    }, [props.onPageSet]);
 
     const getInfo = async ()=> {
         setImplementation(await contract.implementation());
         setInstancesCount((await contract.instancesCount()).toNumber());
     }
 
-    return <CenteredCard title="Contract Info">
-        <p>Factory Address: { factoryAddress }</p>
+    return <CenteredCard title="Factory Info">
+        <p>Address: { factoryAddress }</p>
         <p>Implementation Address: { implementation }</p>
         <p>Instances Count: { instancesCount } </p>
         </CenteredCard>
 }
 
-export default GeneralContractInfo;
+export default FactoryInfo;
