@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { factoryAddress, factoryABI } from "../../../Smart Contracts Info/FactorySmartContractInfo";
 import { implementationABI } from "../../../Smart Contracts Info/ImplementationInfo";
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
-import GivingCircleNavBar from "../CircleNavBar/CircleNavBar";
 import ProposalCreationNavBar from "./ProposalCreationActions/ProposalCreationNavBar";
+import AddAttendeesPhase from "./ProposalCreationActions/AddAttendeesPhase";
 
 const GivingCirclePhases = (props)=> {
 
@@ -34,24 +34,24 @@ const GivingCirclePhases = (props)=> {
         }
     }
 
-    const [output, setOutput] = useState('');
+    const [phaseOutput, setPhaseOutput] = useState('');
 
     const [addAttendeesStateTrigger, setAddAttendeesStateTrigger] = useState('');
     const [addProposersStateTrigger, setAddProposersStateTrigger] = useState('');
 
     const handleStateSet = (state)=> {
-        if (state === 'circleInfo') {
+        if (state === 'addAttendees') {
             setAddAttendeesStateTrigger((addAttendeesStateTrigger) => {
                 addAttendeesStateTrigger++;
-                setOutput(
-                    // <GivingCircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={addAttendeesStateTrigger} selectedInstance={props.selectedInstance}></GivingCircleInfo>
+                setPhaseOutput(
+                    <AddAttendeesPhase selectedInstance={props.selectedInstance}></AddAttendeesPhase>
                 );
                 return addAttendeesStateTrigger;
             });
-        } else if (state === 'circlePhaseActions') {
+        } else if (state === 'addProposers') {
             setAddProposersStateTrigger((addProposersStateTrigger) => {
                 addProposersStateTrigger++;
-                setOutput(
+                setPhaseOutput(
                     // <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} onPageSet={addProposersStateTrigger} selectedInstance={props.selectedInstance}></GivingCirclePhases>
                 );
                 return addProposersStateTrigger;
@@ -61,62 +61,17 @@ const GivingCirclePhases = (props)=> {
 
     const [proposalAddresses, setProposalAddresses] = useState([]);
 
-    const [attendees, setAttendees] = useState([]);
-
-    const addAttendeeField = ()=> {
-        let data = [...attendees, "new attendee"];
-        setAttendees(data);
-        console.log(data);
-    }
-
-    const addAttendees = async ()=> {
-        console.log(attendees);
-        let tx = await props.selectedInstance.registerAttendees(attendees);
-        tx.wait();
-        console.log("Registered attendees!");
-    }
-
-    const handleAttendeeFieldChange = (index, event)=> {
-        let data = [...attendees];
-        data[index] = event.target.value;
-        console.log(data);
-        setAttendees(data);
-    }
-
-    let phaseOutput;
+    let phaseNavigationOutput;
     
     if (phase === "Proposal Creation") {
-        phaseOutput =
-        <div>
-            <p>Attendees To Add</p>
-            <div><button onClick={addAttendeeField}>New Attendee</button></div>
-            {
-                attendees.map((input, index) => {
-                    return (
-                        <div key={index}>
-                            <input
-                                name ="attendee"
-                                placeholder="Attendee"
-                                value={input.name}
-                                onChange= {event => handleAttendeeFieldChange(index, event)}
-                            />
-                        </div>            
-                        )
-                })
-            }
-            <div><button onClick={addAttendees}>Add All Attendees</button></div>
-        </div>;
+        phaseNavigationOutput = <ProposalCreationNavBar onStateSet={handleStateSet}></ProposalCreationNavBar>;
     };
 
     return <CenteredCard title="Interactions">
-        <p>
-            Phase: { phase }
-        </p>
-        <ProposalCreationNavBar onStateSet={handleStateSet}></ProposalCreationNavBar>
+        <p>Phase: { phase }</p>
         <div>
-        {
-            phaseOutput
-        }
+            {phaseNavigationOutput}
+            {phaseOutput}
         </div>
 
         </CenteredCard>
