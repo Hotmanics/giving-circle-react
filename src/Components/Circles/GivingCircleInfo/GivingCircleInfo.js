@@ -1,9 +1,10 @@
 // import "./GeneralContractInfo.css";
 import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
-import CenteredCard from "../Cards/Centered Card/CenteredCard";
-import { factoryAddress, factoryABI } from "../../FactoryInfo";
-import { implementationABI } from "../../ImplementationInfo";
+import CenteredCard from "../../Cards/Centered Card/CenteredCard";
+import { factoryAddress, factoryABI } from "../../../Smart Contracts Info/FactorySmartContractInfo";
+
+import { implementationABI } from "../../../Smart Contracts Info/ImplementationInfo";
 import GivingCircleNavBar from "../GivingCircleNavBar/GivingCircleNavBar";
 
 const GivingCircleInfo = (props)=> {

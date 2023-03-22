@@ -1,8 +1,8 @@
 // import "./FactoryInfo.css";
 import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
-import CenteredCard from "../Cards/Centered Card/CenteredCard";
-import { factoryAddress, factoryABI } from "../../FactoryInfo";
+import CenteredCard from "../../Cards/Centered Card/CenteredCard";
+import { factoryAddress, factoryABI } from "../../../Smart Contracts Info/FactorySmartContractInfo";
 
 const FactoryInfo = (props)=> {
 

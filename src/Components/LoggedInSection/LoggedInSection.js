@@ -1,9 +1,9 @@
 import "./LoggedInSection.css";
 import NavBar from "../NavBar/NavBar";
 import React, { useState } from 'react';
-import GivingCircle from "../GivingCircle/GivingCircle";
-import FactoryInfo from "../FactoryInfo/FactoryInfo";
-import FactoryInteractions from "../FactoryInteractions/FactoryInteractions";
+import FactoryInfo from "../Factory/FactoryInfo/FactoryInfo";
+import FactoryInteractions from "../Factory/FactoryInteractions/FactoryInteractions";
+import Circles from "../Circles/Circles";
 
 const LoggedInSection = (props)=> {
 
@@ -30,7 +30,7 @@ const LoggedInSection = (props)=> {
         else if (state === "givingCircle") {
             setGivingCircleTrigger((givingCircleTrigger) => {
                 givingCircleTrigger = givingCircleTrigger + 1;
-                setOutput(<GivingCircle onBoastMessage={handleLogger} onGivingCirclePageSet={givingCircleTrigger} connectedWalletInfo={props.connectedWalletInfo}></GivingCircle>);
+                setOutput(<Circles onBoastMessage={handleLogger} onGivingCirclePageSet={givingCircleTrigger} connectedWalletInfo={props.connectedWalletInfo}></Circles>);
                 return givingCircleTrigger;
             });
         }

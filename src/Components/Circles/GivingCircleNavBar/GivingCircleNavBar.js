@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CenteredCard from "../Cards/Centered Card/CenteredCard";
+import CenteredCard from "../../Cards/Centered Card/CenteredCard";
 
 const GivingCircleNavBar = (props)=> {
 

@@ -2,13 +2,13 @@
 import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
-import { factoryAddress, factoryABI } from "../../FactoryInfo";
-import { implementationABI } from "../../ImplementationInfo";
-import GivingCircleNavBar from "../GivingCircleNavBar/GivingCircleNavBar";
-import GivingCirclePhases from "../GivingCirclePhases/GivingCirclePhases";
-import GivingCircleInfo from "../GivingCircleInfo/GivingCircleInfo";
+import { factoryAddress, factoryABI } from "../../Smart Contracts Info/FactorySmartContractInfo";
+import { implementationABI } from "../../Smart Contracts Info/ImplementationInfo";
+import GivingCircleNavBar from "./GivingCircleNavBar/GivingCircleNavBar";
+import GivingCirclePhases from "./GivingCirclePhases/GivingCirclePhases";
+import GivingCircleInfo from "./GivingCircleInfo/GivingCircleInfo";
 
-const GivingCircle = (props)=> {
+const Circles = (props)=> {
 
 
     const [circles, setCircles] = useState([]);
@@ -126,4 +126,4 @@ const GivingCircle = (props)=> {
         </CenteredCard>
 }
 
-export default GivingCircle;
+export default Circles;

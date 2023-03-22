@@ -1,7 +1,7 @@
 import { ethers } from "ethers"
 import React, { useState } from "react";
-import CenteredCard from "../Cards/Centered Card/CenteredCard";
-import { factoryAddress, factoryABI } from "../../FactoryInfo";
+import CenteredCard from "../../Cards/Centered Card/CenteredCard";
+import { factoryAddress, factoryABI } from "../../../Smart Contracts Info/FactorySmartContractInfo";
 import "./FactoryInteractions.css";
 
 const FactoryInteractions = (props)=> {
