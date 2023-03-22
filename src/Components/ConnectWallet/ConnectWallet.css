@@ -1,0 +1,13 @@
+.connectWallet {
+  background-color: #333333;
+  padding: 1rem;
+  border-radius: 12px;
+  margin:auto;
+  }
+
+  .connectWallet p {
+    font-size: 18px;
+    display: inline;
+    color:#ffffff;
+
+  }

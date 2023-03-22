@@ -1,0 +1,15 @@
+.centeredCard {
+    background-color: 	#333333;
+    padding: 1rem;
+    border-radius: 12px;
+    margin:auto;
+    margin-top: 1rem; 
+  }
+
+.centeredCard h2 {
+  color:#ffffff;
+}
+
+.centeredCard p {
+  color:#ffffff;
+}
