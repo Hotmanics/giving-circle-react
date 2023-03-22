@@ -5,23 +5,20 @@ import CenteredCard from "../Cards/Centered Card/CenteredCard";
 import { factoryAddress, factoryABI } from "../../FactoryInfo";
 import { implementationABI } from "../../ImplementationInfo";
 import GivingCircleNavBar from "../GivingCircleNavBar/GivingCircleNavBar";
+import GivingCirclePhases from "../GivingCirclePhases/GivingCirclePhases";
+import GivingCircleInfo from "../GivingCircleInfo/GivingCircleInfo";
 
 const GivingCircle = (props)=> {
+
+
+    const [circles, setCircles] = useState([]);
+    const [selectedInstance, setSelectedInstance] = useState('');
 
     useEffect(()=> {
         if (props.onGivingCirclePageSet) {
           getAllCircles();
         }
     }, [props.onGivingCirclePageSet]);
-
-    const factoryContract = new ethers.Contract(
-        factoryAddress,
-        factoryABI,
-        props.connectedWalletInfo.provider
-    );
-    
-    const [circles, setCircles] = useState([]);
-    const [selectedGivingCircle, setSelectedGivingCircle] = useState("");
 
 
     const getAllCircles = async ()=> {
@@ -34,37 +31,13 @@ const GivingCircle = (props)=> {
         setCircles(arr);
     }
 
-    const [proposalAddresses, setProposalAddresses] = useState([]);
-
-    const [attendees, setAttendees] = useState([]);
-
-    const addAttendeeField = ()=> {
-        let data = [...attendees, "new attendee"];
-        setAttendees(data);
-        console.log(data);
-    }
-
-    const addAttendees = async ()=> {
-        console.log(attendees);
-        let tx = await selectedInstance.registerAttendees(attendees);
-        tx.wait();
-        console.log("Registered attendees!");
-    }
-
-    const handleAttendeeFieldChange = (index, event)=> {
-        let data = [...attendees];
-        data[index] = event.target.value;
-        console.log(data);
-        setAttendees(data);
-    }
-
-    const [selectedInstance, setSelectedInstance] = useState('');
-
-    const [phase, setPhase] = useState();
-
+    const factoryContract = new ethers.Contract(
+        factoryAddress,
+        factoryABI,
+        props.connectedWalletInfo.provider
+    );
+    
     const handleGivingCircleSelected = async (event)=> {
-        setSelectedGivingCircle(event.target.value);
-
         const instanceAddress = await factoryContract.instances(event.target.value);
 
         const contract = new ethers.Contract(
@@ -74,38 +47,33 @@ const GivingCircle = (props)=> {
         );
 
         setSelectedInstance(contract);
-
-        let phase = await contract.phase();
-        setPhase(phase);
     }
 
-    let phaseOutput;
-    
-    if (phase === 1) {
-        phaseOutput =
-        <div>
-            <p>Attendees To Add</p>
-            <div><button onClick={addAttendeeField}>New Attendee</button></div>
-            {
-                attendees.map((input, index) => {
-                    return (
-                        <div key={index}>
-                            <input
-                                name ="attendee"
-                                placeholder="Attendee"
-                                value={input.name}
-                                onChange= {event => handleAttendeeFieldChange(index, event)}
-                            />
-                        </div>            
-                        )
-                })
-            }
-            <div><button onClick={addAttendees}>Add All Attendees</button></div>
-        </div>;
-    };
+    const [phaseSelectedTrigger, setPhaseSelectedTrigger] = useState(0);
+    const [infoSelectedTrigger, setInfoSelectedTrigger] = useState(0);
+
+    const [output, setOutput] = useState('');
+    const handleStateSet = (state)=> {
+        if (state === 'circleInfo') {
+            setInfoSelectedTrigger((infoSelectedTrigger) => {
+                infoSelectedTrigger = infoSelectedTrigger + 1;
+                setOutput(
+                    <GivingCircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={infoSelectedTrigger} selectedInstance={selectedInstance}></GivingCircleInfo>
+                );
+            });
+        } else if (state === 'circlePhaseActions') {
+            setPhaseSelectedTrigger((phaseSelectedTrigger) => {
+                phaseSelectedTrigger = phaseSelectedTrigger + 1;
+                setOutput(
+                    <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} onPageSet={phaseSelectedTrigger} selectedInstance={selectedInstance}></GivingCirclePhases>
+                );
+            });
+
+            
+        }
+    }
 
     return <CenteredCard title="Giving Circle">
-        <p>{selectedGivingCircle}</p>
         <div id="aye">
             <p>Circle ID</p>
         <select onChange={handleGivingCircleSelected} defaultValue="choose">
@@ -118,11 +86,10 @@ const GivingCircle = (props)=> {
                 ))
             }
         </select>  
-        
-        <GivingCircleNavBar></GivingCircleNavBar>
 
+        <GivingCircleNavBar onStateSet={handleStateSet}></GivingCircleNavBar>
         {
-            phaseOutput
+            output
         }
         </div>
 

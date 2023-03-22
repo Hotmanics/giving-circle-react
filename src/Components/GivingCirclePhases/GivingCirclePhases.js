@@ -9,30 +9,24 @@ import GivingCircleNavBar from "../GivingCircleNavBar/GivingCircleNavBar";
 const GivingCirclePhases = (props)=> {
 
     useEffect(()=> {
-        if (props.onGivingCirclePageSet) {
-          getAllCircles();
+        if (props.onPageSet) {
+          getPhase();
         }
-    }, [props.onGivingCirclePageSet]);
+    }, [props.onPageSet]);
+
+    const [phase, setPhase] = useState();
+
+    const getPhase = async ()=> {
+        
+        let p = await props.selectedInstance.phase();
+        setPhase(p);
+    }
 
     const factoryContract = new ethers.Contract(
         factoryAddress,
         factoryABI,
         props.connectedWalletInfo.provider
     );
-    
-    const [circles, setCircles] = useState([]);
-    const [selectedGivingCircle, setSelectedGivingCircle] = useState("");
-
-
-    const getAllCircles = async ()=> {
-        let x = await factoryContract.instancesCount();
-        let arr = [];
-
-        for (let i = 0; i < x; i++) {
-            arr.push(i);
-        }
-        setCircles(arr);
-    }
 
     const [proposalAddresses, setProposalAddresses] = useState([]);
 
@@ -46,7 +40,7 @@ const GivingCirclePhases = (props)=> {
 
     const addAttendees = async ()=> {
         console.log(attendees);
-        let tx = await selectedInstance.registerAttendees(attendees);
+        let tx = await props.selectedInstance.registerAttendees(attendees);
         tx.wait();
         console.log("Registered attendees!");
     }
@@ -56,27 +50,6 @@ const GivingCirclePhases = (props)=> {
         data[index] = event.target.value;
         console.log(data);
         setAttendees(data);
-    }
-
-    const [selectedInstance, setSelectedInstance] = useState('');
-
-    const [phase, setPhase] = useState();
-
-    const handleGivingCircleSelected = async (event)=> {
-        setSelectedGivingCircle(event.target.value);
-
-        const instanceAddress = await factoryContract.instances(event.target.value);
-
-        const contract = new ethers.Contract(
-            instanceAddress,
-            implementationABI,
-            props.connectedWalletInfo.provider
-        );
-
-        setSelectedInstance(contract);
-
-        let phase = await contract.phase();
-        setPhase(phase);
     }
 
     let phaseOutput;
@@ -105,22 +78,10 @@ const GivingCirclePhases = (props)=> {
     };
 
     return <CenteredCard title="Giving Circle">
-        <p>{selectedGivingCircle}</p>
+        <p>
+            { phase }
+        </p>
         <div id="aye">
-            <p>Circle ID</p>
-        <select onChange={handleGivingCircleSelected} defaultValue="choose">
-        <option value="choose" disabled>
-         -- Select Giving Circle --
-        </option>
-            {
-                circles.map((num) => (
-                    <option key={Math.random()} value={num}> {num} </option>
-                ))
-            }
-        </select>  
-        
-        <GivingCircleNavBar></GivingCircleNavBar>
-
         {
             phaseOutput
         }
