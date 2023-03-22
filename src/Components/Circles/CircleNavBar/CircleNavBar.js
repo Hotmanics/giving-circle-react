@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
 
-const GivingCircleNavBar = (props)=> {
+const CircleNavBar = (props)=> {
 
     const [state, setState] = useState('');
 
@@ -13,12 +13,12 @@ const GivingCircleNavBar = (props)=> {
 
     return <CenteredCard>
         <button onClick={()=> {handleClick('circleInfo')}}>
-            Circle Info
+            Info
         </button>
         <button onClick={()=> {handleClick('circlePhaseActions')}}>
-            Circle Phase Actions
+            Interactions
         </button>
     </CenteredCard>
 }
 
-export default GivingCircleNavBar;
+export default CircleNavBar;

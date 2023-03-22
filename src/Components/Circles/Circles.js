@@ -4,26 +4,32 @@ import React, { useState, useEffect } from "react";
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
 import { factoryAddress, factoryABI } from "../../Smart Contracts Info/FactorySmartContractInfo";
 import { implementationABI } from "../../Smart Contracts Info/ImplementationInfo";
-import GivingCircleNavBar from "./GivingCircleNavBar/GivingCircleNavBar";
+import GivingCircleNavBar from "./CircleNavBar/CircleNavBar";
 import GivingCirclePhases from "./GivingCirclePhases/GivingCirclePhases";
-import GivingCircleInfo from "./GivingCircleInfo/GivingCircleInfo";
+import GivingCircleInfo from "./CircleInfo/CircleInfo";
+import "./Circles.css";
 
 const Circles = (props)=> {
 
-
     const [circles, setCircles] = useState([]);
     const [selectedInstance, setSelectedInstance] = useState('');
+    const [selectedCircleIndex, setSelectedCircleIndex] = useState('');
 
-
+    const [output, setOutput] = useState('');
     const [phaseSelectedTrigger, setPhaseSelectedTrigger] = useState(0);
     const [infoSelectedTrigger, setInfoSelectedTrigger] = useState(0);
+
+    const factoryContract = new ethers.Contract(
+        factoryAddress,
+        factoryABI,
+        props.connectedWalletInfo.provider
+    );
 
     useEffect(()=> {
         if (props.onGivingCirclePageSet) {
           getAllCircles();
         }
     }, [props.onGivingCirclePageSet]);
-
 
     const getAllCircles = async ()=> {
         let x = await factoryContract.instancesCount();
@@ -34,14 +40,6 @@ const Circles = (props)=> {
         }
         setCircles(arr);
     }
-
-    const factoryContract = new ethers.Contract(
-        factoryAddress,
-        factoryABI,
-        props.connectedWalletInfo.provider
-    );
-    
-    const [selectedCircleIndex, setSelectedCircleIndex] = useState('');
 
     const handleGivingCircleSelected = async (event)=> {
         const instanceAddress = await factoryContract.instances(event.target.value);
@@ -64,7 +62,6 @@ const Circles = (props)=> {
         });
     }
 
-    const [output, setOutput] = useState('');
     const handleStateSet = (state)=> {
         if (state === 'circleInfo') {
             setInfoSelectedTrigger((infoSelectedTrigger) => {
@@ -85,23 +82,18 @@ const Circles = (props)=> {
         }
     }
 
-    let navbarOutput;
-    if (selectedInstance === '') {
-
-    } else {
-        navbarOutput = <GivingCircleNavBar onStateSet={handleStateSet}></GivingCircleNavBar>;
-    }
-
     let selectedCircleDisplayOutput;
-    if (selectedCircleIndex === '') {
-
-    } else {
-        selectedCircleDisplayOutput = <p>Selected Circle: { selectedCircleIndex } </p>
+    if (selectedCircleIndex !== '') {
+        selectedCircleDisplayOutput = <h2 id="special">Selected: { selectedCircleIndex } </h2>
     }
 
-    return <CenteredCard title="Giving Circle">
-        <div id="aye">
-            <p>Circle ID</p>
+    let navbarOutput;
+    if (selectedInstance !== '') {
+        navbarOutput = <GivingCircleNavBar onStateSet={handleStateSet}></GivingCircleNavBar>;
+    } 
+
+    return <CenteredCard title="Giving Circles">
+        <div>
         <select onChange={handleGivingCircleSelected} defaultValue="choose">
         <option value="choose" disabled>
          -- Select Giving Circle --
@@ -112,15 +104,9 @@ const Circles = (props)=> {
                 ))
             }
         </select>  
-        {
-            selectedCircleDisplayOutput
-        }
-        {
-            navbarOutput
-        }
-        {
-            output
-        }
+        { selectedCircleDisplayOutput }
+        { navbarOutput }
+        { output }
         </div>
 
         </CenteredCard>

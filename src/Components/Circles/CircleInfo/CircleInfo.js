@@ -1,13 +1,8 @@
-// import "./GeneralContractInfo.css";
-import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
-import { factoryAddress, factoryABI } from "../../../Smart Contracts Info/FactorySmartContractInfo";
+import "./CircleInfo.css";
 
-import { implementationABI } from "../../../Smart Contracts Info/ImplementationInfo";
-import GivingCircleNavBar from "../GivingCircleNavBar/GivingCircleNavBar";
-
-const GivingCircleInfo = (props)=> {
+const CircleInfo = (props)=> {
 
     useEffect(()=> {
         if (props.onPageSet) {
@@ -33,28 +28,24 @@ const GivingCircleInfo = (props)=> {
 
         } else if (phase === 3) {
             setPhase("Gift Redemption");
-
         }
 
         let attendees = await props.selectedInstance.getAttendees();
         setAttendees(attendees);
     }
 
-    return <CenteredCard title="Circle Info">
+    return <CenteredCard title="Info">
         <p>Address: { props.selectedInstance.address }</p>
         <p>Phase: { phase }</p>
-        <p>Attendess: </p>
-
+        <h2>Attendess: </h2>
         <table>
             <tbody>
-
-
             <tr>
                 <th>Address</th>
                 <th>Beans</th>
             </tr>
             {
-            attendees.map((value, index) => {
+                attendees.map((value, index) => {
                 return  <tr key={index}>
                             <th>{value.addr}</th>
                             <th>{value.beansAvailable.toNumber()}</th>
@@ -63,10 +54,7 @@ const GivingCircleInfo = (props)=> {
             }
             </tbody>
         </table>
-
-        
-
         </CenteredCard>
 }
 
-export default GivingCircleInfo;
+export default CircleInfo;
