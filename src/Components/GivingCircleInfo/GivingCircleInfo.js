@@ -54,12 +54,10 @@ const GivingCircleInfo = (props)=> {
             </tr>
             {
             attendees.map((value, index) => {
-                console.log("printing value");
                 return  <tr key={index}>
                             <th>{value.addr}</th>
                             <th>{value.beansAvailable.toNumber()}</th>
                         </tr>
-                // <p key={index}>{value}</p>
                 })
             }
             </tbody>

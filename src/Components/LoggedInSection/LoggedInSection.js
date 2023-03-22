@@ -31,6 +31,7 @@ const LoggedInSection = (props)=> {
             setContractInfoTrigger((contractInfoTrigger) => {
                 contractInfoTrigger = contractInfoTrigger + 1;
                 setOutput(<GeneralContractInfo onBoastMessage={handleLogger} onContractPageSet={contractInfoTrigger} connectedWalletInfo={props.connectedWalletInfo}></GeneralContractInfo>);
+                return contractInfoTrigger;
             });
         }
         else if (state === 'givingCircleFactory') {
@@ -40,6 +41,7 @@ const LoggedInSection = (props)=> {
             setGivingCircleTrigger((givingCircleTrigger) => {
                 givingCircleTrigger = givingCircleTrigger + 1;
                 setOutput(<GivingCircle onBoastMessage={handleLogger} onGivingCirclePageSet={givingCircleTrigger} connectedWalletInfo={props.connectedWalletInfo}></GivingCircle>);
+                return givingCircleTrigger;
             });
         }
         // } else if (state === 'balance') {

@@ -14,6 +14,10 @@ const GivingCircle = (props)=> {
     const [circles, setCircles] = useState([]);
     const [selectedInstance, setSelectedInstance] = useState('');
 
+
+    const [phaseSelectedTrigger, setPhaseSelectedTrigger] = useState(0);
+    const [infoSelectedTrigger, setInfoSelectedTrigger] = useState(0);
+
     useEffect(()=> {
         if (props.onGivingCirclePageSet) {
           getAllCircles();
@@ -37,6 +41,8 @@ const GivingCircle = (props)=> {
         props.connectedWalletInfo.provider
     );
     
+    const [selectedCircleIndex, setSelectedCircleIndex] = useState('');
+
     const handleGivingCircleSelected = async (event)=> {
         const instanceAddress = await factoryContract.instances(event.target.value);
 
@@ -47,30 +53,50 @@ const GivingCircle = (props)=> {
         );
 
         setSelectedInstance(contract);
-    }
+        setSelectedCircleIndex(event.target.value);
 
-    const [phaseSelectedTrigger, setPhaseSelectedTrigger] = useState(0);
-    const [infoSelectedTrigger, setInfoSelectedTrigger] = useState(0);
+        setInfoSelectedTrigger((infoSelectedTrigger) => {
+            infoSelectedTrigger++;
+            setOutput(
+                <GivingCircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={infoSelectedTrigger} selectedInstance={contract}></GivingCircleInfo>
+            );
+            return infoSelectedTrigger;
+        });
+    }
 
     const [output, setOutput] = useState('');
     const handleStateSet = (state)=> {
         if (state === 'circleInfo') {
             setInfoSelectedTrigger((infoSelectedTrigger) => {
-                infoSelectedTrigger = infoSelectedTrigger + 1;
+                infoSelectedTrigger++;
                 setOutput(
                     <GivingCircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={infoSelectedTrigger} selectedInstance={selectedInstance}></GivingCircleInfo>
                 );
+                return infoSelectedTrigger;
             });
         } else if (state === 'circlePhaseActions') {
             setPhaseSelectedTrigger((phaseSelectedTrigger) => {
-                phaseSelectedTrigger = phaseSelectedTrigger + 1;
+                phaseSelectedTrigger++;
                 setOutput(
                     <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} onPageSet={phaseSelectedTrigger} selectedInstance={selectedInstance}></GivingCirclePhases>
                 );
+                return phaseSelectedTrigger;
             });
-
-            
         }
+    }
+
+    let navbarOutput;
+    if (selectedInstance === '') {
+
+    } else {
+        navbarOutput = <GivingCircleNavBar onStateSet={handleStateSet}></GivingCircleNavBar>;
+    }
+
+    let selectedCircleDisplayOutput;
+    if (selectedCircleIndex === '') {
+
+    } else {
+        selectedCircleDisplayOutput = <p>Selected Circle: { selectedCircleIndex } </p>
     }
 
     return <CenteredCard title="Giving Circle">
@@ -86,8 +112,12 @@ const GivingCircle = (props)=> {
                 ))
             }
         </select>  
-
-        <GivingCircleNavBar onStateSet={handleStateSet}></GivingCircleNavBar>
+        {
+            selectedCircleDisplayOutput
+        }
+        {
+            navbarOutput
+        }
         {
             output
         }

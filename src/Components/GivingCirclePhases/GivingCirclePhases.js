@@ -22,12 +22,6 @@ const GivingCirclePhases = (props)=> {
         setPhase(p);
     }
 
-    const factoryContract = new ethers.Contract(
-        factoryAddress,
-        factoryABI,
-        props.connectedWalletInfo.provider
-    );
-
     const [proposalAddresses, setProposalAddresses] = useState([]);
 
     const [attendees, setAttendees] = useState([]);
