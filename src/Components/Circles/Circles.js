@@ -84,7 +84,7 @@ const Circles = (props)=> {
 
     let selectedCircleDisplayOutput;
     if (selectedCircleIndex !== '') {
-        selectedCircleDisplayOutput = <h2 id="special">Selected: { selectedCircleIndex } </h2>
+        selectedCircleDisplayOutput = <h2 id="special">Circle { selectedCircleIndex } </h2>
     }
 
     let navbarOutput;

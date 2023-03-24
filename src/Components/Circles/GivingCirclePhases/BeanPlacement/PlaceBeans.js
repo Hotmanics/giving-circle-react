@@ -12,10 +12,14 @@ const PlaceBeans = (props)=> {
     }, [props.onPageSet]);
 
     const [proposals, setProposals] = useState([]);
+    const [numOfPlaceableBeans, setNumOfPlaceableBeans] = useState(0);
 
     const getInfo = async ()=> {
         let proposals = await props.selectedInstance.getProposals();
         setProposals(proposals);
+
+        let x = await props.selectedInstance.getAvailableBeans(props.connectedWalletInfo.account);
+        setNumOfPlaceableBeans(x.toNumber());
     }
 
     // const [attendees, setAttendees] = useState([]);
@@ -42,7 +46,7 @@ const PlaceBeans = (props)=> {
 
     const [beansToPlace, setBeansToPlace] = useState(0);
     const [indexToGive, setIndexToGive] = useState(0);
-
+    
     const handleBeansField = (event)=> {
         setBeansToPlace(event.target.value);
     }
@@ -52,9 +56,10 @@ const PlaceBeans = (props)=> {
     }
 
     const placeBeans = async ()=> {
-        let tx = await props.selectedInstance.placeMyBeans(indexToGive, beansToPlace);
+        let tx = await props.selectedInstance.placeMyBeansMultiple([indexToGive], [beansToPlace]);
         await tx.wait();
         console.log("Placed beans!");
+        getInfo();
     }
 
     return <CenteredCard title="Place Beans">
@@ -78,14 +83,14 @@ const PlaceBeans = (props)=> {
                 </tbody>
             </table>
 
-            
+        <p>Placeable Beans: {numOfPlaceableBeans} </p>    
         <p>Index</p>
         <input type="number" onChange={handleIndexField}/>
         
         <p>Beans To Place</p>
         <input type="number" onChange={handleBeansField}/>
         
-        <div><button onClick={placeBeans}>Place Them</button></div>
+        <div><button onClick={placeBeans}>Place Beans</button></div>
 
             {/* <p>Attendees To Add</p>
             <div><button onClick={addAttendeeField}>New Attendee</button></div>

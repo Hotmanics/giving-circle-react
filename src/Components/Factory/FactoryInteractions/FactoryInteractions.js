@@ -124,7 +124,7 @@ const FactoryInteractions = (props)=> {
         <p>KYC Address</p>
         <input type="text" onChange={handleKycAddress}/>
 
-        <p>Number Of Beans To Disperse</p>
+        <p>Beans To Disperse Per Person</p>
         <input type="number" onChange={handleNumberOfBeansDispersed}/>
 
         <p>Funding Threshold</p>
@@ -147,7 +147,7 @@ const FactoryInteractions = (props)=> {
             )})
         }
 
-        <p>Special Bean Placers</p>
+        <p>Bean Placer Admins</p>
         <div><button onClick={addBeanPlacerField}>Add more...</button></div>
 
         {
@@ -164,7 +164,7 @@ const FactoryInteractions = (props)=> {
             )})
         }
 
-        <p>Special Gift Redeemers</p>
+        <p>Fund Managers</p>
         <div><button onClick={addGiftRedeemerField}>Add more...</button></div>
 
         {
@@ -173,7 +173,7 @@ const FactoryInteractions = (props)=> {
                 <div key={index}>
                     <input
                         name ="redeemer"
-                        placeholder="gift redeemer"
+                        placeholder="Fund Manager"
                         value={input.name}
                         onChange= {event => handleSpecialGiftRedeemerChanged(index, event)}
                     />

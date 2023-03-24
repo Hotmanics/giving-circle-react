@@ -7,6 +7,7 @@ import AddAttendees from "./ProposalCreationActions/AddAttendees";
 import AddProposers from "./ProposalCreationActions/AddProposers";
 import BeanPlacementNavBar from "./BeanPlacement/BeanPlacementNavBar";
 import PlaceBeans from "./BeanPlacement/PlaceBeans";
+import GiftRedeem from "./GiftRedeem/GiftRedeem";
 
 const GivingCirclePhases = (props)=> {
 
@@ -32,6 +33,8 @@ const GivingCirclePhases = (props)=> {
 
         } else if (phase === 3) {
             setPhase("Gift Redemption");
+
+            handleStateSet("Gift Redemption");
         }
     }
 
@@ -40,7 +43,7 @@ const GivingCirclePhases = (props)=> {
     const [addAttendeesStateTrigger, setAddAttendeesStateTrigger] = useState('');
     const [addProposersStateTrigger, setAddProposersStateTrigger] = useState('');
     const [placeBeansStateTrigger, setPlaceBeansStateTrigger] = useState('');
-    const [addFundsStateTrigger, setAddFundsStateTrigger] = useState('');
+    const [redeemGiftsTrigger, setRedeemGiftsTrigger] = useState('');
 
     const handleStateSet = async (state)=> {
         if (state === 'addAttendees') {
@@ -80,7 +83,16 @@ const GivingCirclePhases = (props)=> {
             console.log("progressed to gift redemption!");
             getPhase();
         } 
-        
+
+        if (state === "Gift Redemption") {
+            setRedeemGiftsTrigger((redeemGiftsTrigger) => {
+                redeemGiftsTrigger++;
+            setPhaseOutput(
+                <GiftRedeem onPageSet={redeemGiftsTrigger} selectedInstance={props.selectedInstance} connectedWalletInfo={props.connectedWalletInfo}></GiftRedeem>
+            );
+            return redeemGiftsTrigger;
+            });
+        }
     }
 
     let phaseNavigationOutput;

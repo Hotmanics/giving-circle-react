@@ -9,21 +9,19 @@ const AddProposers = (props)=> {
     const addProposerField = ()=> {
         let data = [...proposers, "new attendee"];
         setProposers(data);
-        console.log(data);
     }
 
     const addProposers = async ()=> {
-        console.log(proposers);
 
-        for (let i =0; i < proposers.length; i++) {
-            let tx = await props.selectedInstance.createNewProposal(proposers[i]);
-            await tx.wait();
-            console.log("Registered proposers!");    
-        }
+        // for (let i =0; i < proposers.length; i++) {
+        //     let tx = await props.selectedInstance.createNewProposal(proposers[i]);
+        //     await tx.wait();
+        //     console.log("Registered proposers!");    
+        // }
 
-        // let tx = await props.selectedInstance.batchCreateNewProposals(proposers);
-        // tx.wait();
-        // console.log("Registered proposers!");
+        let tx = await props.selectedInstance.batchCreateNewProposals(proposers);
+        tx.wait();
+        console.log("Registered all proposers!");
     }
 
     const handleProposerFieldChange = (index, event)=> {

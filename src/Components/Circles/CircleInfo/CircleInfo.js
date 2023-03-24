@@ -22,6 +22,8 @@ const CircleInfo = (props)=> {
     const [minFundAmount, setMinFundAmount] = useState('');
     const [yourERC20Balance, setYourERC20Balance] = useState(0);
 
+    const [decimals, setDecimals] = useState(0);
+
     const getInfo = async ()=> {
         
         let phase = await props.selectedInstance.phase();
@@ -56,6 +58,7 @@ const CircleInfo = (props)=> {
         setERC20TokenAddress(instanceAddress);
 
         let decimals = await contract.decimals();
+        setDecimals(decimals);
 
         let fundedAm = await contract.balanceOf(props.selectedInstance.address);
         fundedAm = ethers.utils.formatUnits(fundedAm, decimals);
@@ -95,6 +98,12 @@ const CircleInfo = (props)=> {
         let tx = await contract.transfer(props.selectedInstance.address, fundBig);
         await tx.wait();
         console.log("Added Funds!");
+
+
+        let fundedAm = await contract.balanceOf(props.selectedInstance.address);
+        fundedAm = ethers.utils.formatUnits(fundedAm, decimals);
+        setFundedAMount(fundedAm);
+
     }
 
     return <CenteredCard title="Info">
@@ -114,7 +123,7 @@ const CircleInfo = (props)=> {
             <tbody>
             <tr>
                 <th>Address</th>
-                <th>Beans</th>
+                <th>Placeable Beans</th>
             </tr>
             {
                 attendees.map((value, index) => {
@@ -143,7 +152,7 @@ const CircleInfo = (props)=> {
                             <th>{index}</th>
                             <th>{value.proposer}</th>
                             <th>{value.beansReceived.toNumber()}</th>
-                            <th>{value.giftAmount.toNumber()}</th>
+                            <th>{ethers.utils.formatUnits(value.giftAmount, decimals)}</th>
                             <th>{value.hasRedeemed.toString()}</th>
                         </tr>
                 })
