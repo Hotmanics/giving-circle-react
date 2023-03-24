@@ -23,6 +23,8 @@ const CircleInfo = (props)=> {
     const [yourERC20Balance, setYourERC20Balance] = useState(0);
 
     const [decimals, setDecimals] = useState(0);
+    const [isKycRequired, setIsKycRequired] = useState('false');
+    const [kycAddress, setKycAddress] = useState('');
 
     const getInfo = async ()=> {
         
@@ -71,6 +73,9 @@ const CircleInfo = (props)=> {
         let yourAmount = await contract.balanceOf(props.connectedWalletInfo.account);
         yourAmount = ethers.utils.formatUnits(yourAmount, decimals);
         setYourERC20Balance(yourAmount);
+
+        let kycController = await props.selectedInstance.kycController();
+        setKycAddress(kycController);
     }
 
     const [addFundsAmount, setAddFundsAmount] = useState(0);
@@ -106,17 +111,49 @@ const CircleInfo = (props)=> {
 
     }
 
+
     return <CenteredCard title="Info">
-        <p>Address: { props.selectedInstance.address }</p>
-        <p>ERC20 Token: { erc20TokenAddress }</p>
-        <p>Min Fund Amount: {minFundAmount} </p>
-        <p>Funded Amount: {fundedAmount } </p>
-        <p>Your Balance: { yourERC20Balance} </p>
         <p>Add Funds</p>
         <input type="number" onChange={handleFundAmount}/>
         <button onClick={addFunds}>Add</button>
 
-        <p>Phase: { phase }</p>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Address</th>
+                    <th>{ props.selectedInstance.address }</th>
+                </tr>
+                <tr>    
+                    <th>ERC20 Token</th>
+                    <th>{ erc20TokenAddress }</th>
+                </tr>   
+                    {
+                        kycAddress === "0x0000000000000000000000000000000000000000" ? 
+                            <tr><th>KYC Required</th><th>false</th></tr> : <tr><th>KYC Required</th><th>true</th></tr>
+                    }
+                    {
+                        kycAddress !== "0x0000000000000000000000000000000000000000" ? 
+                            <tr><th>KYC Address</th><th>{kycAddress} </th></tr> : <tr></tr>
+                    }
+                <tr>
+                    <th>Min Fund Amount</th>
+                    <th>{minFundAmount}</th>
+                </tr>
+                <tr>
+                    <th>Funded Amount</th>
+                    <th>{fundedAmount }</th>
+                </tr>               
+                <tr>
+                    <th>Your Balance</th>
+                    <th>{ yourERC20Balance}</th>
+                </tr>
+                <tr>
+                    <th>Phase</th>
+                    <th>{ phase }</th>
+                </tr>
+            </tbody>
+        </table>
+
 
         <h2>Attendess: </h2>
         <table>

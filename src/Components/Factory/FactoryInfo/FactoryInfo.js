@@ -27,9 +27,23 @@ const FactoryInfo = (props)=> {
     }
 
     return <CenteredCard title="Factory Info">
-        <p>Address: { factoryAddress }</p>
-        <p>Implementation Address: { implementation }</p>
-        <p>Instances Count: { instancesCount } </p>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Address</th>
+                    <th>{ factoryAddress }</th>
+                </tr>
+                <tr>
+                    <th>Implementation Address</th>
+                    <th>{ implementation }</th>
+                </tr>
+                <tr>
+                    <th>Instances Count</th>
+                    <th>{ instancesCount }</th>
+                </tr>
+
+            </tbody>
+        </table>
         </CenteredCard>
 }
 
