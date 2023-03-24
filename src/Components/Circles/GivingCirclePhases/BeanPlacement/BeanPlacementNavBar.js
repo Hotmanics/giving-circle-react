@@ -16,7 +16,7 @@ const BeanPlacementNavBar = (props)=> {
             Place Beans
         </button>
         <button onClick={()=> {handleClick('progressToGiftRedemptionPhase')}}>
-            Progress To Gift Redemption Phase
+            Progress To Gift Redemption Phase (CAN SAFELY SEND FUNDS TO RESPECTIVE PLACES DURING THIS ACTION IF ALL USERS ARE KYCED)
         </button>
     </CenteredCard>
 }

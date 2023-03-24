@@ -20,12 +20,12 @@ const implementationABI = [
           },
           {
             "internalType": "address[]",
-            "name": "specialBeanPlacers",
+            "name": "beanPlacementAdmins",
             "type": "address[]"
           },
           {
             "internalType": "address[]",
-            "name": "specialGiftRedeemers",
+            "name": "fundsManagers",
             "type": "address[]"
           },
           {
@@ -212,7 +212,33 @@ const implementationABI = [
   },
   {
     "inputs": [],
+    "name": "BEAN_PLACEMENT_ADMIN_ROLE",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "DEFAULT_ADMIN_ROLE",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "FUNDS_MANAGER_ROLE",
     "outputs": [
       {
         "internalType": "bytes32",
@@ -261,32 +287,6 @@ const implementationABI = [
     "name": "ProgressToGiftRedeemPhase",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "SPECIAL_BEAN_PLACER_ROLE",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "SPECIAL_GIFT_REDEEMER_ROLE",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -630,12 +630,12 @@ const implementationABI = [
           },
           {
             "internalType": "address[]",
-            "name": "specialBeanPlacers",
+            "name": "beanPlacementAdmins",
             "type": "address[]"
           },
           {
             "internalType": "address[]",
-            "name": "specialGiftRedeemers",
+            "name": "fundsManagers",
             "type": "address[]"
           },
           {
@@ -939,6 +939,19 @@ const implementationABI = [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawRemainingFunds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ];

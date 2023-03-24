@@ -45,7 +45,6 @@ const AddProposers = (props)=> {
                                 value={input.name}
                                 onChange= {event => handleProposerFieldChange(index, event)}
                             />
-                            <button>Test</button>
                         </div>            
                         )
                 })

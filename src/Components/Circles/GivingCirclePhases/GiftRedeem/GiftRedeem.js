@@ -66,11 +66,32 @@ const GiftRedeem = (props)=> {
         console.log("Redeemed Gifts!");
     }
 
+    const [withdrawRemainingFundsInput, setWithdrawRemainingFundsInput] = useState();
+
+    const handleWithdrawRemainingFundsInputChanged = (event)=> {
+        setWithdrawRemainingFundsInput(event.target.value);
+    }
+
+    const withdrawRemainingFunds = async ()=> {
+        let tx = await props.selectedInstance.withdrawRemainingFunds(withdrawRemainingFundsInput);
+        await tx.wait();
+    }
+
     return <CenteredCard title="Gift Redemption">
                 <div>
                     <p>Your Redeemable Amount: {amountToRedeem}</p>
                     <div><button onClick={redeemMyGift}>Redeem</button></div>
-                    <div><button onClick={redeemAllGifts}>Redeem All (Leader)</button></div>
+                    <div><button onClick={redeemAllGifts}>Courtest Redeem All (Funds Manager)</button></div>
+
+<p>.</p>
+                    <input
+                        name ="target"
+                        placeholder="Target"
+                        onChange= {handleWithdrawRemainingFundsInputChanged}
+                    />
+                    <p>Can also be used to roll over funds to a new circle</p>
+
+                    <div><button onClick={withdrawRemainingFunds}>Withdraw Remaining Funds (Funds Manager)</button></div>
                 </div>;
             </CenteredCard>
 }

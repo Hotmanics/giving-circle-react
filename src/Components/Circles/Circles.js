@@ -42,7 +42,7 @@ const Circles = (props)=> {
     }
 
     const handleGivingCircleSelected = async (event)=> {
-        const instanceAddress = await factoryContract.instances(event.target.value);
+        const instanceAddress = await factoryContract.instances(event.target.value - 1);
 
         const contract = new ethers.Contract(
             instanceAddress,
@@ -100,7 +100,7 @@ const Circles = (props)=> {
         </option>
             {
                 circles.map((num) => (
-                    <option key={Math.random()} value={num}> {num} </option>
+                    <option key={Math.random()} value={num+1}> {num+1} </option>
                 ))
             }
         </select>  

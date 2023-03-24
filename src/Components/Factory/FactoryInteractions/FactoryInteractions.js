@@ -100,8 +100,8 @@ const FactoryInteractions = (props)=> {
             beansToDispursePerAttendee: numOfBeansToDisperse,
             fundingThreshold: final,
             circleLeaders: leaderInputFields,
-            specialBeanPlacers: specialBeanPlacerInputFields,
-            specialGiftRedeemers: specialGiftRedeemerInputFields,
+            beanPlacementAdmins: specialBeanPlacerInputFields,
+            fundsManagers: specialGiftRedeemerInputFields,
             erc20Token: erc20Address,
             kycController: kycAddress === '' ? "0x0000000000000000000000000000000000000000" : kycAddress, //0x0000000000000000000000000000000000000000 - Zero Address
           });
@@ -147,7 +147,7 @@ const FactoryInteractions = (props)=> {
             )})
         }
 
-        <p>Bean Placer Admins</p>
+        <p>Bean Placement Admins</p>
         <div><button onClick={addBeanPlacerField}>Add more...</button></div>
 
         {
