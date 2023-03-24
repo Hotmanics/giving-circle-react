@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
 import { factoryAddress, factoryABI } from "../../../Smart Contracts Info/FactorySmartContractInfo";
 import "./FactoryInteractions.css";
+import { PartialIERC20InfoABI } from "../../../Smart Contracts Info/IPartialERC20Info";
 
 const FactoryInteractions = (props)=> {
 
@@ -86,13 +87,22 @@ const FactoryInteractions = (props)=> {
     const submit = async (e) => {
         e.preventDefault();
 
+        const erc20Contract = new ethers.Contract(
+            erc20Address,
+            PartialIERC20InfoABI,
+            props.connectedWalletInfo.provider
+        );
+
+        let decimals = await erc20Contract.decimals();
+        let final = ethers.utils.parseUnits(fundingThreshold, decimals)
+
         let tx = await contract.createGivingCircle({
             beansToDispursePerAttendee: numOfBeansToDisperse,
-            fundingThreshold: fundingThreshold,
+            fundingThreshold: final,
             circleLeaders: leaderInputFields,
             specialBeanPlacers: specialBeanPlacerInputFields,
             specialGiftRedeemers: specialGiftRedeemerInputFields,
-            erc20Token: erc20Address, //0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747 - Mumbai USDC
+            erc20Token: erc20Address,
             kycController: kycAddress === '' ? "0x0000000000000000000000000000000000000000" : kycAddress, //0x0000000000000000000000000000000000000000 - Zero Address
           });
         

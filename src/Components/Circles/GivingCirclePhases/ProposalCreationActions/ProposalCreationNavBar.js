@@ -17,6 +17,9 @@ const ProposalCreationNavBar = (props)=> {
         <button onClick={()=> {handleClick('addProposers')}}>
             Add Proposers
         </button>
+        <button onClick={()=> {handleClick('progressToBeanPlacementPhase')}}>
+            Progress To Bean Placement Phase
+        </button>
     </CenteredCard>
 }
 

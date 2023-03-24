@@ -3,7 +3,7 @@ import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../../../Cards/Centered Card/CenteredCard";
 
-const AddAttendeesPhase = (props)=> {
+const AddAttendees = (props)=> {
     const [attendees, setAttendees] = useState([]);
 
     const addAttendeeField = ()=> {
@@ -44,9 +44,9 @@ const AddAttendeesPhase = (props)=> {
                         )
                 })
             }
-            <div><button onClick={addAttendees}>Add All Attendees</button></div>
+            <div><button onClick={addAttendees}>Add Attendees</button></div>
         </div>;
         </CenteredCard>
 }
 
-export default AddAttendeesPhase;
+export default AddAttendees;
