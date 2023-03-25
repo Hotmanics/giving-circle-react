@@ -66,11 +66,11 @@ const ConnectWallet = (props)=> {
 
     let buttonSection = connectedWalletInfo.account === undefined ? 
                             <button type="button" onClick={connectWallet}>
-                                Login
+                                Login 
                             </button> :
                             <div></div>;
 
-    const accountInfo = connectedWalletInfo.account === undefined ? <p>Please login.</p>
+    const accountInfo = connectedWalletInfo.account === undefined ? <p>Please login. (Please make sure your wallet is connected to mumbai!)</p>
                         : <p>You are logged in as: { connectedWalletInfo.account }</p>
                         
     return <div className="connectWallet">

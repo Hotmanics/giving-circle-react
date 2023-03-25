@@ -36,11 +36,11 @@ const FactoryInfo = (props)=> {
     const [circleCreatorRole, setCircleCreatorRole] = useState('');
 
     const getInfo = async ()=> {
+        
         setOnChainImplementation(await contract.implementation());
         setInstancesCount((await contract.instancesCount()).toNumber());
 
         setCircleCreatorRole(await contract.CIRCLE_CREATOR_ROLE());
-        console.log(await contract.CIRCLE_CREATOR_ROLE())
     }
 
     const handleAdmins = async ()=> {
