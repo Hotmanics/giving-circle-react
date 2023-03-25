@@ -912,19 +912,6 @@ const implementationABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "otherCircle",
-        "type": "address"
-      }
-    ],
-    "name": "rollOverToCircle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "bytes4",
         "name": "interfaceId",
         "type": "bytes4"

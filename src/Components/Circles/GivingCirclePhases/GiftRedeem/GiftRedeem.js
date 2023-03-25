@@ -15,7 +15,6 @@ const GiftRedeem = (props)=> {
 
     const [amountToRedeem, setAmountToRedeem] = useState(0);
 
-
     const getInfo = async ()=> {
 
         const instanceAddress = await props.selectedInstance.erc20Token();
@@ -49,9 +48,14 @@ const GiftRedeem = (props)=> {
     }
 
     const redeemMyGift = async ()=> {
-        let tx = await props.selectedInstance.redeemMyGift();
-        await tx.wait();
-        console.log("redeemed gift!!");
+        try {
+            let tx = await props.selectedInstance.redeemMyGift();
+            props.onBoastMessage("Redeeming My Gift...");
+            await tx.wait();
+            props.onBoastMessage("Redeemed My Gift!");
+        } catch (e) {
+            props.onBoastMessage(e.reason);
+        }
     }
 
     const redeemAllGifts = async ()=> {
@@ -63,9 +67,20 @@ const GiftRedeem = (props)=> {
             proposalAddresses.push(proposals[i].proposer);
         }
 
-        let tx = await props.selectedInstance.redeemGiftForSomeoneMultiple(proposalAddresses);
-        await tx.wait();
-        console.log("Redeemed Gifts!");
+        let role = await props.selectedInstance.FUNDS_MANAGER_ROLE();
+
+        try {
+            let tx = await props.selectedInstance.redeemGiftForSomeoneMultiple(proposalAddresses);
+            props.onBoastMessage("Redeeming gifts for several people...");
+            await tx.wait();
+            props.onBoastMessage("Redeemed gifts for several people!");
+        } catch (e) {
+            if (e.reason === `execution reverted: AccessControl: account ${props.connectedWalletInfo.account.toLowerCase()} is missing role ${role}`) {
+                props.onBoastMessage("You do not have access to redeem funds for others!");
+            } else {
+                props.onBoastMessage(e.reason);
+            }
+        }
     }
 
     const [withdrawRemainingFundsInput, setWithdrawRemainingFundsInput] = useState();
@@ -74,9 +89,16 @@ const GiftRedeem = (props)=> {
         setWithdrawRemainingFundsInput(event.target.value);
     }
 
-    const withdrawRemainingFunds = async ()=> {
-        let tx = await props.selectedInstance.withdrawRemainingFunds(withdrawRemainingFundsInput);
-        await tx.wait();
+    const withdrawRemainingFunds = async ()=> { 
+        try{
+            let tx = await props.selectedInstance.withdrawRemainingFunds(withdrawRemainingFundsInput);
+            props.onBoastMessage("Withdrawing funds to " + withdrawRemainingFundsInput + "...");
+            await tx.wait();
+            props.onBoastMessage("Withdrew funds to " + withdrawRemainingFundsInput + "!");
+    
+        } catch (e) {
+            props.onBoastMessage("Please enter a valid address!");
+        }
     }
 
 

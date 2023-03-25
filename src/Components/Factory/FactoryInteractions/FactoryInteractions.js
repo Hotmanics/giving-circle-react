@@ -74,34 +74,55 @@ const FactoryInteractions = (props)=> {
 
     const submit = async (e) => {
         e.preventDefault();
+        let erc20Contract;
+        let decimals;
 
-        const erc20Contract = new ethers.Contract(
+        try{
+
+        erc20Contract = new ethers.Contract(
             erc20Address,
             PartialIERC20InfoABI,
             props.connectedWalletInfo.provider
         );
 
-        let decimals = await erc20Contract.decimals();
-        let final = ethers.utils.parseUnits(fundingThreshold, decimals)
+        decimals = await erc20Contract.decimals();
 
-        let tx = await contract.createGivingCircle({
-            beansToDispursePerAttendee: numOfBeansToDisperse,
-            fundingThreshold: final,
-            circleLeaders: leaderInputFields,
-            beanPlacementAdmins: specialBeanPlacerInputFields,
-            fundsManagers: specialGiftRedeemerInputFields,
-            erc20Token: erc20Address,
-            kycController: kycAddress === '' ? "0x0000000000000000000000000000000000000000" : kycAddress, //0x0000000000000000000000000000000000000000 - Zero Address
-          });
-        
-        props.onBoastMessage("Creating Giving Circle...");
+        } catch (e) {
+            props.onBoastMessage("You did not supply an erc20 Token!");
+        }
+
+        console.log(fundingThreshold);
+        let final = ethers.utils.parseUnits(fundingThreshold.toString(), decimals)
+
+        try {
+            let tx = await contract.createGivingCircle({
+                beansToDispursePerAttendee: numOfBeansToDisperse,
+                fundingThreshold: final,
+                circleLeaders: leaderInputFields,
+                beanPlacementAdmins: specialBeanPlacerInputFields,
+                fundsManagers: specialGiftRedeemerInputFields,
+                erc20Token: erc20Address,
+                kycController: kycAddress === '' ? "0x0000000000000000000000000000000000000000" : kycAddress, //0x0000000000000000000000000000000000000000 - Zero Address
+            });
+
+        let circleCount = await contract.instancesCount();
+
+        props.onBoastMessage(`Creating Giving Circle ${circleCount.toNumber() + 1}...`);
         await tx.wait();
-        props.onBoastMessage("Created Giving Circle!");
+        props.onBoastMessage(`Created Giving Circle ${circleCount.toNumber() + 1}!`);
+
+        } catch (e) {
+            props.onBoastMessage(e.reason);
+        }
+
+        
     }
 
     return <CenteredCard className="factoryInteractions" title="Create New Giving Cirlce">
 
     <div>
+        <p>USDC Address Mumbai (ERC20 Token): 0x0FA8781a83E46826621b3BC094Ea2A0212e71B23</p>
+        <p>KYC Address Mumbai: 0x4989649CA2C77727CB1ceD8e5E79591d5Efbc6AD</p>
         <div id="in">
 
         <p>ERC20 Address</p>
@@ -117,13 +138,13 @@ const FactoryInteractions = (props)=> {
         <div id="in">
 
         <p>Beans To Disperse Per Person</p>
-        <input type="number" onChange={handleNumberOfBeansDispersed}/>
+        <input type="number" defaultValue={numOfBeansToDisperse} onChange={handleNumberOfBeansDispersed}/>
 
         </div>
         <div id="in">
 
         <p>Funding Threshold</p>
-        <input type="number" onChange={handleFundingThreshold}/>
+        <input type="number" defaultValue={0} onChange={handleFundingThreshold}/>
 
         </div>
     </div>

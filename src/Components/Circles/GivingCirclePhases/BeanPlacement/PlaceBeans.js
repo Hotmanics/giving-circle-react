@@ -54,10 +54,15 @@ const PlaceBeans = (props)=> {
     }
 
     const placeBeans = async ()=> {
-        let tx = await props.selectedInstance.placeMyBeansMultiple([indexToGive], [beansToPlace]);
-        await tx.wait();
-        console.log("Placed beans!");
-        getInfo();
+        try{
+            let tx = await props.selectedInstance.placeMyBeansMultiple([indexToGive], [beansToPlace]);
+            props.onBoastMessage(`Placing ${beansToPlace} bean(s) to index ${indexToGive}...`);
+            await tx.wait();
+            props.onBoastMessage(`Placed ${beansToPlace} bean(s) to index ${indexToGive}!`);
+            getInfo();
+        } catch (e) {
+            props.onBoastMessage(e.reason);
+        }
     }
 
     return <CenteredCard title="Place Beans">
@@ -84,12 +89,12 @@ const PlaceBeans = (props)=> {
 
         <div id="in">
             <p>Index</p>
-            <input type="number" onChange={handleIndexField}/>
+            <input type="number" defaultValue={0} onChange={handleIndexField}/>
         </div>
         
         <div id="in">
             <p>Beans To Place</p>
-            <input type="number" onChange={handleBeansField}/>
+            <input type="number" defaultValue={0} onChange={handleBeansField}/>
         </div>
         
         <div><button onClick={placeBeans}>Place Beans</button></div>

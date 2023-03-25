@@ -12,10 +12,15 @@ const AddAttendees = (props)=> {
     }
 
     const addAttendees = async ()=> {
-        console.log(attendees);
-        let tx = await props.selectedInstance.registerAttendees(attendees);
-        tx.wait();
-        console.log("Registered attendees!");
+        try {
+            console.log(attendees);
+            let tx = await props.selectedInstance.registerAttendees(attendees);
+            props.onBoastMessage("Adding Attendees...");
+            tx.wait();
+            props.onBoastMessage("Added Attendees!");
+        } catch (e) {
+            props.onBoastMessage("Please enter valid address(es)!");
+        }
     }
 
     const handleAttendeeFieldChange = (index, event)=> {
@@ -43,7 +48,7 @@ const AddAttendees = (props)=> {
                         )
                 })
             }
-            <div><button className="semiBigButton" onClick={addAttendees}>Add Attendees</button></div>
+            <div><button className="semiBigButton" onClick={addAttendees}>Add Attendees (Leader)</button></div>
         </div>;
         </CenteredCard>
 }

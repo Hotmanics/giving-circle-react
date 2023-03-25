@@ -11,9 +11,21 @@ const AddProposers = (props)=> {
     }
 
     const addProposers = async ()=> {
-        let tx = await props.selectedInstance.batchCreateNewProposals(proposers);
-        tx.wait();
-        console.log("Registered all proposers!");
+        // let tx = await props.selectedInstance.batchCreateNewProposals(proposers);
+        // tx.wait();
+        // console.log("Registered all proposers!");
+
+
+        try {
+            let tx = await props.selectedInstance.batchCreateNewProposals(proposers);
+            props.onBoastMessage("Adding Proposers...");
+            tx.wait();
+            props.onBoastMessage("Added Proposers!");
+        } catch (e) {
+            props.onBoastMessage("Please enter valid address(es)!");
+        }
+
+
     }
 
     const handleProposerFieldChange = (index, event)=> {
@@ -41,7 +53,7 @@ const AddProposers = (props)=> {
                         )
                 })
             }
-            <div><button className="semiBigButton" onClick={addProposers}>Add Proposers</button></div>
+            <div><button className="semiBigButton" onClick={addProposers}>Add Proposers (Leader)</button></div>
         </div>;
         </CenteredCard>
 }

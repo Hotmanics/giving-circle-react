@@ -55,7 +55,7 @@ const Circles = (props)=> {
         setInfoSelectedTrigger((infoSelectedTrigger) => {
             infoSelectedTrigger++;
             setOutput(
-                <GivingCircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={infoSelectedTrigger} selectedInstance={contract}></GivingCircleInfo>
+                <GivingCircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={infoSelectedTrigger} selectedInstance={contract} onBoastMessage={props.onBoastMessage}></GivingCircleInfo>
             );
             return infoSelectedTrigger;
         });
@@ -66,7 +66,7 @@ const Circles = (props)=> {
             setInfoSelectedTrigger((infoSelectedTrigger) => {
                 infoSelectedTrigger++;
                 setOutput(
-                    <GivingCircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={infoSelectedTrigger} selectedInstance={selectedInstance}></GivingCircleInfo>
+                    <GivingCircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={infoSelectedTrigger} selectedInstance={selectedInstance} onBoastMessage={props.onBoastMessage}></GivingCircleInfo>
                 );
                 return infoSelectedTrigger;
             });
@@ -74,7 +74,7 @@ const Circles = (props)=> {
             setPhaseSelectedTrigger((phaseSelectedTrigger) => {
                 phaseSelectedTrigger++;
                 setOutput(
-                    <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} onPageSet={phaseSelectedTrigger} selectedInstance={selectedInstance}></GivingCirclePhases>
+                    <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} onPageSet={phaseSelectedTrigger} selectedInstance={selectedInstance} onBoastMessage={props.onBoastMessage}></GivingCirclePhases>
                 );
                 return phaseSelectedTrigger;
             });

@@ -14,7 +14,7 @@ const LoggedInSection = (props)=> {
     const [factoryInfoTrigger, setContractInfoTrigger] = useState(0);
     const [givingCircleTrigger, setGivingCircleTrigger] = useState(0);
 
-    const [output, setOutput] = useState(<p>Welcome!</p>);
+    const [output, setOutput] = useState('');
 
     const handleStateSet = (state)=> {
         if (state === 'factoryInfo') {

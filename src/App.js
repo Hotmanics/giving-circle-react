@@ -31,12 +31,12 @@ function App() {
   let output = <div>
   <ConnectWallet onBoastMessage={handleLogger} onWalletConnected={handleLogin}></ConnectWallet>
   <Logger boastMessage={message} connectedWalletInfo={connectedWalletInfo}></Logger>
-  {loginComponents}</div>;
+  {loginComponents}
+  </div>;
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>Hey</p>
         { output }
       </header>
     </div>

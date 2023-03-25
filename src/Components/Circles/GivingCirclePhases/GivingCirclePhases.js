@@ -49,7 +49,7 @@ const GivingCirclePhases = (props)=> {
             setAddAttendeesStateTrigger((addAttendeesStateTrigger) => {
                 addAttendeesStateTrigger++;
                 setPhaseOutput(
-                    <AddAttendees selectedInstance={props.selectedInstance}></AddAttendees>
+                    <AddAttendees selectedInstance={props.selectedInstance} onBoastMessage={props.onBoastMessage}></AddAttendees>
                 );
                 return addAttendeesStateTrigger;
             });
@@ -57,37 +57,47 @@ const GivingCirclePhases = (props)=> {
             setAddProposersStateTrigger((addProposersStateTrigger) => {
                 addProposersStateTrigger++;
                 setPhaseOutput(
-                    <AddProposers selectedInstance={props.selectedInstance}></AddProposers>
+                    <AddProposers selectedInstance={props.selectedInstance} onBoastMessage={props.onBoastMessage}></AddProposers>
                 );
                 return addProposersStateTrigger;
             });
         } else if (state === "progressToBeanPlacementPhase") {
-            let tx = await props.selectedInstance.ProgressToBeanPlacementPhase();
-            await tx.wait();
-            console.log("progressed phase!");
-            getPhase();
+            try {
+                let tx = await props.selectedInstance.ProgressToBeanPlacementPhase();
+                props.onBoastMessage("Progressing To Bean Placement Phase...");
+                await tx.wait();
+                props.onBoastMessage("Progressed To Bean Placement Phase!");
+                getPhase();
+            } catch (e) {
+                props.onBoastMessage(e.reason);
+            }
         }
 
         if (state === "placeBeans") {
             setPlaceBeansStateTrigger((placeBeansStateTrigger) => {
                 placeBeansStateTrigger++;
             setPhaseOutput(
-                <PlaceBeans onPageSet={placeBeansStateTrigger} selectedInstance={props.selectedInstance} connectedWalletInfo={props.connectedWalletInfo}></PlaceBeans>
+                <PlaceBeans onPageSet={placeBeansStateTrigger} selectedInstance={props.selectedInstance} connectedWalletInfo={props.connectedWalletInfo} onBoastMessage={props.onBoastMessage}></PlaceBeans>
             );
             return placeBeansStateTrigger;
             });
         } else if (state === "progressToGiftRedemptionPhase") {
-            let tx = await props.selectedInstance.ProgressToGiftRedeemPhase();
-            await tx.wait();
-            console.log("progressed to gift redemption!");
-            getPhase();
+            try{
+                let tx = await props.selectedInstance.ProgressToGiftRedeemPhase();
+                props.onBoastMessage("Progressing To Gift Redemption Phase...");
+                await tx.wait();
+                props.onBoastMessage("Progressed To Gift Redemption Phase!");
+                getPhase();
+            } catch (e) {
+                props.onBoastMessage(e.reason);
+            }
         } 
 
         if (state === "Gift Redemption") {
             setRedeemGiftsTrigger((redeemGiftsTrigger) => {
                 redeemGiftsTrigger++;
             setPhaseOutput(
-                <GiftRedeem onPageSet={redeemGiftsTrigger} selectedInstance={props.selectedInstance} connectedWalletInfo={props.connectedWalletInfo}></GiftRedeem>
+                <GiftRedeem onPageSet={redeemGiftsTrigger} selectedInstance={props.selectedInstance} connectedWalletInfo={props.connectedWalletInfo} onBoastMessage={props.onBoastMessage}></GiftRedeem>
             );
             return redeemGiftsTrigger;
             });

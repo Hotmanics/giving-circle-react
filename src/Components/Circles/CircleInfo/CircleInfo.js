@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
 import { ethers } from "ethers"
 import { PartialIERC20InfoABI } from "../../../Smart Contracts Info/IPartialERC20Info";
+import { kycControllerABI } from "../../../Smart Contracts Info/KycControllerInfo";
+
 import "./CircleInfo.css";
 
 const CircleInfo = (props)=> {
@@ -31,6 +33,8 @@ const CircleInfo = (props)=> {
     const[totalRedeemedFunds, setTotalRedeemedFunds] = useState(99);
     const [totalUnredeemedFunds, setTotalUnredeemedFunds] = useState(99);
     const[totalAllocatedFunds, setTotalAllocatedFunds] = useState(99);
+    const [totalBeansToDispurse, setTotalBeansToDispurse] = useState(99);
+
 
     const getInfo = async ()=> {
         
@@ -83,7 +87,6 @@ const CircleInfo = (props)=> {
         let kycController = await props.selectedInstance.kycController();
         setKycAddress(kycController);
 
-
         let totalAll = await props.selectedInstance.getTotalAllocatedFunds();
         setTotalAllocatedFunds(ethers.utils.formatUnits(totalAll, decimals));
 
@@ -98,7 +101,70 @@ const CircleInfo = (props)=> {
 
         let leftOverFunds = await props.selectedInstance.getLeftoverFunds();
         setLeftoverFunders(ethers.utils.formatUnits(leftOverFunds, decimals));
+
+        let totalBeansToDispurse = await props.selectedInstance.beansToDispursePerAttendee();
+        setTotalBeansToDispurse(totalBeansToDispurse.toNumber());
     }
+
+    const [userToKyc, setUserToKyc] = useState('');
+
+    const handleUserToKycInput = (event) => {
+        setUserToKyc(event.target.value);
+    }
+
+    const kycUser = async () => {
+        const instanceAddress = await props.selectedInstance.kycController();
+
+        const contract = new ethers.Contract(
+            instanceAddress,
+            kycControllerABI,
+            props.connectedWalletInfo.provider
+        );
+
+        try{
+            let tx = await contract.kycUser(userToKyc);
+            props.onBoastMessage(`kycing ${userToKyc}...`);
+            await tx.wait();
+            props.onBoastMessage(`kyced ${userToKyc}!`);
+        } catch (e) {
+            if (e.reason === `execution reverted: AccessControl: account ${await props.connectedWalletInfo.account.toLowerCase()} is missing role ${await contract.DEFAULT_ADMIN_ROLE()}`) {
+                props.onBoastMessage("You do not have the right to KYC users!");
+            } else {
+                props.onBoastMessage("Please enter a valid address!");
+            }
+        }
+    }   
+
+    const [kycAdmin, setKycAdmin] = useState('');
+
+
+    const handleKycAdmin = (event) => {
+        setKycAdmin(event.target.value);
+    }
+
+    const setUserToKycAdmin = async () => {
+        const instanceAddress = await props.selectedInstance.kycController();
+
+        const contract = new ethers.Contract(
+            instanceAddress,
+            kycControllerABI,
+            props.connectedWalletInfo.provider
+        );
+
+        try{
+            let role = await contract.DEFAULT_ADMIN_ROLE();
+            let tx = await contract.grantRole(role, kycAdmin);
+            props.onBoastMessage(`Giving ${kycAdmin} KYC admin role...`);
+            await tx.wait();
+            props.onBoastMessage(`Gave ${kycAdmin} KYC admin role!`);
+        } catch (e) {
+            if (e.reason === `execution reverted: AccessControl: account ${await props.connectedWalletInfo.account.toLowerCase()} is missing role ${await contract.DEFAULT_ADMIN_ROLE()}`) {
+                props.onBoastMessage("You do not have the right grant KYC admins!");
+            } else {
+                props.onBoastMessage("Please enter a valid address!");
+            }
+        }
+    }   
 
     const [addFundsAmount, setAddFundsAmount] = useState(0);
 
@@ -122,15 +188,20 @@ const CircleInfo = (props)=> {
 
         let fundBig = ethers.utils.parseUnits(addFundsAmount, decimals);
         console.log(fundBig.toNumber());
-        let tx = await contract.transfer(props.selectedInstance.address, fundBig);
-        await tx.wait();
-        console.log("Added Funds!");
-
+        try {
+            let tx = await contract.transfer(props.selectedInstance.address, fundBig);
+            props.onBoastMessage("Adding " + addFundsAmount + " token(s) to circle...");
+            await tx.wait();
+            props.onBoastMessage("Added " + addFundsAmount + " token(s) to circle!");
+        } catch (e) {
+            if (e.reason === "execution reverted: ERC20: transfer amount exceeds balance") {
+                props.onBoastMessage(`You attempted to fund the circle with ${addFundsAmount} tokens but you only have ${yourERC20Balance}!`);
+            }
+        }
 
         let fundedAm = await contract.balanceOf(props.selectedInstance.address);
         fundedAm = ethers.utils.formatUnits(fundedAm, decimals);
         setFundedAMount(fundedAm);
-
     }
 
 
@@ -150,8 +221,7 @@ const CircleInfo = (props)=> {
                             <tr><th>KYC Required</th><th>false</th></tr> : <tr><th>KYC Required</th><th>true</th></tr>
                     }
                     {
-                        kycAddress !== "0x0000000000000000000000000000000000000000" ? 
-                            <tr><th>KYC Address</th><th>{kycAddress} </th></tr> : <tr></tr>
+                        kycAddress !== "0x0000000000000000000000000000000000000000" ? <tr><th>KYC Address</th><th>{kycAddress} </th><th><div id="in"><input type="text" onChange={handleUserToKycInput}/><button onClick={kycUser}>KYC User</button></div><div id="in"><input type="text" onChange={handleKycAdmin}/><button onClick={setUserToKycAdmin}>Grant KYC Admin</button></div></th></tr> : <tr></tr>
                     }
                 <tr>
                     <th>Min Fund Amount</th>
@@ -162,20 +232,27 @@ const CircleInfo = (props)=> {
                     <th>
                         {fundedAmount } 
                     </th>
-                    <th>
-                        <div id="in">
-                        <input type="number" onChange={handleFundAmount}/>
-                        <button onClick={addFunds}>Add Funds</button>
-                        </div>    
-                    </th>
+                 
                 </tr>               
                 <tr>
                     <th>Your Balance</th>
                     <th>{ yourERC20Balance}</th>
+                    <th>
+                        <div id="in">
+                        <input  defaultValue={0} type="number" onChange={handleFundAmount}/>
+                        <button onClick={addFunds}>Add Funds To Circle</button>
+                        </div>    
+                    </th>
                 </tr>
                 <tr>
                     <th>Phase</th>
                     <th>{ phase }</th>
+                </tr>
+
+
+                <tr>
+                    <th>Total Beans To Dispurse</th>
+                    <th>{ totalBeansToDispurse }</th>
                 </tr>
 
                 <tr>
