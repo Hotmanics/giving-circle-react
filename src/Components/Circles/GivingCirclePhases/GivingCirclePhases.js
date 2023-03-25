@@ -8,6 +8,7 @@ import AddProposers from "./ProposalCreationActions/AddProposers";
 import BeanPlacementNavBar from "./BeanPlacement/BeanPlacementNavBar";
 import PlaceBeans from "./BeanPlacement/PlaceBeans";
 import GiftRedeem from "./GiftRedeem/GiftRedeem";
+import "./GivingCircle.css";
 
 const GivingCirclePhases = (props)=> {
 

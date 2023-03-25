@@ -113,10 +113,6 @@ const CircleInfo = (props)=> {
 
 
     return <CenteredCard title="Info">
-        <p>Add Funds</p>
-        <input type="number" onChange={handleFundAmount}/>
-        <button onClick={addFunds}>Add</button>
-
         <table>
             <tbody>
                 <tr>
@@ -141,7 +137,16 @@ const CircleInfo = (props)=> {
                 </tr>
                 <tr>
                     <th>Funded Amount</th>
-                    <th>{fundedAmount }</th>
+                    <th>
+                        {fundedAmount } 
+                    </th>
+                    <th>
+                        <div>
+                        <input type="number" onChange={handleFundAmount}/>
+                        <button onClick={addFunds}>Add Funds</button>
+                        </div>    
+                    </th>
+
                 </tr>               
                 <tr>
                     <th>Your Balance</th>

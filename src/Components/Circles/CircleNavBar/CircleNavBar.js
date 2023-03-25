@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
+import "./CircleNavBar.css";
 
 const CircleNavBar = (props)=> {
 
@@ -11,7 +12,7 @@ const CircleNavBar = (props)=> {
         props.onStateSet(_state);
     }   
 
-    return <CenteredCard>
+    return <CenteredCard className="givingCircleNavBar">
         <button onClick={()=> {handleClick('circleInfo')}}>
             Info
         </button>

@@ -1,3 +1,7 @@
   .factoryInfo p {
     font-size: 18px;
   }
+
+  .factory p {
+    color:red;
+  }

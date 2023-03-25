@@ -92,7 +92,7 @@ const Circles = (props)=> {
         navbarOutput = <GivingCircleNavBar onStateSet={handleStateSet}></GivingCircleNavBar>;
     } 
 
-    return <CenteredCard title="Giving Circles">
+    return <CenteredCard className="circles" title="Giving Circles">
         <div>
         <select onChange={handleGivingCircleSelected} defaultValue="choose">
         <option value="choose" disabled>

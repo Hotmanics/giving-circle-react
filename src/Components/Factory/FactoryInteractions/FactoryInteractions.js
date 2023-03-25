@@ -2,8 +2,8 @@ import { ethers } from "ethers"
 import React, { useState } from "react";
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
 import { factoryAddress, factoryABI } from "../../../Smart Contracts Info/FactorySmartContractInfo";
-import "./FactoryInteractions.css";
 import { PartialIERC20InfoABI } from "../../../Smart Contracts Info/IPartialERC20Info";
+import "./FactoryInteractions.css";
 
 const FactoryInteractions = (props)=> {
 
@@ -111,76 +111,104 @@ const FactoryInteractions = (props)=> {
         props.onBoastMessage("Created Giving Circle!");
     }
 
-    return <CenteredCard title="Factory Interactions">
+    return <CenteredCard className="factoryInteractions" title="Factory Interactions">
 
         <h2>Settings</h2>
         <p>Implementation</p>
         <input type="text" onChange={handleImplementationChanged}/>
         <div><button id="marginedButton" onClick={setImplemenetationToChain}>Set</button></div>
         <h2>Create New Giving Circle</h2>
+
+    <div>
+        <div id="in">
+
         <p>ERC20 Address</p>
         <input type="text" onChange={handleErc20AdressChanged}/>
+
+        </div>
+        <div id="in">
 
         <p>KYC Address</p>
         <input type="text" onChange={handleKycAddress}/>
 
+        </div>
+        <div id="in">
+
         <p>Beans To Disperse Per Person</p>
         <input type="number" onChange={handleNumberOfBeansDispersed}/>
+
+        </div>
+        <div id="in">
 
         <p>Funding Threshold</p>
         <input type="number" onChange={handleFundingThreshold}/>
 
-        <p>Leaders</p>
-        <div><button onClick={addLeaderField}>Add more...</button></div>
+        </div>
+    </div>
 
-        {
-            leaderInputFields.map((input, index) => {
-            return (
-                <div key={index}>
-                    <input
-                        name ="leader"
-                        placeholder="Leader"
-                        value={input.name}
-                        onChange= {event => handleLeaderChanged(index, event)}
-                    />
-                </div>    
-            )})
-        }
 
-        <p>Bean Placement Admins</p>
-        <div><button onClick={addBeanPlacerField}>Add more...</button></div>
+    <div>
+        <div id="in">
 
-        {
-            specialBeanPlacerInputFields.map((input, index) => {
-            return (
-                <div key={index}>
-                    <input
-                        name ="placer"
-                        placeholder="placer"
-                        value={input.name}
-                        onChange= {event => handleSpecialBeanPlacersChanged(index, event)}
-                    />
-                </div>    
-            )})
-        }
+            <p>Leaders</p>
+            <div><button onClick={addLeaderField}>Add more...</button></div>
 
-        <p>Fund Managers</p>
-        <div><button onClick={addGiftRedeemerField}>Add more...</button></div>
+            {
+                leaderInputFields.map((input, index) => {
+                return (
+                    <div key={index}>
+                        <input
+                            name ="leader"
+                            placeholder="Leader"
+                            value={input.name}
+                            onChange= {event => handleLeaderChanged(index, event)}
+                        />
+                    </div>    
+                )})
+            }
+        </div>
 
-        {
-            specialGiftRedeemerInputFields.map((input, index) => {
-            return (
-                <div key={index}>
-                    <input
-                        name ="redeemer"
-                        placeholder="Fund Manager"
-                        value={input.name}
-                        onChange= {event => handleSpecialGiftRedeemerChanged(index, event)}
-                    />
-                </div>    
-            )})
-        }
-        
+        <div id="in">
+
+            <p>Bean Placement Admins</p>
+            <div><button onClick={addBeanPlacerField}>Add more...</button></div>
+
+            {
+                specialBeanPlacerInputFields.map((input, index) => {
+                return (
+                    <div key={index}>
+                        <input
+                            name ="placer"
+                            placeholder="placer"
+                            value={input.name}
+                            onChange= {event => handleSpecialBeanPlacersChanged(index, event)}
+                        />
+                    </div>    
+                )})
+            }
+
+        </div>
+
+        <div id="in">
+            <p>Fund Managers</p>
+            <div><button onClick={addGiftRedeemerField}>Add more...</button></div>
+
+            {
+                specialGiftRedeemerInputFields.map((input, index) => {
+                return (
+                    <div key={index}>
+                        <input
+                            name ="redeemer"
+                            placeholder="Fund Manager"
+                            value={input.name}
+                            onChange= {event => handleSpecialGiftRedeemerChanged(index, event)}
+                        />
+                    </div>    
+                )})
+            }
+        </div>
+    </div>
+
         
         <div><button onClick={submit}>Create New Circle</button></div>
         </CenteredCard>

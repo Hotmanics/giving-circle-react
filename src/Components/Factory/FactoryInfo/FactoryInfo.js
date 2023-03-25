@@ -1,4 +1,4 @@
-// import "./FactoryInfo.css";
+import "./FactoryInfo.css";
 import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";

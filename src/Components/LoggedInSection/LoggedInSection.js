@@ -1,4 +1,3 @@
-import "./LoggedInSection.css";
 import NavBar from "../NavBar/NavBar";
 import React, { useState } from 'react';
 import FactoryInfo from "../Factory/FactoryInfo/FactoryInfo";
@@ -36,7 +35,7 @@ const LoggedInSection = (props)=> {
         }
     }
 
-    return <div className="LoggedInSection">
+    return <div>
     <NavBar onStateSet={handleStateSet}></NavBar>
     { output }
     </div>
