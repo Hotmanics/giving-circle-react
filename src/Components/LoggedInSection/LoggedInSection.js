@@ -1,5 +1,6 @@
 import NavBar from "../NavBar/NavBar";
 import React, { useState } from 'react';
+
 import FactoryInfo from "../Factory/FactoryInfo/FactoryInfo";
 import FactoryInteractions from "../Factory/FactoryInteractions/FactoryInteractions";
 import Circles from "../Circles/Circles";

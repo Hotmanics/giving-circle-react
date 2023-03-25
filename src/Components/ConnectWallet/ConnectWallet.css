@@ -5,18 +5,36 @@
   margin:auto;
   }
 
-  .connectWallet p {
+.connectWallet p {
     font-size: 18px;
     display: inline;
     color:#ffffff;
 
   }
 
-  .connectWallet button {
+.connectWallet button {
     cursor: pointer;
     padding: .5rem 1rem;
     border: 2px solid #ffffff;
     background-color: #f48847;
     color: white;
     border-radius: 12px;
+    margin-right:5px;
+}
+
+.connectWallet button:hover,
+.connectWallet button:active {
+  background-color: #724021;
+  border-color: #724021;;
+}
+
+.connectWallet button.alternative {
+  color: #724021; 
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.connectWallet button.alternative:hover,
+.connectWallet button.alternative:active {
+  background-color: #724021;
 }

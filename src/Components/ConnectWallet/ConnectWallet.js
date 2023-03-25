@@ -1,10 +1,9 @@
+import React, { useState } from 'react';
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import { ethers } from "ethers"
-import React, { useState } from 'react';
 import "./ConnectWallet.css";
-import LeftCard from "../Cards/Left Card/LeftCard";
 
 const providerOptions = {
     walletconnect: {
@@ -73,6 +72,7 @@ const ConnectWallet = (props)=> {
 
     const accountInfo = connectedWalletInfo.account === undefined ? <p>Please login.</p>
                         : <p>You are logged in as: { connectedWalletInfo.account }</p>
+                        
     return <div className="connectWallet">
         { buttonSection } 
         { accountInfo }

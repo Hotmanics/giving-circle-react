@@ -1,5 +1,3 @@
-// import "./GeneralContractInfo.css";
-import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
 import ProposalCreationNavBar from "./ProposalCreationActions/ProposalCreationNavBar";
@@ -31,10 +29,10 @@ const GivingCirclePhases = (props)=> {
             
         } else if (phase === 2) {
             setPhase("Bean Placement");
+            handleStateSet("placeBeans");
 
         } else if (phase === 3) {
             setPhase("Gift Redemption");
-
             handleStateSet("Gift Redemption");
         }
     }

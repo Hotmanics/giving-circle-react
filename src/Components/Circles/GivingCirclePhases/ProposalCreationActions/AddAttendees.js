@@ -1,7 +1,6 @@
-// import "./GeneralContractInfo.css";
-import { ethers } from "ethers"
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CenteredCard from "../../../Cards/Centered Card/CenteredCard";
+import "./AddAttendees.css";
 
 const AddAttendees = (props)=> {
     const [attendees, setAttendees] = useState([]);
@@ -26,7 +25,7 @@ const AddAttendees = (props)=> {
         setAttendees(data);
     }
 
-    return <CenteredCard title="Add Attendees">
+    return <CenteredCard className="addAttendees" title="Add Attendees">
         <div>
             <p>Attendees To Add</p>
             <div><button onClick={addAttendeeField}>New Attendee</button></div>
@@ -44,7 +43,7 @@ const AddAttendees = (props)=> {
                         )
                 })
             }
-            <div><button onClick={addAttendees}>Add Attendees</button></div>
+            <div><button className="semiBigButton" onClick={addAttendees}>Add Attendees</button></div>
         </div>;
         </CenteredCard>
 }

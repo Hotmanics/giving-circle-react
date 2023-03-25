@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
 import "./NavBar.css";
-import "../Buttons/buttons.css";
 
 const NavBar = (props)=> {
 

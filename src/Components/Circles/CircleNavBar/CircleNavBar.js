@@ -13,10 +13,10 @@ const CircleNavBar = (props)=> {
     }   
 
     return <CenteredCard className="givingCircleNavBar">
-        <button onClick={()=> {handleClick('circleInfo')}}>
+        <button className="bigButton" onClick={()=> {handleClick('circleInfo')}}>
             Info
         </button>
-        <button onClick={()=> {handleClick('circlePhaseActions')}}>
+        <button className="bigButton" onClick={()=> {handleClick('circlePhaseActions')}}>
             Interactions
         </button>
     </CenteredCard>

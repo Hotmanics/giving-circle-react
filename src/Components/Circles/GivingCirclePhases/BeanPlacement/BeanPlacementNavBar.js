@@ -12,10 +12,10 @@ const BeanPlacementNavBar = (props)=> {
     }   
 
     return <CenteredCard>
-        <button onClick={()=> {handleClick('placeBeans')}}>
+        <button className="semiBigButton" onClick={()=> {handleClick('placeBeans')}}>
             Place Beans
         </button>
-        <button onClick={()=> {handleClick('progressToGiftRedemptionPhase')}}>
+        <button className="semiBigButton" onClick={()=> {handleClick('progressToGiftRedemptionPhase')}}>
             Progress To Gift Redemption Phase (CAN SAFELY SEND FUNDS TO RESPECTIVE PLACES DURING THIS ACTION IF ALL USERS ARE KYCED)
         </button>
     </CenteredCard>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
-import "./CircleInfo.css";
 import { ethers } from "ethers"
 import { PartialIERC20InfoABI } from "../../../Smart Contracts Info/IPartialERC20Info";
+import "./CircleInfo.css";
 
 const CircleInfo = (props)=> {
 
@@ -112,7 +112,7 @@ const CircleInfo = (props)=> {
     }
 
 
-    return <CenteredCard title="Info">
+    return <CenteredCard className="circleInfo" title="Info">
         <table>
             <tbody>
                 <tr>
@@ -141,12 +141,11 @@ const CircleInfo = (props)=> {
                         {fundedAmount } 
                     </th>
                     <th>
-                        <div>
+                        <div id="in">
                         <input type="number" onChange={handleFundAmount}/>
                         <button onClick={addFunds}>Add Funds</button>
                         </div>    
                     </th>
-
                 </tr>               
                 <tr>
                     <th>Your Balance</th>

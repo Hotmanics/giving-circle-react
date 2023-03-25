@@ -1,5 +1,3 @@
-// import "./GeneralContractInfo.css";
-import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../../../Cards/Centered Card/CenteredCard";
 
@@ -63,8 +61,7 @@ const PlaceBeans = (props)=> {
     }
 
     return <CenteredCard title="Place Beans">
-            <div>
-
+        <div>
             <h2>Proposers: </h2>
             <table>
                 <tbody>
@@ -84,11 +81,16 @@ const PlaceBeans = (props)=> {
             </table>
 
         <p>Placeable Beans: {numOfPlaceableBeans} </p>    
-        <p>Index</p>
-        <input type="number" onChange={handleIndexField}/>
+
+        <div id="in">
+            <p>Index</p>
+            <input type="number" onChange={handleIndexField}/>
+        </div>
         
-        <p>Beans To Place</p>
-        <input type="number" onChange={handleBeansField}/>
+        <div id="in">
+            <p>Beans To Place</p>
+            <input type="number" onChange={handleBeansField}/>
+        </div>
         
         <div><button onClick={placeBeans}>Place Beans</button></div>
 

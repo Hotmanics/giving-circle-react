@@ -1,4 +1,3 @@
-// import "./GeneralContractInfo.css";
 import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
@@ -84,7 +83,7 @@ const Circles = (props)=> {
 
     let selectedCircleDisplayOutput;
     if (selectedCircleIndex !== '') {
-        selectedCircleDisplayOutput = <h2 id="special">Circle { selectedCircleIndex } </h2>
+        selectedCircleDisplayOutput = <h2>Circle { selectedCircleIndex } </h2>
     }
 
     let navbarOutput;

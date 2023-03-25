@@ -209,8 +209,7 @@ const FactoryInteractions = (props)=> {
         </div>
     </div>
 
-        
-        <div><button onClick={submit}>Create New Circle</button></div>
+        <div><button className="semiBigButton" onClick={submit}>Create New Circle</button></div>
         </CenteredCard>
 }
 

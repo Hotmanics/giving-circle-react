@@ -11,13 +11,13 @@ const ProposalCreationNavBar = (props)=> {
     }   
 
     return <CenteredCard>
-        <button onClick={()=> {handleClick('addAttendees')}}>
+        <button className="semiBigButton" onClick={()=> {handleClick('addAttendees')}}>
             Add Attendees
         </button>
-        <button onClick={()=> {handleClick('addProposers')}}>
+        <button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
             Add Proposers
         </button>
-        <button onClick={()=> {handleClick('progressToBeanPlacementPhase')}}>
+        <button className="semiBigButton" onClick={()=> {handleClick('progressToBeanPlacementPhase')}}>
             Progress To Bean Placement Phase
         </button>
     </CenteredCard>

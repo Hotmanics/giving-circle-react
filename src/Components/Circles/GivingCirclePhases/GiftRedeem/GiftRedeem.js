@@ -3,6 +3,7 @@ import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../../../Cards/Centered Card/CenteredCard";
 import { PartialIERC20InfoABI } from "../../../../Smart Contracts Info/IPartialERC20Info";
+import "./GiftRedeem.css";
 
 const GiftRedeem = (props)=> {
 
@@ -29,7 +30,6 @@ const GiftRedeem = (props)=> {
         let proposals = await props.selectedInstance.getProposals();
         for (let i = 0; i < proposals.length; i++) {
             if (proposals[i].proposer === props.connectedWalletInfo.account) {
-                console.log(proposals[i]);
 
                 let amount = 0;
 
@@ -77,13 +77,14 @@ const GiftRedeem = (props)=> {
         await tx.wait();
     }
 
-    return <CenteredCard title="Gift Redemption">
+    return <CenteredCard className="giftRedeem" title="Gift Redemption">
                 <div>
                     <p>Your Redeemable Amount: {amountToRedeem}</p>
-                    <div><button onClick={redeemMyGift}>Redeem</button></div>
-                    <div><button onClick={redeemAllGifts}>Courtest Redeem All (Funds Manager)</button></div>
+                    <div><button className="semiBigButton" onClick={redeemMyGift}>Redeem</button></div>
+                    <div><button className="semiBigButton" onClick={redeemAllGifts}>Courtest Redeem All (Funds Manager)</button></div>
 
-<p>.</p>
+    <br/>
+    <br/>
                     <input
                         name ="target"
                         placeholder="Target"
@@ -91,7 +92,7 @@ const GiftRedeem = (props)=> {
                     />
                     <p>Can also be used to roll over funds to a new circle</p>
 
-                    <div><button onClick={withdrawRemainingFunds}>Withdraw Remaining Funds (Funds Manager)</button></div>
+                    <div><button className="semiBigButton" onClick={withdrawRemainingFunds}>Withdraw Remaining Funds (Funds Manager)</button></div>
                 </div>;
             </CenteredCard>
 }

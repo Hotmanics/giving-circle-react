@@ -4,6 +4,8 @@ import ConnectWallet from "./Components/ConnectWallet/ConnectWallet";
 import Logger from "./Components/Logger/Logger";
 import "./Components/Buttons/buttons.css";
 import LoggedInSection from "./Components/LoggedInSection/LoggedInSection";
+import "./Components/Table/Table.css";
+import "./Components/Inline/Inline.css";
 
 function App() {
 
@@ -34,6 +36,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <p>Hey</p>
         { output }
       </header>
     </div>
