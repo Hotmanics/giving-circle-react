@@ -15,6 +15,7 @@ const GiftRedeem = (props)=> {
 
     const [amountToRedeem, setAmountToRedeem] = useState(0);
 
+
     const getInfo = async ()=> {
 
         const instanceAddress = await props.selectedInstance.erc20Token();
@@ -43,6 +44,7 @@ const GiftRedeem = (props)=> {
 
             }
         }
+
 
     }
 
@@ -76,6 +78,8 @@ const GiftRedeem = (props)=> {
         let tx = await props.selectedInstance.withdrawRemainingFunds(withdrawRemainingFundsInput);
         await tx.wait();
     }
+
+
 
     return <CenteredCard className="giftRedeem" title="Gift Redemption">
                 <div>

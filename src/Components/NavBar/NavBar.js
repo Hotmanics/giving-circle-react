@@ -17,7 +17,7 @@ const NavBar = (props)=> {
             Factory Info
         </button>
         <button className="bigButton" onClick={()=> {handleClick('factoryInteractions')}}>
-            Factory Interactions
+        Create New Giving Cirlce
         </button>
 
         <button className="bigButton"  onClick={()=> {handleClick('givingCircle')}}>

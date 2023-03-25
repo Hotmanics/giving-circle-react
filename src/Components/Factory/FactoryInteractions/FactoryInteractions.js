@@ -72,18 +72,6 @@ const FactoryInteractions = (props)=> {
         setFundingThreshold(event.target.value);
     }
 
-    const [implementation, setImplementation] = useState('');
-    const handleImplementationChanged = async (event) => {
-        setImplementation(event.target.value);
-    }
-    const setImplemenetationToChain = async () => {
-        let tx = await contract.setImplementation(implementation);
-        props.onBoastMessage("Setting implementation to: " + implementation + "...");
-        await tx.wait();
-        props.onBoastMessage("Set implementation to: " + implementation + "!");
-    }
-
-
     const submit = async (e) => {
         e.preventDefault();
 
@@ -111,13 +99,7 @@ const FactoryInteractions = (props)=> {
         props.onBoastMessage("Created Giving Circle!");
     }
 
-    return <CenteredCard className="factoryInteractions" title="Factory Interactions">
-
-        <h2>Settings</h2>
-        <p>Implementation</p>
-        <input type="text" onChange={handleImplementationChanged}/>
-        <div><button id="marginedButton" onClick={setImplemenetationToChain}>Set</button></div>
-        <h2>Create New Giving Circle</h2>
+    return <CenteredCard className="factoryInteractions" title="Create New Giving Cirlce">
 
     <div>
         <div id="in">
@@ -145,7 +127,6 @@ const FactoryInteractions = (props)=> {
 
         </div>
     </div>
-
 
     <div>
         <div id="in">

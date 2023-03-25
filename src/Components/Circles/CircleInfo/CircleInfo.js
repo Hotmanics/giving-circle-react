@@ -26,6 +26,12 @@ const CircleInfo = (props)=> {
     const [isKycRequired, setIsKycRequired] = useState('false');
     const [kycAddress, setKycAddress] = useState('');
 
+    const [totalBeansDispursed, setTotalBeansDispursed] = useState(99);
+    const [leftOverFunds, setLeftoverFunders] = useState(99);
+    const[totalRedeemedFunds, setTotalRedeemedFunds] = useState(99);
+    const [totalUnredeemedFunds, setTotalUnredeemedFunds] = useState(99);
+    const[totalAllocatedFunds, setTotalAllocatedFunds] = useState(99);
+
     const getInfo = async ()=> {
         
         let phase = await props.selectedInstance.phase();
@@ -76,6 +82,22 @@ const CircleInfo = (props)=> {
 
         let kycController = await props.selectedInstance.kycController();
         setKycAddress(kycController);
+
+
+        let totalAll = await props.selectedInstance.getTotalAllocatedFunds();
+        setTotalAllocatedFunds(ethers.utils.formatUnits(totalAll, decimals));
+
+        let totalUnredeemed = await props.selectedInstance.getTotalUnredeemedFunds();
+        setTotalUnredeemedFunds(ethers.utils.formatUnits(totalUnredeemed, decimals));
+
+        let totalRedeemed = await props.selectedInstance.getTotalRedeemedFunds();
+        setTotalRedeemedFunds(ethers.utils.formatUnits(totalRedeemed, decimals));
+
+        let totalBeansDispursed = await props.selectedInstance.getTotalBeansDispursed();
+        setTotalBeansDispursed(totalBeansDispursed.toNumber());
+
+        let leftOverFunds = await props.selectedInstance.getLeftoverFunds();
+        setLeftoverFunders(ethers.utils.formatUnits(leftOverFunds, decimals));
     }
 
     const [addFundsAmount, setAddFundsAmount] = useState(0);
@@ -155,6 +177,36 @@ const CircleInfo = (props)=> {
                     <th>Phase</th>
                     <th>{ phase }</th>
                 </tr>
+
+                <tr>
+                    <th>Total Beans Dispursed</th>
+                    <th>{ totalBeansDispursed }</th>
+                </tr>
+
+
+                <tr>
+                    <th>Leftover Funds</th>
+                    <th>{ leftOverFunds }</th>
+                </tr>
+
+
+                <tr>
+                    <th>Total Redeemed Funfs</th>
+                    <th>{ totalRedeemedFunds }</th>
+                </tr>
+
+
+                <tr>
+                    <th>Total Unredeemed Funds</th>
+                    <th>{ totalUnredeemedFunds }</th>
+                </tr>
+
+
+                <tr>
+                    <th>Total Allocated Funds</th>
+                    <th>{ totalAllocatedFunds }</th>
+                </tr>
+
             </tbody>
         </table>
 
