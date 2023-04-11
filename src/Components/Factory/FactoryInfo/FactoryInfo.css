@@ -5,3 +5,7 @@
   .factory p {
     color:red;
   }
+
+  .factoryInfo #description {
+    width: 200px;
+  }

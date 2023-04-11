@@ -6,4 +6,17 @@
     display: inline-block;
     vertical-align:top;
     margin:10px;
+    width:300px;
   }
+
+.factoryInteractions a {
+  color:aqua;
+}
+
+.factoryInteractions #description {
+  width:200px;
+}
+
+.factoryInteractions #nameField {
+  margin-bottom: 20px;
+}

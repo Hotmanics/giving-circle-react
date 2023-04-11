@@ -1,15 +1,10 @@
-const factoryAddress = "0x91D18cB4B1F75A21a756CE28296F85dB44c9F1b6";
+const factoryAddress = "0xe34B330DE1Ce577eBD1DE662688f636CFe01C68c";
 const factoryABI = [
   {
     "inputs": [
       {
         "internalType": "address[]",
         "name": "admins",
-        "type": "address[]"
-      },
-      {
-        "internalType": "address[]",
-        "name": "circleCreators",
         "type": "address[]"
       }
     ],
@@ -134,6 +129,11 @@ const factoryABI = [
     "inputs": [
       {
         "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
           {
             "internalType": "uint256",
             "name": "beansToDispursePerAttendee",

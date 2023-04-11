@@ -10,9 +10,11 @@ import "./Circles.css";
 
 const Circles = (props)=> {
 
-    const [circles, setCircles] = useState([]);
+    const [circlesComplete, setCirclesComplete] = useState([]);
+
     const [selectedInstance, setSelectedInstance] = useState('');
     const [selectedCircleIndex, setSelectedCircleIndex] = useState('');
+    const [selectedCircleName, setSelectedCircleName] = useState('');
 
     const [output, setOutput] = useState('');
     const [phaseSelectedTrigger, setPhaseSelectedTrigger] = useState(0);
@@ -33,15 +35,35 @@ const Circles = (props)=> {
     const getAllCircles = async ()=> {
         let x = await factoryContract.instancesCount();
         let arr = [];
+        let arrComplete = [];
 
         for (let i = 0; i < x; i++) {
-            arr.push(i);
+
+            const instanceAddress = await factoryContract.instances(i);
+
+            const contract = new ethers.Contract(
+                instanceAddress,
+                implementationABI,
+                props.connectedWalletInfo.provider
+            );
+
+            arrComplete.push({
+                index: i,
+                name: await contract.name(),
+                contract: contract
+            })
         }
-        setCircles(arr);
+
+        setCirclesComplete(arrComplete);
+
+        console.log(arrComplete);
+        console.log("Got all circles!");
     }
 
     const handleGivingCircleSelected = async (event)=> {
-        const instanceAddress = await factoryContract.instances(event.target.value - 1);
+
+        console.log(event.target.value);
+        const instanceAddress = await factoryContract.instances(event.target.value);
 
         const contract = new ethers.Contract(
             instanceAddress,
@@ -50,6 +72,12 @@ const Circles = (props)=> {
         );
 
         setSelectedInstance(contract);
+        let name = await contract.name();
+
+        name.length > 0 ?
+            setSelectedCircleName(name):
+            setSelectedCircleName(event.target.value);
+
         setSelectedCircleIndex(event.target.value);
 
         setInfoSelectedTrigger((infoSelectedTrigger) => {
@@ -82,8 +110,8 @@ const Circles = (props)=> {
     }
 
     let selectedCircleDisplayOutput;
-    if (selectedCircleIndex !== '') {
-        selectedCircleDisplayOutput = <h2>Circle { selectedCircleIndex } </h2>
+    if (selectedCircleName !== '') {
+        selectedCircleDisplayOutput = <h2>Circle: { selectedCircleName } </h2>
     }
 
     let navbarOutput;
@@ -98,8 +126,10 @@ const Circles = (props)=> {
          -- Select Giving Circle --
         </option>
             {
-                circles.map((num) => (
-                    <option key={Math.random()} value={num+1}> {num+1} </option>
+                circlesComplete.map((obj) => (
+                    obj.name.length > 0 ?
+                    <option key={Math.random()} value={obj.index}> {obj.name} </option> :
+                    <option key={Math.random()} value={obj.index}> {obj.index} </option>
                 ))
             }
         </select>  

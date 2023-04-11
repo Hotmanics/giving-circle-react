@@ -40,7 +40,7 @@ const AddAttendees = (props)=> {
                         <div key={index}>
                             <input
                                 name ="attendee"
-                                placeholder="Attendee"
+                                placeholder="Wallet"
                                 value={input.name}
                                 onChange= {event => handleAttendeeFieldChange(index, event)}
                             />

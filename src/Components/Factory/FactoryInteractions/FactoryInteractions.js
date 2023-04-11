@@ -13,17 +13,24 @@ const FactoryInteractions = (props)=> {
         props.connectedWalletInfo.provider
     );
 
-    const [erc20Address, setErc20Address] = useState('');
+    //USDC Mumbai - 0x0FA8781a83E46826621b3BC094Ea2A0212e71B23
+    //KYC Mumbai - 0x4989649CA2C77727CB1ceD8e5E79591d5Efbc6AD
+    const [erc20Address, setErc20Address] = useState('0x0FA8781a83E46826621b3BC094Ea2A0212e71B23');
     const handleErc20AdressChanged = async (event) => {
         setErc20Address(event.target.value);
     }
 
-    const [kycAddress, setKycAddress] = useState('');
+    const [kycAddress, setKycAddress] = useState('0x4989649CA2C77727CB1ceD8e5E79591d5Efbc6AD');
     const handleKycAddress = async (event) => {
         setKycAddress(event.target.value);
     }
-    const [leaderInputFields, setLeaderInputFields] = useState([]);
 
+    const [nameInputField, setNameInputField] = useState('');
+    const handleNameChanged = async (event) => {
+        setNameInputField(event.target.value);
+    }
+
+    const [leaderInputFields, setLeaderInputFields] = useState([]);
     const handleLeaderChanged = (index, event)=> {
         let data = [...leaderInputFields];
         data[index] = event.target.value;
@@ -96,6 +103,7 @@ const FactoryInteractions = (props)=> {
 
         try {
             let tx = await contract.createGivingCircle({
+                name: nameInputField,
                 beansToDispursePerAttendee: numOfBeansToDisperse,
                 fundingThreshold: final,
                 circleLeaders: leaderInputFields,
@@ -107,9 +115,21 @@ const FactoryInteractions = (props)=> {
 
         let circleCount = await contract.instancesCount();
 
-        props.onBoastMessage(`Creating Giving Circle ${circleCount.toNumber() + 1}...`);
+        if (nameInputField.length === 0) {
+            props.onBoastMessage(`Creating Giving Circle: ${circleCount.toNumber() + 1}...`);
+
+        } else {
+            props.onBoastMessage(`Creating Giving Circle: ${nameInputField}...`);
+        }
+
         await tx.wait();
-        props.onBoastMessage(`Created Giving Circle ${circleCount.toNumber() + 1}!`);
+
+        if (nameInputField.length === 0) {
+            props.onBoastMessage(`Created Giving Circle: ${circleCount.toNumber() + 1}!`);
+
+        } else {
+            props.onBoastMessage(`Created Giving Circle: ${nameInputField}!`);
+        }
 
         } catch (e) {
             props.onBoastMessage(e.reason);
@@ -121,38 +141,43 @@ const FactoryInteractions = (props)=> {
     return <CenteredCard className="factoryInteractions" title="Create New Giving Cirlce">
 
     <div>
-        <p>USDC Address Mumbai (ERC20 Token): 0x0FA8781a83E46826621b3BC094Ea2A0212e71B23</p>
-        <p>KYC Address Mumbai: 0x4989649CA2C77727CB1ceD8e5E79591d5Efbc6AD</p>
-        <div id="in">
+    <a href="https://faucet.polygon.technology/" target={"#"}>Polygon Testnet Faucet</a>
+    </div>
+    <div>
+    <table>
+            <tbody>
+                <tr>
+                    <th>What</th>
+                    <th id="description">Description</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>A descriptive name used to identify the Giving Circle.</th>
+                    <th><input id="nameField" name ="name" placeholder="Giving Circle Name" onChange= {handleNameChanged}/></th>
+                </tr>
 
-        <p>ERC20 Address</p>
-        <input type="text" onChange={handleErc20AdressChanged}/>
+                <tr>
+                    <th>Beans To Disperse Per Attendee</th>
+                    <th>The number of beans that get dispersed to each attendee.</th>
+                    <th><input type="number" defaultValue={numOfBeansToDisperse} onChange={handleNumberOfBeansDispersed}/></th>
+                </tr>
 
-        </div>
-        <div id="in">
-
-        <p>KYC Address</p>
-        <input type="text" onChange={handleKycAddress}/>
-
-        </div>
-        <div id="in">
-
-        <p>Beans To Disperse Per Person</p>
-        <input type="number" defaultValue={numOfBeansToDisperse} onChange={handleNumberOfBeansDispersed}/>
-
-        </div>
-        <div id="in">
-
-        <p>Funding Threshold</p>
-        <input type="number" defaultValue={0} onChange={handleFundingThreshold}/>
-
-        </div>
+                <tr>
+                    <th>Funding Threshold</th>
+                    <th>The minimum required amount of tokens that need to be transferred to the Giving Circle before it can progress to the gift redemption phase. </th>
+                    <th><input type="number" defaultValue={0} onChange={handleFundingThreshold}/></th>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <div>
         <div id="in">
 
             <p>Leaders</p>
+            <p>This role allows wallets to progress Giving Circles through its phases.</p>
             <div><button onClick={addLeaderField}>Add more...</button></div>
 
             {
@@ -161,7 +186,7 @@ const FactoryInteractions = (props)=> {
                     <div key={index}>
                         <input
                             name ="leader"
-                            placeholder="Leader"
+                            placeholder="Wallet"
                             value={input.name}
                             onChange= {event => handleLeaderChanged(index, event)}
                         />
@@ -173,6 +198,8 @@ const FactoryInteractions = (props)=> {
         <div id="in">
 
             <p>Bean Placement Admins</p>
+            <p>This role allows wallets to place beans on behalf of other wallets</p>
+
             <div><button onClick={addBeanPlacerField}>Add more...</button></div>
 
             {
@@ -181,7 +208,7 @@ const FactoryInteractions = (props)=> {
                     <div key={index}>
                         <input
                             name ="placer"
-                            placeholder="placer"
+                            placeholder="Wallet"
                             value={input.name}
                             onChange= {event => handleSpecialBeanPlacersChanged(index, event)}
                         />
@@ -193,6 +220,7 @@ const FactoryInteractions = (props)=> {
 
         <div id="in">
             <p>Fund Managers</p>
+            <p>This role allows wallets to redeem gifts on behalf of other wallets.</p>
             <div><button onClick={addGiftRedeemerField}>Add more...</button></div>
 
             {
@@ -201,7 +229,7 @@ const FactoryInteractions = (props)=> {
                     <div key={index}>
                         <input
                             name ="redeemer"
-                            placeholder="Fund Manager"
+                            placeholder="Wallet"
                             value={input.name}
                             onChange= {event => handleSpecialGiftRedeemerChanged(index, event)}
                         />

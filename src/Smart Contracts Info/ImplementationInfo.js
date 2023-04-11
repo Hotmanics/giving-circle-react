@@ -4,6 +4,11 @@ const implementationABI = [
       {
         "components": [
           {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
             "name": "beansToDispursePerAttendee",
             "type": "uint256"
@@ -329,9 +334,41 @@ const implementationABI = [
   {
     "inputs": [
       {
-        "internalType": "address payable[]",
-        "name": "proposers",
-        "type": "address[]"
+        "components": [
+          {
+            "internalType": "address payable",
+            "name": "contributor",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "contributorName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "contributions",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "beansReceived",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "giftAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasRedeemed",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Proposals.Proposal[]",
+        "name": "newProposals",
+        "type": "tuple[]"
       }
     ],
     "name": "batchCreateNewProposals",
@@ -355,9 +392,41 @@ const implementationABI = [
   {
     "inputs": [
       {
-        "internalType": "address payable",
-        "name": "proposer",
-        "type": "address"
+        "components": [
+          {
+            "internalType": "address payable",
+            "name": "contributor",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "contributorName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "contributions",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "beansReceived",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "giftAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasRedeemed",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Proposals.Proposal",
+        "name": "proposal",
+        "type": "tuple"
       }
     ],
     "name": "createNewProposal",
@@ -468,6 +537,21 @@ const implementationABI = [
       {
         "components": [
           {
+            "internalType": "address payable",
+            "name": "contributor",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "contributorName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "contributions",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
             "name": "beansReceived",
             "type": "uint256"
@@ -481,11 +565,6 @@ const implementationABI = [
             "internalType": "bool",
             "name": "hasRedeemed",
             "type": "bool"
-          },
-          {
-            "internalType": "address payable",
-            "name": "proposer",
-            "type": "address"
           }
         ],
         "internalType": "struct Proposals.Proposal[]",
@@ -614,6 +693,11 @@ const implementationABI = [
       {
         "components": [
           {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
             "name": "beansToDispursePerAttendee",
             "type": "uint256"
@@ -667,6 +751,19 @@ const implementationABI = [
         "internalType": "contract KYCController",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -791,6 +888,21 @@ const implementationABI = [
     "name": "proposals",
     "outputs": [
       {
+        "internalType": "address payable",
+        "name": "contributor",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "contributorName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "contributions",
+        "type": "string"
+      },
+      {
         "internalType": "uint256",
         "name": "beansReceived",
         "type": "uint256"
@@ -804,11 +916,6 @@ const implementationABI = [
         "internalType": "bool",
         "name": "hasRedeemed",
         "type": "bool"
-      },
-      {
-        "internalType": "address payable",
-        "name": "proposer",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -943,4 +1050,4 @@ const implementationABI = [
   }
 ];
 
-  module.exports = { implementationABI };
+module.exports = { implementationABI };

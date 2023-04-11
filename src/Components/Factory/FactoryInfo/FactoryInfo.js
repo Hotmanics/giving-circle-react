@@ -72,31 +72,44 @@ const FactoryInfo = (props)=> {
     }
 
 
-    return <CenteredCard title="Factory Info">
+    return <CenteredCard title="Giving Circles Setup">
         <table>
             <tbody>
                 <tr>
-                    <th>Address</th>
-                    <th>{ factoryAddress }</th>
+                    <th>What</th>
+                    <th id="description">Description</th>
+                    <th>Value</th>
+                    <th></th>
                 </tr>
                 <tr>
-                    <th>Implementation Address</th>
-                    <th>{ onChainImplementation }</th>
+                    <th>Giving Circle Creator Address</th>
+                    <th>The smart contract that is used to create giving circles.</th>
+                    <th>{ factoryAddress } (Smart Contract) </th>
+                </tr>
+                <tr>
+                    <th>Blueprint Address</th>
+                    <th>The smart contract that is used as a blueprint by the Giving Circle Creator. </th>
+                    <th>{ onChainImplementation } (Smart Contract) </th>
                     <th>
-                        <input type="text" onChange={handleImplementationChanged}/>
-                        <div><button id="marginedButton" onClick={setImplemenetationToChain}>Set</button></div>
+                        Please provided an updated blueprint address to be used by the Giving Cirlce Creator.
+                        <br>
+                        </br>
+                        <input type="text" placeholder="Smart Contract" onChange={handleImplementationChanged}/>
+                        <div><button id="marginedButton" onClick={setImplemenetationToChain}>Set New Blueprint</button></div>
                     </th>
                 </tr>
                 <tr>
                     <th>Instances Count</th>
+                    <th>The number of Giving Circles created by the Giving Circle Creator.</th>
                     <th>{ instancesCount }</th>
                 </tr>
 
             </tbody>
         </table>
 
-        <input type="text" onChange={handleIndexField}/>
-        <button onClick={handleAdmins}>Grant Circle Creator Role</button>
+        <p>The Circle Creator Role holds the responsibility of creating new giving circles.</p>
+        <input type="text" placeholder="Wallet" onChange={handleIndexField}/>
+        <button onClick={handleAdmins}>Grant: Circle Creator Role</button>
 
         </CenteredCard>
 }

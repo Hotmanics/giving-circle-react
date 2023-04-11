@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "./App.css";
 import ConnectWallet from "./Components/ConnectWallet/ConnectWallet";
 import Logger from "./Components/Logger/Logger";
@@ -8,6 +8,10 @@ import "./Components/Table/Table.css";
 import "./Components/Inline/Inline.css";
 
 function App() {
+
+  useEffect(() => {
+    document.title = "Giving Circles"
+ }, []);
 
   const [connectedWalletInfo, setConnectedWalletInfo] = useState('');
   const [message, setMessage] = useState('');

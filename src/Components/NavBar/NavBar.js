@@ -14,7 +14,7 @@ const NavBar = (props)=> {
 
     return <CenteredCard>
         <button className="bigButton" onClick={()=> {handleClick('factoryInfo')}}>
-            Factory Info
+            Giving Circles Setup
         </button>
         <button className="bigButton" onClick={()=> {handleClick('factoryInteractions')}}>
         Create New Giving Cirlce

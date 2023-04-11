@@ -14,6 +14,8 @@ const CircleInfo = (props)=> {
         }
     }, [props.onPageSet]);
 
+    const [name, setName] = useState();
+
     const [phase, setPhase] = useState('');
     const [attendees, setAttendees] = useState([]);
     const [proposals, setProposals] = useState([]);
@@ -34,7 +36,6 @@ const CircleInfo = (props)=> {
     const [totalUnredeemedFunds, setTotalUnredeemedFunds] = useState(99);
     const[totalAllocatedFunds, setTotalAllocatedFunds] = useState(99);
     const [totalBeansToDispurse, setTotalBeansToDispurse] = useState(99);
-
 
     const getInfo = async ()=> {
         
@@ -57,6 +58,9 @@ const CircleInfo = (props)=> {
         setAttendees(attendees);
 
         let proposals = await props.selectedInstance.getProposals();
+
+        console.log("HERE ARE PROPOSALS");
+        console.log(proposals);
         setProposals(proposals);
 
         const instanceAddress = await props.selectedInstance.erc20Token();
@@ -104,6 +108,9 @@ const CircleInfo = (props)=> {
 
         let totalBeansToDispurse = await props.selectedInstance.beansToDispursePerAttendee();
         setTotalBeansToDispurse(totalBeansToDispurse.toNumber());
+
+        let name = await props.selectedInstance.name();
+        setName(name);
     }
 
     const [userToKyc, setUserToKyc] = useState('');
@@ -209,26 +216,64 @@ const CircleInfo = (props)=> {
         <table>
             <tbody>
                 <tr>
+                    <th>What</th>
+                    <th>Description</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+
+                <tr>
                     <th>Address</th>
+                    <th>The smart contract of the Giving Circle.</th>
                     <th>{ props.selectedInstance.address }</th>
                 </tr>
                 <tr>    
-                    <th>ERC20 Token</th>
+                    <th>USDC</th>
+                    <th>The smart contract of USDC used for funding.</th>
                     <th>{ erc20TokenAddress }</th>
                 </tr>   
                     {
                         kycAddress === "0x0000000000000000000000000000000000000000" ? 
-                            <tr><th>KYC Required</th><th>false</th></tr> : <tr><th>KYC Required</th><th>true</th></tr>
+                            <tr>
+                                <th>KYC Required</th>
+                                <th>Does this circle require contributors to be KYCed?</th>
+                                <th>NO</th>
+                            </tr>
+                                 : 
+                            <tr>
+                                <th>KYC Required</th>
+                                <th>Does this circle require contributors to be KYCed?</th>
+                                <th>YES</th>
+                            </tr>
                     }
                     {
-                        kycAddress !== "0x0000000000000000000000000000000000000000" ? <tr><th>KYC Address</th><th>{kycAddress} </th><th><div id="in"><input type="text" onChange={handleUserToKycInput}/><button onClick={kycUser}>KYC User</button></div><div id="in"><input type="text" onChange={handleKycAdmin}/><button onClick={setUserToKycAdmin}>Grant KYC Admin</button></div></th></tr> : <tr></tr>
+                        kycAddress !== "0x0000000000000000000000000000000000000000" ? 
+                            <tr>
+                                <th>KYC Address</th>
+                                <th>The smart contract containing the KYC database.</th>
+                                <th>{kycAddress} </th>
+                                <th>
+                                    <div id="in">
+                                        Adds a wallet to the database and marks it as KYCed.
+                                        <input type="text" placeholder="Wallet" onChange={handleUserToKycInput}/>
+                                        <button onClick={kycUser}>KYC Wallet (KYC Admin)</button>
+                                    </div>
+                                    <div id="in">
+                                        The KYC Admin Role holds the responsibility of adding new wallets to the database.
+                                        <input type="text" placeholder="Wallet" onChange={handleKycAdmin}/>
+                                        <button onClick={setUserToKycAdmin}>Grant: KYC Admin Role (KYC Admin)</button>
+                                    </div>
+                                </th>
+                            </tr> : <tr></tr>
                     }
                 <tr>
                     <th>Min Fund Amount</th>
+                    <th>The minimum amount of funds for the Giving Circle to be able to progress to the gift redemption phase.</th>
                     <th>{minFundAmount}</th>
                 </tr>
                 <tr>
                     <th>Funded Amount</th>
+                    <th>The current USDC balance of the smart contract </th>
                     <th>
                         {fundedAmount } 
                     </th>
@@ -236,6 +281,7 @@ const CircleInfo = (props)=> {
                 </tr>               
                 <tr>
                     <th>Your Balance</th>
+                    <th>Your current USDC balance. </th>
                     <th>{ yourERC20Balance}</th>
                     <th>
                         <div id="in">
@@ -246,41 +292,48 @@ const CircleInfo = (props)=> {
                 </tr>
                 <tr>
                     <th>Phase</th>
+                    <th>The current phase of the Giving Circle.</th>
                     <th>{ phase }</th>
                 </tr>
 
 
                 <tr>
                     <th>Total Beans To Dispurse</th>
+                    <th>The total number of beans to dispurse to each attendee.</th>
                     <th>{ totalBeansToDispurse }</th>
                 </tr>
 
                 <tr>
                     <th>Total Beans Dispursed</th>
+                    <th>The total number of beans dispursed across all attendees.</th>
                     <th>{ totalBeansDispursed }</th>
                 </tr>
 
 
                 <tr>
                     <th>Leftover Funds</th>
+                    <th>Extra funds that are not allocated anywhere.</th>
                     <th>{ leftOverFunds }</th>
                 </tr>
 
 
                 <tr>
-                    <th>Total Redeemed Funfs</th>
+                    <th>Total Redeemed Funds</th>
+                    <th>The total amount of funds that have been currently redeemed.</th>
                     <th>{ totalRedeemedFunds }</th>
                 </tr>
 
 
                 <tr>
                     <th>Total Unredeemed Funds</th>
+                    <th>The total amount of funds that have not yet been redeemed.</th>
                     <th>{ totalUnredeemedFunds }</th>
                 </tr>
 
 
                 <tr>
                     <th>Total Allocated Funds</th>
+                    <th>The total number of funds allocated to contributors.</th>
                     <th>{ totalAllocatedFunds }</th>
                 </tr>
 
@@ -289,10 +342,11 @@ const CircleInfo = (props)=> {
 
 
         <h2>Attendess: </h2>
+        <p>People who are physically at the event who place beans to contributors.</p>
         <table>
             <tbody>
             <tr>
-                <th>Address</th>
+                <th>Address (Wallet)</th>
                 <th>Placeable Beans</th>
             </tr>
             {
@@ -306,12 +360,15 @@ const CircleInfo = (props)=> {
             </tbody>
         </table>
 
-        <h2>Proposers: </h2>
+        <h2>Contributors: </h2>
+        <p>People who have dedicate time/energy/resources to the DAO.</p>
         <table>
             <tbody>
             <tr>
                 <th>Index</th>
-                <th>Address</th>
+                <th>Name</th>
+                <th>Address (Wallet)</th>
+                <th>Contributions</th>
                 <th>Beans Received</th>
                 <th>Gift Amount</th>
                 <th>Redeemed</th>
@@ -320,7 +377,9 @@ const CircleInfo = (props)=> {
                 proposals.map((value, index) => {
                 return  <tr key={index}>
                             <th>{index}</th>
-                            <th>{value.proposer}</th>
+                            <th>{value.contributorName}</th>
+                            <th>{value.contributor}</th>
+                            <th>{value.contributions}</th>
                             <th>{value.beansReceived.toNumber()}</th>
                             <th>{ethers.utils.formatUnits(value.giftAmount, decimals)}</th>
                             <th>{value.hasRedeemed.toString()}</th>

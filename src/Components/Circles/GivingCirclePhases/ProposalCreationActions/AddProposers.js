@@ -6,7 +6,16 @@ const AddProposers = (props)=> {
     const [proposers, setProposers] = useState([]);
 
     const addProposerField = ()=> {
-        let data = [...proposers, "new attendee"];
+        let data = [...proposers, 
+            { 
+                contributor : "",
+                contributorName: "A", 
+                contributions: "My contributions",
+                beansReceived:0,
+                giftAmount:0,
+                hasRedeemed:false
+            }
+        ];
         setProposers(data);
     }
 
@@ -15,22 +24,36 @@ const AddProposers = (props)=> {
         // tx.wait();
         // console.log("Registered all proposers!");
 
-
+        console.log(proposers);
         try {
             let tx = await props.selectedInstance.batchCreateNewProposals(proposers);
             props.onBoastMessage("Adding Proposers...");
             tx.wait();
             props.onBoastMessage("Added Proposers!");
         } catch (e) {
+            console.log(e);
             props.onBoastMessage("Please enter valid address(es)!");
         }
 
 
     }
 
-    const handleProposerFieldChange = (index, event)=> {
+    const handleProposerAddressFieldChange = (index, event)=> {
         let data = [...proposers];
-        data[index] = event.target.value;
+        data[index].contributor = event.target.value;
+        setProposers(data);
+    }
+
+    const handleProposerNameFieldChange = (index, event)=> {
+        let data = [...proposers];
+        data[index].contributorName = event.target.value;
+        console.log(data);
+        setProposers(data);
+    }
+
+    const handleProposerContributionsFieldChange = (index, event)=> {
+        let data = [...proposers];
+        data[index].contributions = event.target.value;
         console.log(data);
         setProposers(data);
     }
@@ -41,13 +64,28 @@ const AddProposers = (props)=> {
             <div><button onClick={addProposerField}>New Proposer</button></div>
             {
                 proposers.map((input, index) => {
+                    console.log(input);
                     return (
                         <div key={index}>
                             <input
                                 name ="proposer"
-                                placeholder="Proposer"
-                                value={input.name}
-                                onChange= {event => handleProposerFieldChange(index, event)}
+                                placeholder="Wallet"
+                                // value={input.address}
+                                onChange= {event => handleProposerAddressFieldChange(index, event)}
+                            />
+
+                            <input
+                                name ="proposerName"
+                                placeholder="Name"
+                                // value={input.name}
+                                onChange= {event => handleProposerNameFieldChange(index, event)}
+                            />
+
+                            <input
+                                name ="proposerContributions"
+                                placeholder="Contributions"
+                                // value={input.contributions}
+                                onChange= {event => handleProposerContributionsFieldChange(index, event)}
                             />
                         </div>            
                         )
