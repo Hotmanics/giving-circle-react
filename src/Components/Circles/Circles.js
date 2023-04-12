@@ -21,6 +21,7 @@ const Circles = (props)=> {
     const [output, setOutput] = useState('');
     const [phaseSelectedTrigger, setPhaseSelectedTrigger] = useState(0);
     const [infoSelectedTrigger, setInfoSelectedTrigger] = useState(0);
+    const [connectedWalletRoles, setConnectedWalletRoles] = useState([]);
 
     const factoryContract = new ethers.Contract(
         factoryAddress,
@@ -105,8 +106,11 @@ const Circles = (props)=> {
         } else if (state === 'circlePhaseActions') {
             setPhaseSelectedTrigger((phaseSelectedTrigger) => {
                 phaseSelectedTrigger++;
+
+                console.log(connectedWalletRoles);
+                
                 setOutput(
-                    <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} onPageSet={phaseSelectedTrigger} selectedInstance={selectedInstance} onBoastMessage={props.onBoastMessage}></GivingCirclePhases>
+                    <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} connectedWalletRoles={connectedWalletRoles} onPageSet={phaseSelectedTrigger} selectedInstance={selectedInstance} onBoastMessage={props.onBoastMessage}></GivingCirclePhases>
                 );
                 return phaseSelectedTrigger;
             });
@@ -120,8 +124,9 @@ const Circles = (props)=> {
 
     let navbarOutput;
     if (selectedInstance !== '') {
-        navbarOutput = <GivingCircleNavBar onStateSet={handleStateSet}></GivingCircleNavBar>;
-    } 
+        navbarOutput = <GivingCircleNavBar onStateSet={handleStateSet} connectedWalletRoles={connectedWalletRoles}></GivingCircleNavBar>;
+    }
+
 
     const getRoles = async (selectedInstance)=> {
 
@@ -155,6 +160,7 @@ const Circles = (props)=> {
 
         }
 
+
         let finalString = '';
         for (let i = 0; i < currentRoles.length; i++) {
             if (i === currentRoles.length - 1) {
@@ -164,7 +170,9 @@ const Circles = (props)=> {
             }
         }
 
+        setConnectedWalletRoles(currentRoles);
         setFinalString(finalString);
+        return currentRoles;
     }
 
 

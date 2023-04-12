@@ -10,6 +10,7 @@ const BeanPlacementNavBar = (props)=> {
         props.onStateSet(_state);
     }   
 
+
     return <CenteredCard>
         <button className="semiBigButton" onClick={()=> {handleClick('placeBeans')}}>
             Place Beans

@@ -1,0 +1,12 @@
+.proposalCreationNavBar button {
+    margin:10px;
+}
+
+.proposalCreationNavBar input {
+    margin:2.5px;
+}
+
+.proposalCreationNavBar textarea {
+    width: 400px;
+    height:75px;
+}

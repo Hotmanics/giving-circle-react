@@ -37,7 +37,9 @@ const GivingCirclePhases = (props)=> {
         }
     }
 
-    const [phaseOutput, setPhaseOutput] = useState('');
+    const [phaseOutput, setPhaseOutput] = useState(
+        <AddProposers selectedInstance={props.selectedInstance} connectedWalletRoles = {props.connectedWalletRoles} onBoastMessage={props.onBoastMessage}></AddProposers>
+    );
 
     const [addAttendeesStateTrigger, setAddAttendeesStateTrigger] = useState('');
     const [addProposersStateTrigger, setAddProposersStateTrigger] = useState('');
@@ -58,7 +60,7 @@ const GivingCirclePhases = (props)=> {
             setAddProposersStateTrigger((addProposersStateTrigger) => {
                 addProposersStateTrigger++;
                 setPhaseOutput(
-                    <AddProposers selectedInstance={props.selectedInstance} onBoastMessage={props.onBoastMessage}></AddProposers>
+                    <AddProposers selectedInstance={props.selectedInstance} connectedWalletRoles = {props.connectedWalletRoles} onBoastMessage={props.onBoastMessage}></AddProposers>
                 );
                 return addProposersStateTrigger;
             });
@@ -110,7 +112,7 @@ const GivingCirclePhases = (props)=> {
     let phaseNavigationOutput;
     
     if (phase === "Proposal Creation") {
-        phaseNavigationOutput = <ProposalCreationNavBar onStateSet={handleStateSet}></ProposalCreationNavBar>;
+        phaseNavigationOutput = <ProposalCreationNavBar onStateSet={handleStateSet} connectedWalletRoles={props.connectedWalletRoles}></ProposalCreationNavBar>;
     } else if (phase === "Bean Placement") {
         phaseNavigationOutput = <BeanPlacementNavBar onStateSet={handleStateSet}></BeanPlacementNavBar>;
     }

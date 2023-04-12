@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import CenteredCard from '../../../Cards/Centered Card/CenteredCard';
+import "./ProposalCreationNavBar.css";
+
 const ProposalCreationNavBar = (props)=> {
 
     const [state, setState] = useState('');
@@ -10,16 +12,36 @@ const ProposalCreationNavBar = (props)=> {
         props.onStateSet(_state);
     }   
 
-    return <CenteredCard>
+    let output;
+
+    let isLeader = false;
+
+    for (let i = 0; i < props.connectedWalletRoles.length; i++) {
+        if (props.connectedWalletRoles[i] === "Circle Leader") {
+            isLeader = true;
+        }
+    }
+
+    if (isLeader) {
+        output = <div><button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
+        Contributors
+        </button>
+    
         <button className="semiBigButton" onClick={()=> {handleClick('addAttendees')}}>
-            Add Attendees (Leader)
+        Add Attendees
         </button>
-        <button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
-            Add Contributors (Leader)
-        </button>
+
         <button className="semiBigButton" onClick={()=> {handleClick('progressToBeanPlacementPhase')}}>
-            Progress To Bean Placement Phase (Leader)
+            Progress To Bean Placement Phase
+        </button></div>
+    } else {
+        output = <button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
+            Contributors
         </button>
+    }
+
+    return <CenteredCard className="proposalCreationNavBar">
+        { output }
     </CenteredCard>
 }
 

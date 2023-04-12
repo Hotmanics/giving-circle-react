@@ -425,6 +425,46 @@ const implementationABI = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address payable",
+            "name": "addr",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "contributions",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fundsAllocated",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasRedeemed",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Proposals.Contributor",
+        "name": "newContributor",
+        "type": "tuple"
+      }
+    ],
+    "name": "createNewProposalForMe",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "erc20Token",
     "outputs": [
