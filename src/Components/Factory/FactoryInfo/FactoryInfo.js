@@ -22,16 +22,8 @@ const FactoryInfo = (props)=> {
         setOnChainImplementation(await props.factoryContract.implementation());
     }
 
-    // const contract = new ethers.Contract(
-    //     factoryAddress,
-    //     factoryABI,
-    //     props.connectedWalletInfo.provider
-    // );
-
     useEffect(()=> {
-        if (props.onPageSet) {
-          getInfo();  
-        }
+          getInfo(); 
     }, [props.onPageSet]);
 
     const [circleCreatorRole, setCircleCreatorRole] = useState('');

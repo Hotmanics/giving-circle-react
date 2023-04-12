@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
 import "./FactoryNavBar.css";
 import FactoryInfo from "../FactoryInfo/FactoryInfo";
@@ -7,30 +7,33 @@ import RolesReader from "../../Roles Reader/RolesReader";
 
 const FactoryNavBar = (props)=> {
 
+    const [factoryInfo, setFactoryInfo] = useState();
+
+    useEffect(()=> {
+        setFactoryInfo( <FactoryInfo 
+            onBoastMessage={handleLogger} 
+            onPageSet={factoryInfoTrigger}
+            connectedWalletInfo={props.connectedWalletInfo}
+            factoryContract={props.factoryContract}
+        ></FactoryInfo>
+        );
+        if (props.onPageSet) {
+            
+        }
+    }, [props.onPageSet]);
+
     const [factoryInfoTrigger, setFactoryInfoTrigger] = useState(0);
-    const [state, setState] = useState('');
 
     const handleLogger = (message)=> {
         props.onBoastMessage(message);
     }   
-
-    let factoryInfo = <FactoryInfo 
-        onBoastMessage={handleLogger} 
-        onPageSet={factoryInfoTrigger}
-        connectedWalletInfo={props.connectedWalletInfo}
-        factoryContract={props.factoryContract}
-    ></FactoryInfo>;
 
     const [output, setOutput] = useState(factoryInfo);
 
     const handleClick = (_state)=> {
 
         if (_state === 'factoryInfo') {
-            setFactoryInfoTrigger((factoryInfoTrigger) => {
-                factoryInfoTrigger = factoryInfoTrigger + 1;
-                setOutput(factoryInfo);
-                return factoryInfoTrigger;
-            });
+            setOutput(factoryInfo);
         }
         else if (_state === 'factoryInteractions') {
             setOutput(
@@ -72,7 +75,6 @@ const FactoryNavBar = (props)=> {
 
     let isPresent = false;
     for (let i = 0; i < currentRoles.length; i++) {
-        console.log(currentRoles);
         if (currentRoles[i] == "Circle Creator") {
             isPresent = true;
         }
