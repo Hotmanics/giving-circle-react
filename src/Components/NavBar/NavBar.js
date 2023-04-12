@@ -17,7 +17,7 @@ const NavBar = (props)=> {
             Giving Circles Setup
         </button>
         <button className="bigButton" onClick={()=> {handleClick('factoryInteractions')}}>
-        Create New Giving Cirlce
+        Giving Circle Creation
         </button>
 
         <button className="bigButton"  onClick={()=> {handleClick('givingCircle')}}>

@@ -5,3 +5,8 @@
 .addProposers input {
     margin:2.5px;
 }
+
+.addProposers textarea {
+    width: 400px;
+    height:75px;
+}

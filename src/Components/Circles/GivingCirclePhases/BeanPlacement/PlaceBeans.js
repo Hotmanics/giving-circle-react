@@ -20,28 +20,6 @@ const PlaceBeans = (props)=> {
         setNumOfPlaceableBeans(x.toNumber());
     }
 
-    // const [attendees, setAttendees] = useState([]);
-
-    // const addAttendeeField = ()=> {
-    //     let data = [...attendees, "new attendee"];
-    //     setAttendees(data);
-    //     console.log(data);
-    // }
-
-    // const addAttendees = async ()=> {
-    //     console.log(attendees);
-    //     let tx = await props.selectedInstance.registerAttendees(attendees);
-    //     tx.wait();
-    //     console.log("Registered attendees!");
-    // }
-
-    // const handleAttendeeFieldChange = (index, event)=> {
-    //     let data = [...attendees];
-    //     data[index] = event.target.value;
-    //     console.log(data);
-    //     setAttendees(data);
-    // }
-
     const [beansToPlace, setBeansToPlace] = useState(0);
     const [indexToGive, setIndexToGive] = useState(0);
     
@@ -73,19 +51,24 @@ const PlaceBeans = (props)=> {
                 <tr>
                     <th>Index</th>
                     <th>Address</th>
+                    <th>Name</th>
+                    <th>Contributions</th>
                 </tr>
+
                 {
                     proposals.map((value, index) => {
                     return  <tr key={index}>
                                 <th>{index}</th>
-                                <th>{value.proposer}</th>
+                                <th>{value.contributor.name}</th>
+                                <th>{value.contributor.contributions}</th>
+                                <th>{value.contributor.addr}</th>
                             </tr>
                     })
                 }
                 </tbody>
             </table>
 
-        <p>Placeable Beans: {numOfPlaceableBeans} </p>    
+        <p>Your Placeable Beans: {numOfPlaceableBeans} </p>    
 
         <div id="in">
             <p>Index</p>
@@ -98,24 +81,7 @@ const PlaceBeans = (props)=> {
         </div>
         
         <div><button onClick={placeBeans}>Place Beans</button></div>
-
-            {/* <p>Attendees To Add</p>
-            <div><button onClick={addAttendeeField}>New Attendee</button></div>
-            {
-                attendees.map((input, index) => {
-                    return (
-                        <div key={index}>
-                            <input
-                                name ="attendee"
-                                placeholder="Attendee"
-                                value={input.name}
-                                onChange= {event => handleAttendeeFieldChange(index, event)}
-                            />
-                        </div>            
-                        )
-                })
-            }
-            <div><button onClick={addAttendees}>Add Attendees</button></div> */}
+         
         </div>;
         </CenteredCard>
 }

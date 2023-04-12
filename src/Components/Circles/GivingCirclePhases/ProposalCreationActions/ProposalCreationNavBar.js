@@ -15,7 +15,7 @@ const ProposalCreationNavBar = (props)=> {
             Add Attendees (Leader)
         </button>
         <button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
-            Add Proposers (Leader)
+            Add Contributors (Leader)
         </button>
         <button className="semiBigButton" onClick={()=> {handleClick('progressToBeanPlacementPhase')}}>
             Progress To Bean Placement Phase (Leader)

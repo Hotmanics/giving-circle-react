@@ -3,10 +3,10 @@ import CenteredCard from "../../../Cards/Centered Card/CenteredCard";
 import "./AddAttendees.css";
 
 const AddAttendees = (props)=> {
-    const [attendees, setAttendees] = useState([]);
+    const [attendees, setAttendees] = useState([""]);
 
     const addAttendeeField = ()=> {
-        let data = [...attendees, "new attendee"];
+        let data = [...attendees, ""];
         setAttendees(data);
         console.log(data);
     }
@@ -33,7 +33,7 @@ const AddAttendees = (props)=> {
     return <CenteredCard className="addAttendees" title="Add Attendees">
         <div>
             <p>Attendees To Add</p>
-            <div><button onClick={addAttendeeField}>New Attendee</button></div>
+            <div><button onClick={addAttendeeField}>+</button></div>
             {
                 attendees.map((input, index) => {
                     return (

@@ -45,6 +45,7 @@ const GivingCirclePhases = (props)=> {
     const [redeemGiftsTrigger, setRedeemGiftsTrigger] = useState('');
 
     const handleStateSet = async (state)=> {
+
         if (state === 'addAttendees') {
             setAddAttendeesStateTrigger((addAttendeesStateTrigger) => {
                 addAttendeesStateTrigger++;
@@ -82,13 +83,15 @@ const GivingCirclePhases = (props)=> {
             return placeBeansStateTrigger;
             });
         } else if (state === "progressToGiftRedemptionPhase") {
+
             try{
-                let tx = await props.selectedInstance.ProgressToGiftRedeemPhase();
+                let tx = await props.selectedInstance.ProgressToFundsRedemptionPhase();
                 props.onBoastMessage("Progressing To Gift Redemption Phase...");
                 await tx.wait();
                 props.onBoastMessage("Progressed To Gift Redemption Phase!");
                 getPhase();
             } catch (e) {
+                console.log(e);
                 props.onBoastMessage(e.reason);
             }
         } 

@@ -7,7 +7,6 @@ const BeanPlacementNavBar = (props)=> {
 
     const handleClick = (_state)=> {
         setState(_state);
-        console.log(_state);
         props.onStateSet(_state);
     }   
 
@@ -16,7 +15,7 @@ const BeanPlacementNavBar = (props)=> {
             Place Beans
         </button>
         <button className="semiBigButton" onClick={()=> {handleClick('progressToGiftRedemptionPhase')}}>
-            Progress To Gift Redemption Phase (CAN SAFELY SEND FUNDS TO RESPECTIVE PLACES DURING THIS ACTION IF ALL USERS ARE KYCED)
+            Progress To Gift Redemption Phase (Leader)
         </button>
     </CenteredCard>
 }

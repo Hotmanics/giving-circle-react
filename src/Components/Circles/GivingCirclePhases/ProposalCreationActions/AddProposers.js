@@ -3,18 +3,19 @@ import CenteredCard from "../../../Cards/Centered Card/CenteredCard";
 import "./AddProposers.css";
 
 const AddProposers = (props)=> {
-    const [proposers, setProposers] = useState([]);
+
+    let templateContributor = {
+        addr : "",
+        name: "A", 
+        contributions: "My contributions",
+        fundsAllocated:0,
+        hasRedeemed:false
+    };
+
+    const [proposers, setProposers] = useState([templateContributor]);
 
     const addProposerField = ()=> {
-        let data = [...proposers, 
-            {
-                addr : "",
-                name: "A", 
-                contributions: "My contributions",
-                fundsAllocated:0,
-                hasRedeemed:false
-            }
-        ];
+        let data = [...proposers, templateContributor];
         setProposers(data);
     }
 
@@ -57,10 +58,10 @@ const AddProposers = (props)=> {
         setProposers(data);
     }
 
-    return <CenteredCard className="addProposers" title="Add Proposers">
+    return <CenteredCard className="addProposers" title="Add Contributors">
         <div>
-            <p>Proposers To Add</p>
-            <div><button onClick={addProposerField}>New Proposer</button></div>
+            <p>Contributors are those who have dedicate time/energy/resources to the DAO.</p>
+            <div><button onClick={addProposerField}>+</button></div>
             {
                 proposers.map((input, index) => {
                     console.log(input);
@@ -79,18 +80,21 @@ const AddProposers = (props)=> {
                                 // value={input.name}
                                 onChange= {event => handleProposerNameFieldChange(index, event)}
                             />
-
-                            <input
+                            <div>
+                            <textarea
                                 name ="proposerContributions"
                                 placeholder="Contributions"
                                 // value={input.contributions}
                                 onChange= {event => handleProposerContributionsFieldChange(index, event)}
                             />
+                            </div>
+
+                            
                         </div>            
                         )
                 })
             }
-            <div><button className="semiBigButton" onClick={addProposers}>Add Proposers (Leader)</button></div>
+            <div><button className="semiBigButton" onClick={addProposers}>Add Contributors (Leader)</button></div>
         </div>;
         </CenteredCard>
 }
