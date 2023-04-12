@@ -6,23 +6,38 @@ import "./Components/Buttons/buttons.css";
 import LoggedInSection from "./Components/LoggedInSection/LoggedInSection";
 import "./Components/Table/Table.css";
 import "./Components/Inline/Inline.css";
+import { factoryAddress, factoryABI } from "./Smart Contracts Info/FactorySmartContractInfo";
+import { ethers } from "ethers"
 
 function App() {
 
   useEffect(() => {
     document.title = "Giving Circles"
- }, []);
+    }, []);
 
   const [connectedWalletInfo, setConnectedWalletInfo] = useState('');
+  const [factoryContract, setFactoryContract] = useState();
   const [message, setMessage] = useState('');
 
   const handleLogin = (info)=> {
     setConnectedWalletInfo(info);
 
+    const factoryContract = new ethers.Contract(
+        factoryAddress,
+        factoryABI,
+        info.provider
+    );        
+
+    setFactoryContract(factoryContract);
+
     setLoginComponents(
       info.provider === undefined ?
         <div></div> : 
-        <LoggedInSection onBoastMessage={handleLogger} connectedWalletInfo={info}></LoggedInSection>
+        <LoggedInSection 
+          onBoastMessage={handleLogger} 
+          connectedWalletInfo={info}
+          factoryContract={factoryContract}
+        ></LoggedInSection>
         );
   }
 

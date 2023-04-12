@@ -1,17 +1,10 @@
 import { ethers } from "ethers"
 import React, { useState } from "react";
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
-import { factoryAddress, factoryABI } from "../../../Smart Contracts Info/FactorySmartContractInfo";
 import { PartialIERC20InfoABI } from "../../../Smart Contracts Info/IPartialERC20Info";
 import "./FactoryInteractions.css";
 
 const FactoryInteractions = (props)=> {
-
-    const contract = new ethers.Contract(
-        factoryAddress,
-        factoryABI,
-        props.connectedWalletInfo.provider
-    );
 
     //USDC Mumbai - 0x0FA8781a83E46826621b3BC094Ea2A0212e71B23
     //KYC Mumbai - 0x4989649CA2C77727CB1ceD8e5E79591d5Efbc6AD
@@ -102,7 +95,7 @@ const FactoryInteractions = (props)=> {
         let final = ethers.utils.parseUnits(fundingThreshold.toString(), decimals)
 
         try {
-            let tx = await contract.createGivingCircle({
+            let tx = await props.factoryContract.createGivingCircle({
                 name: nameInputField,
                 beansToDispursePerAttendee: numOfBeansToDisperse,
                 fundingThreshold: final,
@@ -113,7 +106,7 @@ const FactoryInteractions = (props)=> {
                 kycController: kycAddress === '' ? "0x0000000000000000000000000000000000000000" : kycAddress, //0x0000000000000000000000000000000000000000 - Zero Address
             });
 
-        let circleCount = await contract.instancesCount();
+        let circleCount = await props.factoryContract.instancesCount();
 
         if (nameInputField.length === 0) {
             props.onBoastMessage(`Creating Giving Circle: ${circleCount.toNumber() + 1}...`);

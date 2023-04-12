@@ -10,6 +10,8 @@ import "./Circles.css";
 
 const Circles = (props)=> {
 
+    const [finalString, setFinalString] = useState('');
+
     const [circlesComplete, setCirclesComplete] = useState([]);
 
     const [selectedInstance, setSelectedInstance] = useState('');
@@ -80,6 +82,8 @@ const Circles = (props)=> {
 
         setSelectedCircleIndex(event.target.value);
 
+        getRoles(contract);
+
         setInfoSelectedTrigger((infoSelectedTrigger) => {
             infoSelectedTrigger++;
             setOutput(
@@ -111,13 +115,58 @@ const Circles = (props)=> {
 
     let selectedCircleDisplayOutput;
     if (selectedCircleName !== '') {
-        selectedCircleDisplayOutput = <h2>Circle: { selectedCircleName } </h2>
+        selectedCircleDisplayOutput = <div><h2>Circle: { selectedCircleName } </h2><h2>Your roles: </h2> <p>{finalString}</p></div>
     }
 
     let navbarOutput;
     if (selectedInstance !== '') {
         navbarOutput = <GivingCircleNavBar onStateSet={handleStateSet}></GivingCircleNavBar>;
     } 
+
+    const getRoles = async (selectedInstance)=> {
+
+        let ADMIN_ROLE = await selectedInstance.DEFAULT_ADMIN_ROLE();
+        let LEADER_ROLE = await selectedInstance.LEADER_ROLE();
+        let FUNDS_MANAGER_ROLE = await selectedInstance.FUNDS_MANAGER_ROLE();
+        let BEAN_PLACEMENT_ADMIN_ROLE = await selectedInstance.BEAN_PLACEMENT_ADMIN_ROLE();
+
+        let hasAdminRole = await selectedInstance.hasRole(ADMIN_ROLE, props.connectedWalletInfo.account);
+        let hasLeaderRole = await selectedInstance.hasRole(LEADER_ROLE, props.connectedWalletInfo.account);
+        let hasFundsRole = await selectedInstance.hasRole(FUNDS_MANAGER_ROLE, props.connectedWalletInfo.account);
+        let hasBeanPlacementRole = await selectedInstance.hasRole(BEAN_PLACEMENT_ADMIN_ROLE, props.connectedWalletInfo.account);
+
+        let currentRoles = [];
+
+        if (hasAdminRole) {
+            currentRoles.push("Admin");
+        }
+
+        if (hasLeaderRole) {
+            currentRoles.push("Circle Leader");
+        }
+
+        if (hasFundsRole) {
+            currentRoles.push("Funds Manager");
+
+        }
+
+        if (hasBeanPlacementRole) {
+            currentRoles.push("Bean Placement Manager");
+
+        }
+
+        let finalString = '';
+        for (let i = 0; i < currentRoles.length; i++) {
+            if (i === currentRoles.length - 1) {
+                finalString += currentRoles[i];
+            } else {
+                finalString += currentRoles[i] + ", ";
+            }
+        }
+
+        setFinalString(finalString);
+    }
+
 
     return <CenteredCard className="circles" title="Giving Circles">
         <div>

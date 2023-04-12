@@ -13,19 +13,20 @@ const FactoryInfo = (props)=> {
     const handleImplementationChanged = async (event) => {
         setImplementationField(event.target.value);
     }
+    
     const setImplemenetationToChain = async () => {
-        let tx = await contract.setImplementation(implementationField);
+        let tx = await props.factoryContract.setImplementation(implementationField);
         props.onBoastMessage("Setting implementation to: " + implementationField + "...");
         await tx.wait();
         props.onBoastMessage("Set implementation to: " + implementationField + "!");
-        setOnChainImplementation(await contract.implementation());
+        setOnChainImplementation(await props.factoryContract.implementation());
     }
 
-    const contract = new ethers.Contract(
-        factoryAddress,
-        factoryABI,
-        props.connectedWalletInfo.provider
-    );
+    // const contract = new ethers.Contract(
+    //     factoryAddress,
+    //     factoryABI,
+    //     props.connectedWalletInfo.provider
+    // );
 
     useEffect(()=> {
         if (props.onPageSet) {
@@ -37,21 +38,21 @@ const FactoryInfo = (props)=> {
 
     const getInfo = async ()=> {
         
-        setOnChainImplementation(await contract.implementation());
-        setInstancesCount((await contract.instancesCount()).toNumber());
+        setOnChainImplementation(await props.factoryContract.implementation());
+        setInstancesCount((await props.factoryContract.instancesCount()).toNumber());
 
-        setCircleCreatorRole(await contract.CIRCLE_CREATOR_ROLE());
+        setCircleCreatorRole(await props.factoryContract.CIRCLE_CREATOR_ROLE());
     }
 
     const handleAdmins = async ()=> {
 
-        let adminRole = await contract.DEFAULT_ADMIN_ROLE();
+        let adminRole = await props.factoryContract.DEFAULT_ADMIN_ROLE();
 
-        let role = await contract.CIRCLE_CREATOR_ROLE();
+        let role = await props.factoryContract.CIRCLE_CREATOR_ROLE();
 
         try {
 
-            let tx = await contract.grantRole(role, indexToGive);
+            let tx = await props.factoryContract.grantRole(role, indexToGive);
             console.log(`granting circle creator role to: ${indexToGive}`);
             props.onBoastMessage(`granting circle creator role to: ${indexToGive}...`);
             await tx.wait();
@@ -71,8 +72,41 @@ const FactoryInfo = (props)=> {
         setIndexToGive(event.target.value);
     }
 
+    const [finalString, setFinalString] = useState('');
+    
+    const getRoles = async (roleInBytes)=> {
 
-    return <CenteredCard title="Giving Circles Setup">
+        let ADMIN_ROLE = await props.factoryContract.DEFAULT_ADMIN_ROLE();
+        let CIRCLE_CREATOR_ROLE = await props.factoryContract.CIRCLE_CREATOR_ROLE();
+
+        let hasAdminRole = await props.factoryContract.hasRole(ADMIN_ROLE, props.connectedWalletInfo.account);
+        let hasCircleCreatorRole = await props.factoryContract.hasRole(CIRCLE_CREATOR_ROLE, props.connectedWalletInfo.account);
+
+        let currentRoles = [];
+
+        if (hasAdminRole) {
+            currentRoles.push("Admin");
+        }
+
+        if (hasCircleCreatorRole) {
+            currentRoles.push("Circle Creator");
+        }
+
+        let finalString = '';
+        for (let i = 0; i < currentRoles.length; i++) {
+            if (i === currentRoles.length - 1) {
+                finalString += currentRoles[i];
+            } else {
+                finalString += currentRoles[i] + ", ";
+            }
+        }
+
+        setFinalString(finalString);
+    }
+
+    getRoles();
+
+    return <CenteredCard className="factoryInfo" title="Giving Circles Setup">
         <table>
             <tbody>
                 <tr>
