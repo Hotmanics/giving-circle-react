@@ -70,7 +70,7 @@ const implementationABI = [
       {
         "indexed": true,
         "internalType": "address",
-        "name": "beanplacer",
+        "name": "beanPlacer",
         "type": "address"
       }
     ],
@@ -79,11 +79,17 @@ const implementationABI = [
   },
   {
     "anonymous": false,
+    "inputs": [],
+    "name": "FundsAllocated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
     "inputs": [
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "giftwithdrawn",
+        "name": "fundsWithdrawn",
         "type": "uint256"
       },
       {
@@ -93,13 +99,7 @@ const implementationABI = [
         "type": "address"
       }
     ],
-    "name": "GiftRedeemed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [],
-    "name": "GiftsAllocated",
+    "name": "FundsRedeemed",
     "type": "event"
   },
   {
@@ -289,7 +289,7 @@ const implementationABI = [
   },
   {
     "inputs": [],
-    "name": "ProgressToGiftRedeemPhase",
+    "name": "ProgressToFundsRedemptionPhase",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -337,12 +337,12 @@ const implementationABI = [
         "components": [
           {
             "internalType": "address payable",
-            "name": "contributor",
+            "name": "addr",
             "type": "address"
           },
           {
             "internalType": "string",
-            "name": "contributorName",
+            "name": "name",
             "type": "string"
           },
           {
@@ -352,12 +352,7 @@ const implementationABI = [
           },
           {
             "internalType": "uint256",
-            "name": "beansReceived",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "giftAmount",
+            "name": "fundsAllocated",
             "type": "uint256"
           },
           {
@@ -366,8 +361,8 @@ const implementationABI = [
             "type": "bool"
           }
         ],
-        "internalType": "struct Proposals.Proposal[]",
-        "name": "newProposals",
+        "internalType": "struct Proposals.Contributor[]",
+        "name": "newContributors",
         "type": "tuple[]"
       }
     ],
@@ -395,12 +390,12 @@ const implementationABI = [
         "components": [
           {
             "internalType": "address payable",
-            "name": "contributor",
+            "name": "addr",
             "type": "address"
           },
           {
             "internalType": "string",
-            "name": "contributorName",
+            "name": "name",
             "type": "string"
           },
           {
@@ -410,12 +405,7 @@ const implementationABI = [
           },
           {
             "internalType": "uint256",
-            "name": "beansReceived",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "giftAmount",
+            "name": "fundsAllocated",
             "type": "uint256"
           },
           {
@@ -424,8 +414,8 @@ const implementationABI = [
             "type": "bool"
           }
         ],
-        "internalType": "struct Proposals.Proposal",
-        "name": "proposal",
+        "internalType": "struct Proposals.Contributor",
+        "name": "newContributor",
         "type": "tuple"
       }
     ],
@@ -537,34 +527,41 @@ const implementationABI = [
       {
         "components": [
           {
-            "internalType": "address payable",
+            "components": [
+              {
+                "internalType": "address payable",
+                "name": "addr",
+                "type": "address"
+              },
+              {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "contributions",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "fundsAllocated",
+                "type": "uint256"
+              },
+              {
+                "internalType": "bool",
+                "name": "hasRedeemed",
+                "type": "bool"
+              }
+            ],
+            "internalType": "struct Proposals.Contributor",
             "name": "contributor",
-            "type": "address"
-          },
-          {
-            "internalType": "string",
-            "name": "contributorName",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "contributions",
-            "type": "string"
+            "type": "tuple"
           },
           {
             "internalType": "uint256",
             "name": "beansReceived",
             "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "giftAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "hasRedeemed",
-            "type": "bool"
           }
         ],
         "internalType": "struct Proposals.Proposal[]",
@@ -888,34 +885,41 @@ const implementationABI = [
     "name": "proposals",
     "outputs": [
       {
-        "internalType": "address payable",
+        "components": [
+          {
+            "internalType": "address payable",
+            "name": "addr",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "contributions",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fundsAllocated",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasRedeemed",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Proposals.Contributor",
         "name": "contributor",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "contributorName",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "contributions",
-        "type": "string"
+        "type": "tuple"
       },
       {
         "internalType": "uint256",
         "name": "beansReceived",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "giftAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "hasRedeemed",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -929,7 +933,7 @@ const implementationABI = [
         "type": "address"
       }
     ],
-    "name": "redeemGiftForSomeone",
+    "name": "redeemFundsForSomeone",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -942,14 +946,14 @@ const implementationABI = [
         "type": "address[]"
       }
     ],
-    "name": "redeemGiftForSomeoneMultiple",
+    "name": "redeemFundsForSomeoneMultiple",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "redeemMyGift",
+    "name": "redeemMyFunds",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

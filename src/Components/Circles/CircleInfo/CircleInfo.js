@@ -58,9 +58,6 @@ const CircleInfo = (props)=> {
         setAttendees(attendees);
 
         let proposals = await props.selectedInstance.getProposals();
-
-        console.log("HERE ARE PROPOSALS");
-        console.log(proposals);
         setProposals(proposals);
 
         const instanceAddress = await props.selectedInstance.erc20Token();
@@ -377,12 +374,12 @@ const CircleInfo = (props)=> {
                 proposals.map((value, index) => {
                 return  <tr key={index}>
                             <th>{index}</th>
-                            <th>{value.contributorName}</th>
-                            <th>{value.contributor}</th>
-                            <th>{value.contributions}</th>
+                            <th>{value.contributor.name}</th>
+                            <th>{value.contributor.addr}</th>
+                            <th>{value.contributor.contributions}</th>
                             <th>{value.beansReceived.toNumber()}</th>
-                            <th>{ethers.utils.formatUnits(value.giftAmount, decimals)}</th>
-                            <th>{value.hasRedeemed.toString()}</th>
+                            <th>{ethers.utils.formatUnits(value.contributor.fundsAllocated.toNumber(), decimals)}</th>
+                            <th>{value.contributor.hasRedeemed.toString()}</th>
                         </tr>
                 })
             }

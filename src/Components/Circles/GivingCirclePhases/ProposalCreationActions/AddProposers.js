@@ -7,12 +7,11 @@ const AddProposers = (props)=> {
 
     const addProposerField = ()=> {
         let data = [...proposers, 
-            { 
-                contributor : "",
-                contributorName: "A", 
+            {
+                addr : "",
+                name: "A", 
                 contributions: "My contributions",
-                beansReceived:0,
-                giftAmount:0,
+                fundsAllocated:0,
                 hasRedeemed:false
             }
         ];
@@ -27,9 +26,9 @@ const AddProposers = (props)=> {
         console.log(proposers);
         try {
             let tx = await props.selectedInstance.batchCreateNewProposals(proposers);
-            props.onBoastMessage("Adding Proposers...");
+            props.onBoastMessage("Adding Contributors...");
             tx.wait();
-            props.onBoastMessage("Added Proposers!");
+            props.onBoastMessage("Added Contributors!");
         } catch (e) {
             console.log(e);
             props.onBoastMessage("Please enter valid address(es)!");
@@ -40,13 +39,13 @@ const AddProposers = (props)=> {
 
     const handleProposerAddressFieldChange = (index, event)=> {
         let data = [...proposers];
-        data[index].contributor = event.target.value;
+        data[index].addr = event.target.value;
         setProposers(data);
     }
 
     const handleProposerNameFieldChange = (index, event)=> {
         let data = [...proposers];
-        data[index].contributorName = event.target.value;
+        data[index].name = event.target.value;
         console.log(data);
         setProposers(data);
     }
