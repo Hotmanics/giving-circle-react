@@ -64,18 +64,24 @@ const ConnectWallet = (props)=> {
 
     };
 
-    let buttonSection = connectedWalletInfo.account === undefined ? 
-                            <button type="button" onClick={connectWallet}>
-                                Login 
-                            </button> :
-                            <div></div>;
+    let truncated;
+    let output;
 
-    const accountInfo = connectedWalletInfo.account === undefined ? <p>Please login. (Please make sure your wallet is connected to mumbai!)</p>
-                        : <p>You are logged in as: { connectedWalletInfo.account }</p>
+    if (connectedWalletInfo.account === undefined) {
+                            output = <button type="button" onClick={connectWallet}>
+                                Login 
+                            </button>;
+    } else {
+      truncated = connectedWalletInfo.account.substring(0, 10) + "...";
+    }
+
+    const accountInfo = connectedWalletInfo.account === undefined ? <div></div>
+                        : <p>Logged in as: { truncated }</p>
                         
     return <div className="connectWallet">
-        { buttonSection } 
+        { output } 
         { accountInfo }
+        {/* <p>Hellos!</p> */}
         </div>
 }
 

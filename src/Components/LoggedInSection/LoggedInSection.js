@@ -1,9 +1,7 @@
 import NavBar from "../NavBar/NavBar";
 import React, { useState, useEffect } from 'react';
-
-import FactoryInfo from "../Factory/FactoryInfo/FactoryInfo";
-import FactoryInteractions from "../Factory/FactoryInteractions/FactoryInteractions";
 import Circles from "../Circles/Circles";
+import FactoryNavBar from "../Factory/FactoryNavBar/FactoryNavBar";
 import RolesReader from "../Roles Reader/RolesReader";
 
 const LoggedInSection = (props)=> {
@@ -12,32 +10,17 @@ const LoggedInSection = (props)=> {
         props.onBoastMessage(message);
     }   
 
-    const [factoryInfoTrigger, setContractInfoTrigger] = useState(0);
     const [givingCircleTrigger, setGivingCircleTrigger] = useState(0);
 
     const [output, setOutput] = useState();
 
     const handleStateSet = (state)=> {
-        if (state === 'factoryInfo') {
-            setContractInfoTrigger((factoryInfoTrigger) => {
-                factoryInfoTrigger = factoryInfoTrigger + 1;
-                setOutput(
-                    <FactoryInfo 
-                        onBoastMessage={handleLogger} 
-                        onPageSet={factoryInfoTrigger} 
-                        connectedWalletInfo={props.connectedWalletInfo}
-                        factoryContract={props.factoryContract}
-                    ></FactoryInfo>);
-                return factoryInfoTrigger;
-            });
-        }
-        else if (state === 'factoryInteractions') {
+        if (state === 'givingCirclesFactory') {
             setOutput(
-                <FactoryInteractions 
-                    onBoastMessage={handleLogger} 
-                    connectedWalletInfo={props.connectedWalletInfo}
-                    factoryContract={props.factoryContract}
-                ></FactoryInteractions>);
+                <div>
+                    <FactoryNavBar connectedWalletInfo={props.connectedWalletInfo} factoryContract={props.factoryContract} onBoastMessage={handleLogger} ></FactoryNavBar>
+                </div>
+            )
         }
         else if (state === "givingCircle") {
             setGivingCircleTrigger((givingCircleTrigger) => {
@@ -55,7 +38,6 @@ const LoggedInSection = (props)=> {
 
     return <div>
     <NavBar onStateSet={handleStateSet}></NavBar>
-    <RolesReader connectedWalletInfo={props.connectedWalletInfo} factoryContract={props.factoryContract}></RolesReader>
     { output }
     </div>
 }

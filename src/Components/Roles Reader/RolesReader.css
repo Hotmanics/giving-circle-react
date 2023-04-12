@@ -1,9 +1,25 @@
-.rolesReader p {
-    font-size: 20px;
-    display: inline;
+.rolesReader {
+  background-color: #333333;
+  border-radius: 12px;
+  width:250px;
+  height:50px;
+  margin:auto;
+  margin-top:5px;  
+  text-align:center;
+}
+
+.rolesReader h2 {
+    padding: 5px;
+    font-size: 15px;
+    color:#ffffff;
+    margin:0;
   }
 
-  .rolesReader h1 {
-    font-size: 20px;
-    display: inline;
+  
+.rolesReader p {
+    padding: 5px;
+    margin:0;
+    padding:.1rem;
+    color:#ffffff;
+    font-size: 13px;
   }

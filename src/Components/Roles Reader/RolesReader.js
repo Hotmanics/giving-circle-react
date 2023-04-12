@@ -1,12 +1,12 @@
 import { ethers } from "ethers"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./RolesReader.css";
-import CenteredCard from "../Cards/Centered Card/CenteredCard";
 
 const RolesReader = (props)=> {
+
     const [finalString, setFinalString] = useState('');
-    
-    const getRoles = async (roleInBytes)=> {
+
+    const getRoles = async ()=> {
 
         let ADMIN_ROLE = await props.factoryContract.DEFAULT_ADMIN_ROLE();
         let CIRCLE_CREATOR_ROLE = await props.factoryContract.CIRCLE_CREATOR_ROLE();
@@ -38,9 +38,17 @@ const RolesReader = (props)=> {
 
     getRoles();
 
-    return <CenteredCard className="rolesReader" title="Your Giving Circle Creator Roles">
-        <p>: {finalString}</p>
-        </CenteredCard>
+    let output;
+
+    if (finalString.length !== 0) {
+        output = <div className="rolesReader"><h2>Your Giving Circle Creator Roles:</h2>
+        <p>{finalString}</p>
+        </div>
+    }
+
+    return <div>
+        {output}
+        </div>
 }
 
 export default RolesReader;

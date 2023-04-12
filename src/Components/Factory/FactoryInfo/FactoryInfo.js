@@ -125,7 +125,7 @@ const FactoryInfo = (props)=> {
                     <th>The smart contract that is used as a blueprint by the Giving Circle Creator. </th>
                     <th>{ onChainImplementation } (Smart Contract) </th>
                     <th>
-                        Please provided an updated blueprint address to be used by the Giving Cirlce Creator.
+                        Please provide an updated blueprint address to be used by the Giving Cirlce Creator.
                         <br>
                         </br>
                         <input type="text" placeholder="Smart Contract" onChange={handleImplementationChanged}/>

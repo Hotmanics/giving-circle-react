@@ -8,16 +8,12 @@ const NavBar = (props)=> {
 
     const handleClick = (_state)=> {
         setState(_state);
-        console.log(_state);
         props.onStateSet(_state);
     }   
 
     return <CenteredCard>
-        <button className="bigButton" onClick={()=> {handleClick('factoryInfo')}}>
-            Giving Circles Setup
-        </button>
-        <button className="bigButton" onClick={()=> {handleClick('factoryInteractions')}}>
-        Giving Circle Creation
+        <button className="bigButton" onClick={()=> {handleClick('givingCirclesFactory')}}>
+            Giving Circles Factory
         </button>
 
         <button className="bigButton"  onClick={()=> {handleClick('givingCircle')}}>
