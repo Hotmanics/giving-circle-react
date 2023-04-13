@@ -23,6 +23,8 @@ const FactoryInfo = (props)=> {
     }
 
     useEffect(()=> {
+
+
           getInfo(); 
     }, [props.onPageSet]);
 
@@ -98,7 +100,29 @@ const FactoryInfo = (props)=> {
 
     getRoles();
 
-    return <CenteredCard className="factoryInfo" title="Giving Circles Setup">
+    let circleCreatorAdminSection;
+    let factoryAdminSection;
+
+    if (props.currentRoles.length > 0) {
+        for (let i = 0; i < props.currentRoles.length; i++) {
+            if (props.currentRoles[i] === "Admin") {
+                circleCreatorAdminSection = <div><p>The Circle Creator Role holds the responsibility of creating new giving circles.</p>
+                <input type="text" placeholder="Wallet" onChange={handleIndexField}/>
+                <button onClick={handleAdmins}>Grant: Circle Creator Role</button></div>;
+
+                factoryAdminSection = <div>Please provide an updated blueprint address to be used by the Giving Cirlce Creator.
+                <br>
+                </br>
+                <input type="text" placeholder="Smart Contract" onChange={handleImplementationChanged}/>
+                <div><button id="marginedButton" onClick={setImplemenetationToChain}>Set New Blueprint</button></div>
+                </div>
+
+                break;
+            }
+        }
+    }
+
+    return <CenteredCard className="factoryInfo" title="Factory Configuration">
         <table>
             <tbody>
                 <tr>
@@ -117,11 +141,7 @@ const FactoryInfo = (props)=> {
                     <th>The smart contract that is used as a blueprint by the Giving Circle Creator. </th>
                     <th>{ onChainImplementation } (Smart Contract) </th>
                     <th>
-                        Please provide an updated blueprint address to be used by the Giving Cirlce Creator.
-                        <br>
-                        </br>
-                        <input type="text" placeholder="Smart Contract" onChange={handleImplementationChanged}/>
-                        <div><button id="marginedButton" onClick={setImplemenetationToChain}>Set New Blueprint</button></div>
+                        {factoryAdminSection}
                     </th>
                 </tr>
                 <tr>
@@ -132,10 +152,9 @@ const FactoryInfo = (props)=> {
 
             </tbody>
         </table>
-
-        <p>The Circle Creator Role holds the responsibility of creating new giving circles.</p>
-        <input type="text" placeholder="Wallet" onChange={handleIndexField}/>
-        <button onClick={handleAdmins}>Grant: Circle Creator Role</button>
+        {
+            circleCreatorAdminSection
+        }
 
         </CenteredCard>
 }

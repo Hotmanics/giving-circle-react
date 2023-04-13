@@ -6,13 +6,24 @@ import RolesReader from "../Roles Reader/RolesReader";
 
 const LoggedInSection = (props)=> {
 
-    const handleLogger = (message)=> {
+    useEffect(()=> {
+        async function fetch() {
+            setOutput(<Circles 
+            onBoastMessage={handleLogger}
+            onGivingCirclePageSet={givingCircleTrigger} 
+            connectedWalletInfo={props.connectedWalletInfo}
+        ></Circles>);
+        }
+        fetch();
+    }, [props.onPageSet]);
+        const handleLogger = (message)=> {
         props.onBoastMessage(message);
     }   
 
     const [givingCircleTrigger, setGivingCircleTrigger] = useState(0);
 
     const [output, setOutput] = useState();
+    
 
     const handleStateSet = (state)=> {
         if (state === 'givingCirclesFactory') {

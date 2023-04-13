@@ -23,7 +23,21 @@ const FactoryInteractions = (props)=> {
         setNameInputField(event.target.value);
     }
 
-    const [leaderInputFields, setLeaderInputFields] = useState([]);
+    const [adminInputFields, setAdminInputFields] = useState([]);
+    const handleAdminChanged = (index, event)=> {
+        let data = [...adminInputFields];
+        data[index] = event.target.value;
+        setAdminInputFields(data);
+    }
+
+
+    const addAdminField = ()=> {
+        let newfield = 'New Admin'
+        setAdminInputFields([...adminInputFields, newfield]);
+    }
+
+
+    const [leaderInputFields, setLeaderInputFields] = useState(['New Leader']);
     const handleLeaderChanged = (index, event)=> {
         let data = [...leaderInputFields];
         data[index] = event.target.value;
@@ -99,6 +113,7 @@ const FactoryInteractions = (props)=> {
                 name: nameInputField,
                 beansToDispursePerAttendee: numOfBeansToDisperse,
                 fundingThreshold: final,
+                admins: adminInputFields,
                 circleLeaders: leaderInputFields,
                 beanPlacementAdmins: specialBeanPlacerInputFields,
                 fundsManagers: specialGiftRedeemerInputFields,
@@ -168,11 +183,8 @@ const FactoryInteractions = (props)=> {
 
     <div>
         <div id="in">
-
             <p>Leaders</p>
             <p>This role allows wallets to progress Giving Circles through its phases.</p>
-            <div><button onClick={addLeaderField}>Add more...</button></div>
-
             {
                 leaderInputFields.map((input, index) => {
                 return (
@@ -186,14 +198,32 @@ const FactoryInteractions = (props)=> {
                     </div>    
                 )})
             }
+            <div><button onClick={addLeaderField}>+</button></div>
+        </div>
+
+        <div id="in">
+            <p>Admins</p>
+            <p>This role allows the accessing/revoking of other roles.</p>
+            {
+                adminInputFields.map((input, index) => {
+                return (
+                    <div key={index}>
+                        <input
+                            name ="admin"
+                            placeholder="Wallet"
+                            value={input.name}
+                            onChange= {event => handleAdminChanged(index, event)}
+                        />
+                    </div>    
+                )})
+            }
+            <div><button onClick={addAdminField}>+</button></div>
         </div>
 
         <div id="in">
 
             <p>Bean Placement Admins</p>
             <p>This role allows wallets to place beans on behalf of other wallets</p>
-
-            <div><button onClick={addBeanPlacerField}>Add more...</button></div>
 
             {
                 specialBeanPlacerInputFields.map((input, index) => {
@@ -208,14 +238,13 @@ const FactoryInteractions = (props)=> {
                     </div>    
                 )})
             }
+            <div><button onClick={addBeanPlacerField}>+</button></div>
 
         </div>
 
         <div id="in">
             <p>Fund Managers</p>
             <p>This role allows wallets to redeem gifts on behalf of other wallets.</p>
-            <div><button onClick={addGiftRedeemerField}>Add more...</button></div>
-
             {
                 specialGiftRedeemerInputFields.map((input, index) => {
                 return (
@@ -229,6 +258,8 @@ const FactoryInteractions = (props)=> {
                     </div>    
                 )})
             }
+            <div><button onClick={addGiftRedeemerField}>+</button></div>
+
         </div>
     </div>
 

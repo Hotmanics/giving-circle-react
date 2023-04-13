@@ -7,19 +7,25 @@ import RolesReader from "../../Roles Reader/RolesReader";
 
 const FactoryNavBar = (props)=> {
 
+    const [currentRoles, setCurrentRoles] = useState([]);
+
     const [factoryInfo, setFactoryInfo] = useState();
 
     useEffect(()=> {
-        setFactoryInfo( <FactoryInfo 
-            onBoastMessage={handleLogger} 
-            onPageSet={factoryInfoTrigger}
-            connectedWalletInfo={props.connectedWalletInfo}
-            factoryContract={props.factoryContract}
-        ></FactoryInfo>
-        );
-        if (props.onPageSet) {
-            
+        async function fetch() {
+            let roles = await getRoles();
+
+            setFactoryInfo( <FactoryInfo 
+                onBoastMessage={handleLogger} 
+                onPageSet={factoryInfoTrigger}
+                connectedWalletInfo={props.connectedWalletInfo}
+                factoryContract={props.factoryContract}
+                currentRoles={roles}
+            ></FactoryInfo>
+            );
         }
+        fetch();
+
     }, [props.onPageSet]);
 
     const [factoryInfoTrigger, setFactoryInfoTrigger] = useState(0);
@@ -46,7 +52,6 @@ const FactoryNavBar = (props)=> {
         }
     }   
 
-    const [currentRoles, setCurrentRoles] = useState([]);
 
     const getRoles = async ()=> {
 
@@ -67,9 +72,9 @@ const FactoryNavBar = (props)=> {
         }
 
         setCurrentRoles(currentRoles);
+        return currentRoles;
     }
 
-    getRoles();
 
     let navOutput;
 
@@ -81,18 +86,18 @@ const FactoryNavBar = (props)=> {
     }
 
     if (isPresent) {
-        navOutput = <div><CenteredCard>
+        navOutput = <div><CenteredCard title="Giving Circles Factory">
             <button className="bigButton" onClick={()=> {handleClick('factoryInfo')}}>
-            Giving Circles Setup
+            Configuration
             </button>
             <button className="bigButton" onClick={()=> {handleClick('factoryInteractions')}}>
             Giving Circle Creation
             </button>
             </CenteredCard></div>
     } else {
-        navOutput = <div><CenteredCard>
+        navOutput = <div><CenteredCard title="Giving Circles Factory">
             <button className="bigButton" onClick={()=> {handleClick('factoryInfo')}}>
-            Giving Circles Setup
+            Configuration
             </button>
             </CenteredCard></div>    
     }

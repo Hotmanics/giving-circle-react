@@ -1,18 +1,18 @@
 import { ethers } from "ethers"
 import React, { useState, useEffect } from 'react';
-import "./RolesReader.css";
+import "./CircleRolesReader.css";
 
-const RolesReader = (props)=> {
+const CircleRolesReader = (props)=> {
 
     const [finalString, setFinalString] = useState('');
 
     const getRoles = async ()=> {
 
-        let ADMIN_ROLE = await props.factoryContract.DEFAULT_ADMIN_ROLE();
-        let CIRCLE_CREATOR_ROLE = await props.factoryContract.CIRCLE_CREATOR_ROLE();
+        let ADMIN_ROLE = await props.circleContract.DEFAULT_ADMIN_ROLE();
+        let LEADER_ROLE = await props.circleContract.LEADER_ROLE();
 
-        let hasAdminRole = await props.factoryContract.hasRole(ADMIN_ROLE, props.connectedWalletInfo.account);
-        let hasCircleCreatorRole = await props.factoryContract.hasRole(CIRCLE_CREATOR_ROLE, props.connectedWalletInfo.account);
+        let hasAdminRole = await props.circleContract.hasRole(ADMIN_ROLE, props.connectedWalletInfo.account);
+        let hasLeaderRole = await props.circleContract.hasRole(LEADER_ROLE, props.connectedWalletInfo.account);
 
         let currentRoles = [];
 
@@ -20,8 +20,8 @@ const RolesReader = (props)=> {
             currentRoles.push("Admin");
         }
 
-        if (hasCircleCreatorRole) {
-            currentRoles.push("Circle Creator");
+        if (hasLeaderRole) {
+            currentRoles.push("Leader");
         }
 
         let finalString = '';
@@ -41,7 +41,7 @@ const RolesReader = (props)=> {
     let output;
 
     if (finalString.length !== 0) {
-        output = <div className="rolesReader"><h2>Your Giving Circle Factory Roles:</h2>
+        output = <div className="circleRolesReader"><h2>Your Roles For This Giving Circle:</h2>
         <p>{finalString}</p>
         </div>
     }
@@ -51,4 +51,4 @@ const RolesReader = (props)=> {
         </div>
 }
 
-export default RolesReader;
+export default CircleRolesReader;

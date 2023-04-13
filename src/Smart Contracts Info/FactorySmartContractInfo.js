@@ -1,4 +1,4 @@
-const factoryAddress = "0xe34B330DE1Ce577eBD1DE662688f636CFe01C68c";
+const factoryAddress = "0x34906F0c7557854Fa865f16497d668aACa1c47d2";
 const factoryABI = [
   {
     "inputs": [
@@ -143,6 +143,11 @@ const factoryABI = [
             "internalType": "uint256",
             "name": "fundingThreshold",
             "type": "uint256"
+          },
+          {
+            "internalType": "address[]",
+            "name": "admins",
+            "type": "address[]"
           },
           {
             "internalType": "address[]",

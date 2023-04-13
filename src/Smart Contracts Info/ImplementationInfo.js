@@ -20,6 +20,11 @@ const implementationABI = [
           },
           {
             "internalType": "address[]",
+            "name": "admins",
+            "type": "address[]"
+          },
+          {
+            "internalType": "address[]",
             "name": "circleLeaders",
             "type": "address[]"
           },
@@ -743,6 +748,11 @@ const implementationABI = [
             "internalType": "uint256",
             "name": "fundingThreshold",
             "type": "uint256"
+          },
+          {
+            "internalType": "address[]",
+            "name": "admins",
+            "type": "address[]"
           },
           {
             "internalType": "address[]",

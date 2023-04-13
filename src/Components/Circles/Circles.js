@@ -7,6 +7,7 @@ import GivingCircleNavBar from "./CircleNavBar/CircleNavBar";
 import GivingCirclePhases from "./GivingCirclePhases/GivingCirclePhases";
 import GivingCircleInfo from "./CircleInfo/CircleInfo";
 import "./Circles.css";
+import CircleRolesReader from "../Circle Roles Reader/CircleRolesReader";
 
 const Circles = (props)=> {
 
@@ -30,8 +31,9 @@ const Circles = (props)=> {
     );
 
     useEffect(()=> {
+
+        getAllCircles();
         if (props.onGivingCirclePageSet) {
-          getAllCircles();
         }
     }, [props.onGivingCirclePageSet]);
 
@@ -118,8 +120,21 @@ const Circles = (props)=> {
     }
 
     let selectedCircleDisplayOutput;
+    let selectedCircleRolesOutput;
+
     if (selectedCircleName !== '') {
-        selectedCircleDisplayOutput = <div><h2>Circle: { selectedCircleName } </h2><h2>Your roles: </h2> <p>{finalString}</p></div>
+        
+        
+        // const contract = new ethers.Contract(
+        //     instanceAddress,
+        //     implementationABI,
+        //     props.connectedWalletInfo.provider
+        // );
+        selectedCircleDisplayOutput = <div><h2>Circle: { selectedCircleName } </h2>
+        </div>
+
+        selectedCircleRolesOutput = <CircleRolesReader connectedWalletInfo={props.connectedWalletInfo} circleContract={selectedInstance}></CircleRolesReader>;
+
     }
 
     let navbarOutput;
@@ -176,7 +191,7 @@ const Circles = (props)=> {
     }
 
 
-    return <CenteredCard className="circles" title="Giving Circles">
+    return <div><CenteredCard className="circles" title="Giving Circles">
         <div>
         <select onChange={handleGivingCircleSelected} defaultValue="choose">
         <option value="choose" disabled>
@@ -190,12 +205,16 @@ const Circles = (props)=> {
                 ))
             }
         </select>  
-        { selectedCircleDisplayOutput }
-        { navbarOutput }
-        { output }
         </div>
 
         </CenteredCard>
+        { selectedCircleRolesOutput } 
+        <CenteredCard>
+        { selectedCircleDisplayOutput }
+            { navbarOutput }
+            { output }
+        </CenteredCard>
+        </div>
 }
 
 export default Circles;
