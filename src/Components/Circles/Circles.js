@@ -167,14 +167,12 @@ const Circles = (props)=> {
 
         if (hasFundsRole) {
             currentRoles.push("Funds Manager");
-
         }
 
         if (hasBeanPlacementRole) {
             currentRoles.push("Bean Placement Manager");
 
         }
-
 
         let finalString = '';
         for (let i = 0; i < currentRoles.length; i++) {

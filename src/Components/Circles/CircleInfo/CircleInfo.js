@@ -11,6 +11,7 @@ const CircleInfo = (props)=> {
     useEffect(()=> {
         if (props.onPageSet) {
           getInfo();
+          getRolesForKYC();
         }
     }, [props.onPageSet]);
 
@@ -208,6 +209,58 @@ const CircleInfo = (props)=> {
         setFundedAMount(fundedAm);
     }
 
+    const [kycRoles, setKycRoles] = useState([]);
+
+    const getRolesForKYC = async (selectedInstance)=> {
+
+        const instanceAddress = await props.selectedInstance.kycController();
+        console.log(instanceAddress);
+
+        const contract = new ethers.Contract(
+            instanceAddress,
+            kycControllerABI,
+            props.connectedWalletInfo.provider
+        );
+
+        let ADMIN_ROLE = await contract.DEFAULT_ADMIN_ROLE();
+
+        let hasAdminRole = await contract.hasRole(ADMIN_ROLE, props.connectedWalletInfo.account);
+
+        console.log(hasAdminRole);
+        let currentRoles = [];
+
+        if (hasAdminRole) {
+            currentRoles.push("Admin");
+        }
+
+        setKycRoles(currentRoles);
+        return currentRoles;
+    }
+
+    let kycOutput;
+
+    let isPresent = false;
+    for (let i = 0; i < kycRoles.length; i++) {
+        if (kycRoles[i] === "Admin") {
+            isPresent = true;
+        }
+    }
+
+    if (isPresent) {
+        kycOutput = <div>
+                        <div id="in">
+                        Adds a wallet to the database and marks it as KYCed.
+                        <input type="text" placeholder="Wallet" onChange={handleUserToKycInput}/>
+                        <button onClick={kycUser}>KYC Wallet (KYC Admin)</button>
+                        </div>
+                        <div id="in">
+                            The KYC Admin Role holds the responsibility of adding new wallets to the database.
+                            <input type="text" placeholder="Wallet" onChange={handleKycAdmin}/>
+                            <button onClick={setUserToKycAdmin}>Grant: KYC Admin Role (KYC Admin)</button>
+                        </div>
+                    </div>
+    } 
+
 
     return <CenteredCard className="circleInfo" title="Info">
         <table>
@@ -250,7 +303,8 @@ const CircleInfo = (props)=> {
                                 <th>The smart contract containing the KYC database.</th>
                                 <th>{kycAddress} </th>
                                 <th>
-                                    <div id="in">
+                                    {kycOutput}
+                                    {/* <div id="in">
                                         Adds a wallet to the database and marks it as KYCed.
                                         <input type="text" placeholder="Wallet" onChange={handleUserToKycInput}/>
                                         <button onClick={kycUser}>KYC Wallet (KYC Admin)</button>
@@ -259,7 +313,7 @@ const CircleInfo = (props)=> {
                                         The KYC Admin Role holds the responsibility of adding new wallets to the database.
                                         <input type="text" placeholder="Wallet" onChange={handleKycAdmin}/>
                                         <button onClick={setUserToKycAdmin}>Grant: KYC Admin Role (KYC Admin)</button>
-                                    </div>
+                                    </div> */}
                                 </th>
                             </tr> : <tr></tr>
                     }
