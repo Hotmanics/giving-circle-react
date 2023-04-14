@@ -9,8 +9,8 @@ const CircleInfoNavBar = (props)=> {
     }   
 
     return <CenteredCard className="givingCircleNavBar">
-        <button className="bigButton" onClick={()=> {handleClick('info')}}>
-            Info
+        <button className="bigButton" onClick={()=> {handleClick('general')}}>
+            General
         </button>
         <button className="bigButton" onClick={()=> {handleClick('attendees')}}>
             Attendees
@@ -20,6 +20,9 @@ const CircleInfoNavBar = (props)=> {
         </button>
         <button className="bigButton" onClick={()=> {handleClick('funds')}}>
             Funds
+        </button>
+        <button className="bigButton" onClick={()=> {handleClick('kyc')}}>
+            KYC
         </button>
     </CenteredCard>
 }

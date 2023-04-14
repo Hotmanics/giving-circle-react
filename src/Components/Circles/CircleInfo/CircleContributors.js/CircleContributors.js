@@ -4,9 +4,11 @@ import { ethers } from "ethers"
 const CircleContributors = (props)=> {
 
     const [proposals, setProposals] = useState([]);
-
+    const [decimals, setDecimals] = useState('');
 
     const get = async ()=> {
+        let decimals = await props.erc20Contract.decimals();
+        setDecimals(decimals);
 
         let proposals = await props.selectedInstance.getProposals();
         setProposals(proposals);
@@ -36,7 +38,7 @@ const CircleContributors = (props)=> {
                             <th>{value.contributor.addr}</th>
                             <th>{value.contributor.contributions}</th>
                             <th>{value.beansReceived.toNumber()}</th>
-                            <th>{ethers.utils.formatUnits(value.contributor.fundsAllocated.toNumber(), props.decimals)}</th>
+                            <th>{ethers.utils.formatUnits(value.contributor.fundsAllocated.toNumber(), decimals)}</th>
                             <th>{value.contributor.hasRedeemed.toString()}</th>
                         </tr>
                 })

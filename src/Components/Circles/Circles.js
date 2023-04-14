@@ -11,12 +11,9 @@ import CircleRolesReader from "../Circle Roles Reader/CircleRolesReader";
 
 const Circles = (props)=> {
 
-    const [finalString, setFinalString] = useState('');
-
-    const [circlesComplete, setCirclesComplete] = useState([]);
+    const [circles, setCircles] = useState([]);
 
     const [selectedInstance, setSelectedInstance] = useState('');
-    const [selectedCircleIndex, setSelectedCircleIndex] = useState('');
     const [selectedCircleName, setSelectedCircleName] = useState('');
 
     const [output, setOutput] = useState('');
@@ -32,15 +29,14 @@ const Circles = (props)=> {
 
     useEffect(()=> {
 
-        getAllCircles();
+        getCircles();
         if (props.onGivingCirclePageSet) {
         }
     }, [props.onGivingCirclePageSet]);
 
-    const getAllCircles = async ()=> {
+    const getCircles = async ()=> {
         let x = await factoryContract.instancesCount();
         let arr = [];
-        let arrComplete = [];
 
         for (let i = 0; i < x; i++) {
 
@@ -52,22 +48,17 @@ const Circles = (props)=> {
                 props.connectedWalletInfo.provider
             );
 
-            arrComplete.push({
+            arr.push({
                 index: i,
                 name: await contract.name(),
                 contract: contract
             })
         }
 
-        setCirclesComplete(arrComplete);
-
-        console.log(arrComplete);
-        console.log("Got all circles!");
+        setCircles(arr);
     }
 
     const handleGivingCircleSelected = async (event)=> {
-
-        console.log(event.target.value);
         const instanceAddress = await factoryContract.instances(event.target.value);
 
         const contract = new ethers.Contract(
@@ -83,16 +74,15 @@ const Circles = (props)=> {
             setSelectedCircleName(name):
             setSelectedCircleName(event.target.value);
 
-        setSelectedCircleIndex(event.target.value);
+        let roles = getRoles(contract);
 
-        getRoles(contract);
+        setPhaseSelectedTrigger((phaseSelectedTrigger) => {
+            phaseSelectedTrigger++;
 
-        setInfoSelectedTrigger((infoSelectedTrigger) => {
-            infoSelectedTrigger++;
             setOutput(
-                <GivingCircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={infoSelectedTrigger} selectedInstance={contract} onBoastMessage={props.onBoastMessage}></GivingCircleInfo>
+                <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} connectedWalletRoles={roles} onPageSet={phaseSelectedTrigger} selectedInstance={contract} onBoastMessage={props.onBoastMessage}></GivingCirclePhases>
             );
-            return infoSelectedTrigger;
+            return phaseSelectedTrigger;
         });
     }
 
@@ -123,25 +113,14 @@ const Circles = (props)=> {
     let selectedCircleRolesOutput;
 
     if (selectedCircleName !== '') {
-        
-        
-        // const contract = new ethers.Contract(
-        //     instanceAddress,
-        //     implementationABI,
-        //     props.connectedWalletInfo.provider
-        // );
-        selectedCircleDisplayOutput = <div><h2>Circle: { selectedCircleName } </h2>
-        </div>
-
+        selectedCircleDisplayOutput = <div><h2>Circle: { selectedCircleName } </h2></div>
         selectedCircleRolesOutput = <CircleRolesReader connectedWalletInfo={props.connectedWalletInfo} circleContract={selectedInstance}></CircleRolesReader>;
-
     }
 
     let navbarOutput;
     if (selectedInstance !== '') {
         navbarOutput = <GivingCircleNavBar onStateSet={handleStateSet} connectedWalletRoles={connectedWalletRoles}></GivingCircleNavBar>;
     }
-
 
     const getRoles = async (selectedInstance)=> {
 
@@ -174,20 +153,9 @@ const Circles = (props)=> {
 
         }
 
-        let finalString = '';
-        for (let i = 0; i < currentRoles.length; i++) {
-            if (i === currentRoles.length - 1) {
-                finalString += currentRoles[i];
-            } else {
-                finalString += currentRoles[i] + ", ";
-            }
-        }
-
         setConnectedWalletRoles(currentRoles);
-        setFinalString(finalString);
         return currentRoles;
     }
-
 
     return <div><CenteredCard className="circles" title="Giving Circles">
         <div>
@@ -196,7 +164,7 @@ const Circles = (props)=> {
          -- Select Giving Circle --
         </option>
             {
-                circlesComplete.map((obj) => (
+                circles.map((obj) => (
                     obj.name.length > 0 ?
                     <option key={Math.random()} value={obj.index}> {obj.name} </option> :
                     <option key={Math.random()} value={obj.index}> {obj.index} </option>

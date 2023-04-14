@@ -4,15 +4,11 @@ import { PartialIERC20InfoABI } from "../../../../Smart Contracts Info/IPartialE
 
 const CircleFunds = (props)=> {
 
-    const [proposals, setProposals] = useState([]);
-
     const [erc20TokenAddress, setERC20TokenAddress] = useState('');
     const [fundedAmount, setFundedAMount] = useState('');
 
     const [minFundAmount, setMinFundAmount] = useState('');
     const [yourERC20Balance, setYourERC20Balance] = useState(0);
-
-    const [decimals, setDecimals] = useState(0);
 
     const [leftOverFunds, setLeftoverFunders] = useState(99);
     const[totalRedeemedFunds, setTotalRedeemedFunds] = useState(99);
@@ -27,22 +23,12 @@ const CircleFunds = (props)=> {
 
     const addFunds = async ()=> {
 
-        const instanceAddress = await props.selectedInstance.erc20Token();
-
-        const contract = new ethers.Contract(
-            instanceAddress,
-            PartialIERC20InfoABI,
-            props.connectedWalletInfo.provider
-        );
-
-        console.log(addFundsAmount);
-            
-        let decimals = await contract.decimals();
+        let decimals = await props.erc20Contract.decimals();
 
         let fundBig = ethers.utils.parseUnits(addFundsAmount, decimals);
         console.log(fundBig.toNumber());
         try {
-            let tx = await contract.transfer(props.selectedInstance.address, fundBig);
+            let tx = await props.erc20Contract.transfer(props.selectedInstance.address, fundBig);
             props.onBoastMessage("Adding " + addFundsAmount + " token(s) to circle...");
             await tx.wait();
             props.onBoastMessage("Added " + addFundsAmount + " token(s) to circle!");
@@ -52,27 +38,18 @@ const CircleFunds = (props)=> {
             }
         }
 
-        let fundedAm = await contract.balanceOf(props.selectedInstance.address);
+        let fundedAm = await props.erc20Contract.balanceOf(props.selectedInstance.address);
         fundedAm = ethers.utils.formatUnits(fundedAm, decimals);
         setFundedAMount(fundedAm);
     }
     
     const get = async ()=> {
 
-        const instanceAddress = await props.selectedInstance.erc20Token();
+        setERC20TokenAddress(await props.erc20Contract.address);
 
-        const contract = new ethers.Contract(
-            instanceAddress,
-            PartialIERC20InfoABI,
-            props.connectedWalletInfo.provider
-        );
+        let decimals = await props.erc20Contract.decimals();
 
-        setERC20TokenAddress(instanceAddress);
-
-        let decimals = await contract.decimals();
-        setDecimals(decimals);
-
-        let fundedAm = await contract.balanceOf(props.selectedInstance.address);
+        let fundedAm = await props.erc20Contract.balanceOf(props.selectedInstance.address);
         fundedAm = ethers.utils.formatUnits(fundedAm, decimals);
         setFundedAMount(fundedAm);
 
@@ -80,7 +57,7 @@ const CircleFunds = (props)=> {
         minFundAmount = ethers.utils.formatUnits(minFundAmount, decimals);
         setMinFundAmount(minFundAmount);
 
-        let yourAmount = await contract.balanceOf(props.connectedWalletInfo.account);
+        let yourAmount = await props.erc20Contract.balanceOf(props.connectedWalletInfo.account);
         yourAmount = ethers.utils.formatUnits(yourAmount, decimals);
         setYourERC20Balance(yourAmount);
 
@@ -100,7 +77,7 @@ const CircleFunds = (props)=> {
     get();
 
     return <div>
-<table>
+            <table>
             <tbody>
                 <tr>
                     <th>What</th>
@@ -143,28 +120,21 @@ const CircleFunds = (props)=> {
                     <th>Extra funds that are not allocated anywhere.</th>
                     <th>{ leftOverFunds }</th>
                 </tr>
-
-
                 <tr>
                     <th>Total Redeemed Funds</th>
                     <th>The total amount of funds that have been currently redeemed.</th>
                     <th>{ totalRedeemedFunds }</th>
                 </tr>
-
-
                 <tr>
                     <th>Total Unredeemed Funds</th>
                     <th>The total amount of funds that have not yet been redeemed.</th>
                     <th>{ totalUnredeemedFunds }</th>
                 </tr>
-
-
                 <tr>
                     <th>Total Allocated Funds</th>
                     <th>The total number of funds allocated to contributors.</th>
                     <th>{ totalAllocatedFunds }</th>
                 </tr>
-
             </tbody>
         </table>
     </div>
