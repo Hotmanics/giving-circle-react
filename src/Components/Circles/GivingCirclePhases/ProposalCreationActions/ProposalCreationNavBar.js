@@ -16,14 +16,17 @@ const ProposalCreationNavBar = (props)=> {
 
     let isLeader = false;
 
+    console.log(props.connectedWalletRoles);
+    
     for (let i = 0; i < props.connectedWalletRoles.length; i++) {
+        
         if (props.connectedWalletRoles[i] === "Circle Leader") {
             isLeader = true;
         }
     }
 
     if (isLeader) {
-        output = <div><button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
+        output = <div id="boxContainer"><button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
         Contributors
         </button>
     
@@ -35,9 +38,9 @@ const ProposalCreationNavBar = (props)=> {
             Progress To Bean Placement Phase
         </button></div>
     } else {
-        output = <button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
+        output = <div id="boxContainer"><button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
             Contributors
-        </button>
+        </button></div>
     }
 
     return <CenteredCard className="proposalCreationNavBar">

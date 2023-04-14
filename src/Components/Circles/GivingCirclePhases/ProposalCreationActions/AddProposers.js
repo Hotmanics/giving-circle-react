@@ -137,7 +137,7 @@ const AddProposers = (props)=> {
         }
         <div><button onClick={addProposerField}>+</button></div>
 
-        <div><button className="semiBigButton" onClick={addProposers}>Add Contributors (Leader)</button></div>
+        <div><button className="semiBigButton" onClick={addProposers}>Add Contributors</button></div>
         </div>
     }
      

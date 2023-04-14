@@ -7,14 +7,6 @@ button {
     border-radius: 12px;
 }
 
-.bigButton {
-  padding: 1rem 2rem;
-}
-
-.semiBigButton {
-  padding: .75rem 2rem;
-}
-
 button:hover,
 button:active {
   background-color: #724021;

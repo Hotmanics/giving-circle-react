@@ -1,3 +1,10 @@
+.proposalCreationNavBar #boxContainer {
+    background-color:rgb(218, 197, 113);
+    width: 600px;
+    margin:auto;
+    border-radius: 12px;
+}
+
 .proposalCreationNavBar button {
     margin:10px;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
+import "./CircleInfoNavBar.css";
 
 const CircleInfoNavBar = (props)=> {
 
@@ -8,7 +9,7 @@ const CircleInfoNavBar = (props)=> {
         props.onStateSet(_state);
     }   
 
-    return <CenteredCard className="givingCircleNavBar">
+    return <CenteredCard className="circleInfoNavBar">
         <button className="bigButton" onClick={()=> {handleClick('general')}}>
             General
         </button>

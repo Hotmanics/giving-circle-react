@@ -23,6 +23,36 @@ const FactoryNavBar = (props)=> {
                 currentRoles={roles}
             ></FactoryInfo>
             );
+
+            let isCreator = false;
+            for (let i = 0; i < roles.length; i++) {
+                if (roles[i] === "Circle Creator") {
+                    isCreator = true;
+                    break;
+                }
+            }
+
+            if (isCreator) {
+                
+                setOutput(
+                    <FactoryInteractions 
+                    onBoastMessage={handleLogger} 
+                    connectedWalletInfo={props.connectedWalletInfo}
+                    factoryContract={props.factoryContract}
+                ></FactoryInteractions>
+                );
+                
+            } else {
+                setOutput(
+                    <FactoryInfo 
+                        onBoastMessage={handleLogger} 
+                        onPageSet={factoryInfoTrigger}
+                        connectedWalletInfo={props.connectedWalletInfo}
+                        factoryContract={props.factoryContract}
+                        currentRoles={roles}
+                    ></FactoryInfo>
+                        );
+            }
         }
         fetch();
 
@@ -34,10 +64,9 @@ const FactoryNavBar = (props)=> {
         props.onBoastMessage(message);
     }   
 
-    const [output, setOutput] = useState(factoryInfo);
+    const [output, setOutput] = useState();
 
     const handleClick = (_state)=> {
-
         if (_state === 'factoryInfo') {
             setOutput(factoryInfo);
         }

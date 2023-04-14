@@ -102,23 +102,45 @@ const GiftRedeem = (props)=> {
     }
 
 
+    let output;
+
+    let isFundsManager = false;
+
+    console.log(props.currentRoles);
+    for (let i = 0; i < props.currentRoles.length; i++) {
+        if (props.currentRoles[i] === "Funds Manager") {
+            isFundsManager = true;
+            break;
+        }
+    }
+
+    if (isFundsManager) {
+        output = <div>
+        <div><button className="semiBigButton" onClick={redeemAllGifts}>Courtest Redeem All</button></div>
+        
+
+        <p>Can also be used to roll over funds to a new circle</p>
+        <input
+            name ="target"
+            placeholder="Target"
+            onChange= {handleWithdrawRemainingFundsInputChanged}
+        />
+
+        <div><button className="semiBigButton" onClick={withdrawRemainingFunds}>Withdraw Remaining Funds</button></div>;
+        </div>
+    }
+
 
     return <CenteredCard className="giftRedeem" title="Gift Redemption">
                 <div>
                     <p>Your Redeemable Amount: {amountToRedeem}</p>
                     <div><button className="semiBigButton" onClick={redeemMyGift}>Redeem</button></div>
-                    <div><button className="semiBigButton" onClick={redeemAllGifts}>Courtest Redeem All (Funds Manager)</button></div>
 
     <br/>
     <br/>
-                    <input
-                        name ="target"
-                        placeholder="Target"
-                        onChange= {handleWithdrawRemainingFundsInputChanged}
-                    />
-                    <p>Can also be used to roll over funds to a new circle</p>
-
-                    <div><button className="semiBigButton" onClick={withdrawRemainingFunds}>Withdraw Remaining Funds (Funds Manager)</button></div>
+                  {
+                    output
+                  }
                 </div>;
             </CenteredCard>
 }

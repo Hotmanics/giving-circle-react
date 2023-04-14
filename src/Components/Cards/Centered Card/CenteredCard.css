@@ -1,15 +1,12 @@
 .centeredCard {
     background-color: 	#333333;
-    padding: 1rem;
     border-radius: 12px;
-    margin:auto;
-    margin-top: 1rem; 
     text-align: center;
+    line-height: 30px;
   }
 
 .centeredCard h1 {
   color:#ffffff;
-  margin-top: -15px;
 }
 
 .centeredCard h2 {

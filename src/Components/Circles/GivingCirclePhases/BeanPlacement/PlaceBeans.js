@@ -9,6 +9,30 @@ const PlaceBeans = (props)=> {
         }
     }, [props.onPageSet]);
 
+    let templateSelectedContributor = {
+        index: 0,
+        amount: 0
+    }
+
+    const [selectedContributors, setSelectedContributors] = useState([]);
+
+    const addSelectedContributorField = ()=> {
+        let data = [...selectedContributors, templateSelectedContributor];
+        setSelectedContributors(data);
+    }
+
+    const handleIndexFieldChange = (index, event) => {
+        let data = [...selectedContributors];
+        data[index].index = event.target.value;
+        setSelectedContributors(data);
+    }
+
+    const handleAmountFieldChange = (index, event) => {
+        let data = [...selectedContributors];
+        data[index].amount = event.target.value;
+        setSelectedContributors(data);
+    }
+
     const [proposals, setProposals] = useState([]);
     const [numOfPlaceableBeans, setNumOfPlaceableBeans] = useState(0);
 
@@ -18,6 +42,15 @@ const PlaceBeans = (props)=> {
 
         let x = await props.selectedInstance.getAvailableBeans(props.connectedWalletInfo.account);
         setNumOfPlaceableBeans(x.toNumber());
+
+        let arr = [];
+        for (let i =0; i < proposals.length; i++) {
+            arr.push({
+                index: 0,
+                amount: 0
+            })
+        }
+        setSelectedContributors(arr);
     }
 
     const [beansToPlace, setBeansToPlace] = useState(0);
@@ -33,7 +66,15 @@ const PlaceBeans = (props)=> {
 
     const placeBeans = async ()=> {
         try{
-            let tx = await props.selectedInstance.placeMyBeansMultiple([indexToGive], [beansToPlace]);
+            
+            let indices = [];
+            let amounts = [];
+            for (let i = 0; i < proposals.length; i++) {
+                indices.push(i);
+                amounts.push(selectedContributors[i].amount);
+            }
+
+            let tx = await props.selectedInstance.placeMyBeansMultiple(indices, amounts);
             props.onBoastMessage(`Placing ${beansToPlace} bean(s) to index ${indexToGive}...`);
             await tx.wait();
             props.onBoastMessage(`Placed ${beansToPlace} bean(s) to index ${indexToGive}!`);
@@ -43,16 +84,24 @@ const PlaceBeans = (props)=> {
         }
     }
 
+    
     return <CenteredCard title="Place Beans">
         <div>
-            <h2>Proposers: </h2>
+        <p>Your Placeable Beans: {numOfPlaceableBeans} </p>    
+            <h2>Contributors: </h2>
+
+
             <table>
                 <tbody>
+                    <tr>
+                        <th>Beans</th>
+                    </tr>
                 <tr>
                     <th>Index</th>
-                    <th>Address</th>
                     <th>Name</th>
                     <th>Contributions</th>
+                    <th>Address</th>
+                    <th></th>
                 </tr>
 
                 {
@@ -62,14 +111,44 @@ const PlaceBeans = (props)=> {
                                 <th>{value.contributor.name}</th>
                                 <th>{value.contributor.contributions}</th>
                                 <th>{value.contributor.addr}</th>
+                                <th>
+                                {
+                                    <input
+                                    name="amount"
+                                    placeholder="Beans"
+                                    onChange={event => handleAmountFieldChange(index, event)}
+                                />
+                                } 
+                                </th>
                             </tr>
                     })
                 }
                 </tbody>
             </table>
 
-        <p>Your Placeable Beans: {numOfPlaceableBeans} </p>    
 
+        {/* {
+            selectedContributors.map((input, index) => {
+                return (
+                    <div key={index}>
+                        <input
+                            name="index"
+                            placeholder="Index"
+                            onChange={event => handleIndexFieldChange(index, event)}
+                        />
+
+                        <input
+                            name="amount"
+                            placeholder="Beans"
+                            onChange={event => handleAmountFieldChange(index, event)}
+                        />
+
+                    </div>
+                )
+            })
+        }
+        <div><button onClick={addSelectedContributorField}>+</button></div> */}
+{/* 
         <div id="in">
             <p>Index</p>
             <input type="number" defaultValue={0} onChange={handleIndexField}/>
@@ -79,7 +158,7 @@ const PlaceBeans = (props)=> {
             <p>Beans To Place</p>
             <input type="number" defaultValue={0} onChange={handleBeansField}/>
         </div>
-        
+         */}
         <div><button onClick={placeBeans}>Place Beans</button></div>
          
         </div>;

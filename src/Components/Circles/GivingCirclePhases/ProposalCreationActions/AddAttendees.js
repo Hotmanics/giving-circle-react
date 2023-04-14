@@ -48,7 +48,7 @@ const AddAttendees = (props)=> {
                         )
                 })
             }
-            <div><button className="semiBigButton" onClick={addAttendees}>Add Attendees (Leader)</button></div>
+            <div><button className="semiBigButton" onClick={addAttendees}>Add Attendees</button></div>
         </div>;
         </CenteredCard>
 }

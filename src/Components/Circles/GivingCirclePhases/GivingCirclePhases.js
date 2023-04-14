@@ -102,7 +102,7 @@ const GivingCirclePhases = (props)=> {
             setRedeemGiftsTrigger((redeemGiftsTrigger) => {
                 redeemGiftsTrigger++;
             setPhaseOutput(
-                <GiftRedeem onPageSet={redeemGiftsTrigger} selectedInstance={props.selectedInstance} connectedWalletInfo={props.connectedWalletInfo} onBoastMessage={props.onBoastMessage}></GiftRedeem>
+                <GiftRedeem onPageSet={redeemGiftsTrigger} selectedInstance={props.selectedInstance} connectedWalletInfo={props.connectedWalletInfo} currentRoles={props.connectedWalletRoles} onBoastMessage={props.onBoastMessage}></GiftRedeem>
             );
             return redeemGiftsTrigger;
             });
@@ -114,7 +114,7 @@ const GivingCirclePhases = (props)=> {
     if (phase === "Proposal Creation") {
         phaseNavigationOutput = <ProposalCreationNavBar onStateSet={handleStateSet} connectedWalletRoles={props.connectedWalletRoles}></ProposalCreationNavBar>;
     } else if (phase === "Bean Placement") {
-        phaseNavigationOutput = <BeanPlacementNavBar onStateSet={handleStateSet}></BeanPlacementNavBar>;
+        phaseNavigationOutput = <BeanPlacementNavBar onStateSet={handleStateSet} currentRoles={props.connectedWalletRoles}></BeanPlacementNavBar>;
     }
 
     return <CenteredCard title="Interactions">

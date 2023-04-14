@@ -1,0 +1,6 @@
+.circleNavBar #buttonContainer {
+    background-color:rgb(159, 144, 83);
+    width: 300px;
+    margin:auto;
+    border-radius: 12px;
+}

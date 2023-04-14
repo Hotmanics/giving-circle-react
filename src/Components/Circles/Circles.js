@@ -8,6 +8,7 @@ import GivingCirclePhases from "./GivingCirclePhases/GivingCirclePhases";
 import GivingCircleInfo from "./CircleInfo/CircleInfo";
 import "./Circles.css";
 import CircleRolesReader from "../Circle Roles Reader/CircleRolesReader";
+import CircleInfo from "./CircleInfo/CircleInfo";
 
 const Circles = (props)=> {
 
@@ -74,7 +75,7 @@ const Circles = (props)=> {
             setSelectedCircleName(name):
             setSelectedCircleName(event.target.value);
 
-        let roles = getRoles(contract);
+        let roles = await getRoles(contract);
 
         setPhaseSelectedTrigger((phaseSelectedTrigger) => {
             phaseSelectedTrigger++;
@@ -87,11 +88,13 @@ const Circles = (props)=> {
     }
 
     const handleStateSet = (state)=> {
+
+        console.log(props.onBoastMessage);
         if (state === 'circleInfo') {
             setInfoSelectedTrigger((infoSelectedTrigger) => {
                 infoSelectedTrigger++;
                 setOutput(
-                    <GivingCircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={infoSelectedTrigger} selectedInstance={selectedInstance} onBoastMessage={props.onBoastMessage}></GivingCircleInfo>
+                    <CircleInfo connectedWalletInfo = {props.connectedWalletInfo} onPageSet={infoSelectedTrigger} selectedInstance={selectedInstance} onBoastMessage={props.onBoastMessage}></CircleInfo>
                 );
                 return infoSelectedTrigger;
             });
@@ -102,7 +105,7 @@ const Circles = (props)=> {
                 console.log(connectedWalletRoles);
                 
                 setOutput(
-                    <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} connectedWalletRoles={connectedWalletRoles} onPageSet={phaseSelectedTrigger} selectedInstance={selectedInstance} onBoastMessage={props.onBoastMessage}></GivingCirclePhases>
+                    <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} connectedWalletRoles={connectedWalletRoles} onPageSet={phaseSelectedTrigger} selectedInstance={selectedInstance} onBoastMessage={props.onBoastMessage} currentRoles={connectedWalletRoles}></GivingCirclePhases>
                 );
                 return phaseSelectedTrigger;
             });

@@ -34,7 +34,7 @@ const CircleInfo = (props)=> {
     }
 
     const [output, setOutput] = useState(
-        <CircleGeneral connectedWalletInfo={props.connectedWalletInfo} selectedInstance={props.selectedInstance}></CircleGeneral>
+        <CircleGeneral connectedWalletInfo={props.connectedWalletInfo} selectedInstance={props.selectedInstance} onBoastMessage={props.onBoastMessage}></CircleGeneral>
     );
 
     const handleStateSet = (state) => {
@@ -56,7 +56,7 @@ const CircleInfo = (props)=> {
             )
         } else if (state === 'general') {
             setOutput(
-                <CircleGeneral connectedWalletInfo={props.connectedWalletInfo} selectedInstance={props.selectedInstance}></CircleGeneral>
+                <CircleGeneral connectedWalletInfo={props.connectedWalletInfo} selectedInstance={props.selectedInstance} onBoastMessage={props.onBoastMessage}></CircleGeneral>
             )
         }
     }
