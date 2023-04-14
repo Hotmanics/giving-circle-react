@@ -5,6 +5,10 @@ import { PartialIERC20InfoABI } from "../../../Smart Contracts Info/IPartialERC2
 import { kycControllerABI } from "../../../Smart Contracts Info/KycControllerInfo";
 
 import "./CircleInfo.css";
+import CircleInfoNavBar from "./CircleInfoNavBar";
+import CircleAttendees from "./CircleAttendees/CircleAttendees";
+import CircleContributors from "./CircleContributors.js/CircleContributors";
+import CircleFunds from "./CircleFunds/CircleFunds";
 
 const CircleInfo = (props)=> {
 
@@ -261,8 +265,28 @@ const CircleInfo = (props)=> {
                     </div>
     } 
 
+    const [output, setOutput] = useState();
+
+    const handleStateSet = (state) => {
+        if (state === 'attendees') {
+            setOutput(
+                <CircleAttendees selectedInstance={props.selectedInstance}></CircleAttendees>
+            );
+        } else if (state === 'contributors') {
+            setOutput(
+                <CircleContributors selectedInstance={props.selectedInstance} decimals={decimals}></CircleContributors>
+            );
+        } else if (state === 'funds') {
+            setOutput(
+                <CircleFunds connectedWalletInfo={props.connectedWalletInfo} selectedInstance={props.selectedInstance} decimals={decimals}></CircleFunds>
+            );
+        }
+    }
 
     return <CenteredCard className="circleInfo" title="Info">
+
+        <CircleInfoNavBar onStateSet={handleStateSet}></CircleInfoNavBar>
+        {output}
         <table>
             <tbody>
                 <tr>
@@ -304,16 +328,6 @@ const CircleInfo = (props)=> {
                                 <th>{kycAddress} </th>
                                 <th>
                                     {kycOutput}
-                                    {/* <div id="in">
-                                        Adds a wallet to the database and marks it as KYCed.
-                                        <input type="text" placeholder="Wallet" onChange={handleUserToKycInput}/>
-                                        <button onClick={kycUser}>KYC Wallet (KYC Admin)</button>
-                                    </div>
-                                    <div id="in">
-                                        The KYC Admin Role holds the responsibility of adding new wallets to the database.
-                                        <input type="text" placeholder="Wallet" onChange={handleKycAdmin}/>
-                                        <button onClick={setUserToKycAdmin}>Grant: KYC Admin Role (KYC Admin)</button>
-                                    </div> */}
                                 </th>
                             </tr> : <tr></tr>
                     }
@@ -388,55 +402,6 @@ const CircleInfo = (props)=> {
                     <th>{ totalAllocatedFunds }</th>
                 </tr>
 
-            </tbody>
-        </table>
-
-
-        <h2>Attendess: </h2>
-        <p>People who are physically at the event who place beans to contributors.</p>
-        <table>
-            <tbody>
-            <tr>
-                <th>Address (Wallet)</th>
-                <th>Placeable Beans</th>
-            </tr>
-            {
-                attendees.map((value, index) => {
-                return  <tr key={index}>
-                            <th>{value.addr}</th>
-                            <th>{value.beansAvailable.toNumber()}</th>
-                        </tr>
-                })
-            }
-            </tbody>
-        </table>
-
-        <h2>Contributors: </h2>
-        <p>People who have dedicate time/energy/resources to the DAO.</p>
-        <table>
-            <tbody>
-            <tr>
-                <th>Index</th>
-                <th>Name</th>
-                <th>Address (Wallet)</th>
-                <th>Contributions</th>
-                <th>Beans Received</th>
-                <th>Gift Amount</th>
-                <th>Redeemed</th>
-            </tr>
-            {
-                proposals.map((value, index) => {
-                return  <tr key={index}>
-                            <th>{index}</th>
-                            <th>{value.contributor.name}</th>
-                            <th>{value.contributor.addr}</th>
-                            <th>{value.contributor.contributions}</th>
-                            <th>{value.beansReceived.toNumber()}</th>
-                            <th>{ethers.utils.formatUnits(value.contributor.fundsAllocated.toNumber(), decimals)}</th>
-                            <th>{value.contributor.hasRedeemed.toString()}</th>
-                        </tr>
-                })
-            }
             </tbody>
         </table>
         </CenteredCard>
