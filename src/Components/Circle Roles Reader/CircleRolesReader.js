@@ -10,9 +10,11 @@ const CircleRolesReader = (props)=> {
 
         let ADMIN_ROLE = await props.circleContract.DEFAULT_ADMIN_ROLE();
         let LEADER_ROLE = await props.circleContract.LEADER_ROLE();
+        let FUNDS_MANAGER_ROLE = await props.circleContract.FUNDS_MANAGER_ROLE();
 
         let hasAdminRole = await props.circleContract.hasRole(ADMIN_ROLE, props.connectedWalletInfo.account);
         let hasLeaderRole = await props.circleContract.hasRole(LEADER_ROLE, props.connectedWalletInfo.account);
+        let hasFundsManagerRole = await props.circleContract.hasRole(FUNDS_MANAGER_ROLE, props.connectedWalletInfo.account);
 
         let currentRoles = [];
 
@@ -22,6 +24,10 @@ const CircleRolesReader = (props)=> {
 
         if (hasLeaderRole) {
             currentRoles.push("Leader");
+        }
+
+        if (hasFundsManagerRole) {
+            currentRoles.push("Funds Manager");
         }
 
         let finalString = '';

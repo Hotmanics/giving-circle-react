@@ -5,3 +5,7 @@
 .addAttendees input {
     margin:2.5px;
 }
+
+.addAttendees h1 {
+    color: rgb(255, 0, 0);
+}

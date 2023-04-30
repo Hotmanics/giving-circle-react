@@ -1,43 +1,27 @@
 .connectWallet {
   background-color: #333333;
   border-radius: 12px;
-  width:100px;
-  height: 50px;
-  margin-top:5px; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  
+  text-align: center;
+  margin:auto;
+  width: 100%;
+  min-width: 50px;
+  max-width: 250px; 
+  color:white;
   }
 
-.connectWallet p {
-    font-size: 14px;
-    color:#ffffff;
-    text-align:center;
-    padding:.1rem;
+.connectWallet button{
+  background-color: #f48847;
+  color:white;
+  width: 100%;
+  min-width: 50px;
+  max-width: 75px; 
+  font-size:24px;
+  border-radius:12px;
+  margin:2.5px;
   }
-
-.connectWallet button {
-    /* cursor: pointer; */
-    /* border: 2px solid #ffffff; */
-    /* background-color: #f48847; */
-    /* color: white; */
-    /* border-radius: 12px; */
-    /* width: 80px; */
-}
-
-/* .connectWallet button:hover,
-.connectWallet button:active {
-  background-color: #724021;
-  border-color: #724021;;
-}
-
-.connectWallet button.alternative {
-  color: #724021; 
-  border-color: transparent;
-  background-color: transparent;
-}
-
-.connectWallet button.alternative:hover,
-.connectWallet button.alternative:active {
-  background-color: #724021;
-}  */
+  .connectWallet button:hover,
+  .connectWallet button:active{
+    background-color: #894b24;
+    border-color: #000000;
+  }

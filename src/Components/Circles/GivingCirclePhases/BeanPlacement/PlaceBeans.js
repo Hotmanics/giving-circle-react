@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../../../Cards/Centered Card/CenteredCard";
+import "./PlaceBeans.css";
 
 const PlaceBeans = (props)=> {
 
@@ -85,7 +86,7 @@ const PlaceBeans = (props)=> {
     }
 
     
-    return <CenteredCard title="Place Beans">
+    return <CenteredCard className="placeBeans" title="Place Beans">
         <div>
         <p>Your Placeable Beans: {numOfPlaceableBeans} </p>    
             <h2>Contributors: </h2>

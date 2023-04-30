@@ -68,20 +68,19 @@ const ConnectWallet = (props)=> {
     let output;
 
     if (connectedWalletInfo.account === undefined) {
-                            output = <button type="button" onClick={connectWallet}>
-                                Login 
-                            </button>;
+        output = <button type="button" onClick={connectWallet}>
+            Login 
+        </button>;
     } else {
       truncated = connectedWalletInfo.account.substring(0, 10) + "...";
     }
 
-    const accountInfo = connectedWalletInfo.account === undefined ? <div></div>
-                        : <p>Logged in as: { truncated }</p>
-                        
+    let accountInfo = connectedWalletInfo.account === undefined ? <div></div>
+                        : <div id="holla">Logged in as: { truncated }</div>
+
     return <div className="connectWallet">
         { output } 
         { accountInfo }
-        {/* <p>Hellos!</p> */}
         </div>
 }
 

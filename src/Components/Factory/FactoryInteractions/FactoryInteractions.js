@@ -146,7 +146,7 @@ const FactoryInteractions = (props)=> {
         
     }
 
-    return <CenteredCard className="factoryInteractions" title="Create New Giving Cirlce">
+    return <CenteredCard className="factoryInteractions" title="Giving Circle Creation">
 
     <div>
     <a href="https://faucet.polygon.technology/" target={"#"}>Polygon Testnet Faucet</a>

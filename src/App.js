@@ -9,11 +9,12 @@ import "./Components/Inline/Inline.css";
 import { factoryAddress, factoryABI } from "./Smart Contracts Info/FactorySmartContractInfo";
 import { ethers } from "ethers"
 import RolesReader from "./Components/Roles Reader/RolesReader";
+import About from './Components/About/About';
 
 function App() {
 
   useEffect(() => {
-    document.title = "Giving Circles"
+    document.title = "Giving Circles - ATX DAO"
     }, []);
 
   const [connectedWalletInfo, setConnectedWalletInfo] = useState('');
@@ -31,71 +32,35 @@ function App() {
 
     setFactoryContract(factoryContract);
 
-    setLoginComponents(
-      info.provider === undefined ?
-        <div></div> : 
-        <LoggedInSection 
-          onBoastMessage={handleLogger} 
-          connectedWalletInfo={info}
-          factoryContract={factoryContract}
-          onFactorySpecificTrigger={handleFactorySpecificTrigger}
-        ></LoggedInSection>
-        );
   }
 
   const handleLogger = (message)=> {
     setMessage(message);
   }
 
-  const [loginComponents, setLoginComponents] = useState('');
-
   const [rolesOutput, setRolesOutput] = useState();
 
-  const [factoryPageSet, setFactoryPageSet] = useState(0);
-
-  const handleFactorySpecificTrigger = (factoryContract) => {
-
-    console.log(factoryContract);  
-
-    setFactoryPageSet((factoryPageSet) => {
-      factoryPageSet = factoryPageSet + 1;
-    })
-
-
+  let loginComponents;
+  if (connectedWalletInfo.provider !== undefined) {
+    loginComponents = <LoggedInSection 
+    onBoastMessage={handleLogger} 
+    connectedWalletInfo={connectedWalletInfo}
+    factoryContract={factoryContract}
+  ></LoggedInSection>
+  } else {
+    loginComponents = <About></About>
   }
 
-
-  // if (factoryContract !== undefined) {
-  //   console.log("RUNNING")
-  //   setRolesOutput(
-  //     <div id="test">  
-  //     <RolesReader connectedWalletInfo={connectedWalletInfo} factoryContract={factoryContract} onFactoryPageSet={factoryPageSet}></RolesReader>
-  //     </div>
-  //   );
-  // }
-
-
   let output = <div>
-
-    <div id="topContainer">
-  <div id="test">
     <ConnectWallet onBoastMessage={handleLogger} onWalletConnected={handleLogin}></ConnectWallet>
-    </div>
-  <div id="test">  
-  <Logger boastMessage={message} connectedWalletInfo={connectedWalletInfo}></Logger>
-  </div>
- {
-  rolesOutput
- }
-
-  </div>
-
-  {loginComponents}
+    <Logger boastMessage={message} connectedWalletInfo={connectedWalletInfo}></Logger>
+    { rolesOutput }
+    {loginComponents}
   </div>;
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className='app'>
+      <header>
         { output }
       </header>
     </div>
