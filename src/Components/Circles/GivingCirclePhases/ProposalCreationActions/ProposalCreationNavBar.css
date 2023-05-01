@@ -1,13 +1,20 @@
 .proposalCreationNavBar #boxContainer {
-    background-color:rgb(218, 197, 113);
-    width: 600px;
+    background-color:#e2a681;
+    min-width: 200px;
+    max-width: 500px;
     margin:auto;
     border-radius: 12px;
 }
 
-.proposalCreationNavBar button {
+/* .proposalCreationNavBar button {
     margin:10px;
+} */
+
+.proposalCreationNavBar p {
+    margin-bottom: -5px;
+    font-size: 24px;
 }
+
 
 .proposalCreationNavBar input {
     margin:2.5px;
@@ -16,4 +23,27 @@
 .proposalCreationNavBar textarea {
     width: 400px;
     height:75px;
+}
+
+.proposalCreationNavBar #progressButton {
+}
+
+.proposalCreationNavBar button{
+    vertical-align: top;
+    background-color: #f48847;
+    height:25px;
+    color:white;
+    width: 100%;
+    min-width: 50px;
+    max-width: 150px; 
+    font-size:16px;
+    border-radius:12px;
+    margin:2.5px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    }
+    .proposalCreationNavBar button:hover,
+    .proposalCreationNavBar button:active{
+      background-color: #894b24;
+      border-color: #000000;
 }

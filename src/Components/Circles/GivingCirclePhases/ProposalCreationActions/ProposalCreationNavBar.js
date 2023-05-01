@@ -26,7 +26,9 @@ const ProposalCreationNavBar = (props)=> {
     }
 
     if (isLeader) {
-        output = <div id="boxContainer"><button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
+        output = <div id="boxContainer">
+        <p>Actions</p>
+            <button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
         Contributors
         </button>
     
@@ -34,11 +36,13 @@ const ProposalCreationNavBar = (props)=> {
         Add Attendees
         </button>
 
-        <button className="semiBigButton" onClick={()=> {handleClick('progressToBeanPlacementPhase')}}>
-            Progress To Bean Placement Phase
+        <button id="progressButton" className="semiBigButton" onClick={()=> {handleClick('progressToBeanPlacementPhase')}}>
+            Progress Phase
         </button></div>
     } else {
-        output = <div id="boxContainer"><button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
+        output = <div id="boxContainer">
+        <p>Actions</p>
+            <button className="semiBigButton" onClick={()=> {handleClick('addProposers')}}>
             Contributors
         </button></div>
     }

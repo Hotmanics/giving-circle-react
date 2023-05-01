@@ -151,7 +151,38 @@ const FactoryInteractions = (props)=> {
     <div>
     <a href="https://faucet.polygon.technology/" target={"#"}>Polygon Testnet Faucet</a>
     </div>
-    <div>
+
+    <div id="aContainer">
+        <h2 id="title">
+            Name
+        </h2>
+        <p id="description2">
+        A descriptive name used to identify the Giving Circle.
+        </p>
+        <input id="nameField" name ="name" placeholder="Giving Circle Name" onChange= {handleNameChanged}/>
+    </div>
+    <div id="aContainer">
+        <h2 id="title">
+        Beans To Disperse Per Attendee
+        </h2>
+        <p id="description2">
+        The number of beans that get dispersed to each attendee.
+        </p>
+        <input type="number" defaultValue={numOfBeansToDisperse} onChange={handleNumberOfBeansDispersed}/>
+    </div>
+    <div id="aContainer">
+        <h2 id="title">
+        Funding Threshold
+        </h2>
+        <p id="description2">
+        The minimum required amount of tokens that need to be transferred to the Giving Circle before it can progress to the gift redemption phase.
+        </p>
+        <input type="number" defaultValue={0} onChange={handleFundingThreshold}/>
+    </div>
+
+
+
+    {/* <div>
     <table>
             <tbody>
                 <tr>
@@ -179,12 +210,13 @@ const FactoryInteractions = (props)=> {
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> */}
 
     <div>
         <div id="in">
             <p>Leaders</p>
             <p>This role allows wallets to progress Giving Circles through its phases.</p>
+            <div><button onClick={addLeaderField}>+</button></div>
             {
                 leaderInputFields.map((input, index) => {
                 return (
@@ -198,12 +230,12 @@ const FactoryInteractions = (props)=> {
                     </div>    
                 )})
             }
-            <div><button onClick={addLeaderField}>+</button></div>
         </div>
 
         <div id="in">
             <p>Admins</p>
             <p>This role allows the accessing/revoking of other roles.</p>
+            <div><button onClick={addAdminField}>+</button></div>
             {
                 adminInputFields.map((input, index) => {
                 return (
@@ -217,13 +249,13 @@ const FactoryInteractions = (props)=> {
                     </div>    
                 )})
             }
-            <div><button onClick={addAdminField}>+</button></div>
         </div>
 
         <div id="in">
 
             <p>Bean Placement Admins</p>
             <p>This role allows wallets to place beans on behalf of other wallets</p>
+            <div><button onClick={addBeanPlacerField}>+</button></div>
 
             {
                 specialBeanPlacerInputFields.map((input, index) => {
@@ -238,13 +270,13 @@ const FactoryInteractions = (props)=> {
                     </div>    
                 )})
             }
-            <div><button onClick={addBeanPlacerField}>+</button></div>
 
         </div>
 
         <div id="in">
             <p>Fund Managers</p>
             <p>This role allows wallets to redeem gifts on behalf of other wallets.</p>
+            <div><button onClick={addGiftRedeemerField}>+</button></div>
             {
                 specialGiftRedeemerInputFields.map((input, index) => {
                 return (
@@ -258,7 +290,6 @@ const FactoryInteractions = (props)=> {
                     </div>    
                 )})
             }
-            <div><button onClick={addGiftRedeemerField}>+</button></div>
 
         </div>
     </div>

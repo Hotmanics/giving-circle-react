@@ -12,6 +12,8 @@ import CircleInfo from "./CircleInfo/CircleInfo";
 
 const Circles = (props)=> {
 
+    const [phase, setPhase] = useState('');
+
     const [circles, setCircles] = useState([]);
 
     const [selectedInstance, setSelectedInstance] = useState('');
@@ -80,6 +82,8 @@ const Circles = (props)=> {
         setPhaseSelectedTrigger((phaseSelectedTrigger) => {
             phaseSelectedTrigger++;
 
+            getPhase(contract);
+
             setOutput(
                 <GivingCirclePhases connectedWalletInfo = {props.connectedWalletInfo} connectedWalletRoles={roles} onPageSet={phaseSelectedTrigger} selectedInstance={contract} onBoastMessage={props.onBoastMessage}></GivingCirclePhases>
             );
@@ -113,16 +117,36 @@ const Circles = (props)=> {
     }
 
     let selectedCircleDisplayOutput;
-    let selectedCircleRolesOutput;
 
     if (selectedCircleName !== '') {
-        selectedCircleDisplayOutput = <div><h2>Circle: { selectedCircleName } </h2></div>
-        selectedCircleRolesOutput = <CircleRolesReader connectedWalletInfo={props.connectedWalletInfo} circleContract={selectedInstance}></CircleRolesReader>;
+        selectedCircleDisplayOutput = <div>
+            <div>
+                <h2>{ selectedCircleName } </h2>
+            </div>
+        </div>
     }
 
     let navbarOutput;
     if (selectedInstance !== '') {
         navbarOutput = <GivingCircleNavBar onStateSet={handleStateSet} connectedWalletRoles={connectedWalletRoles}></GivingCircleNavBar>;
+    }
+
+
+    const getPhase = async (selectedInstance)=> {
+        let phase = await selectedInstance.phase();
+
+        if (phase === 0) {
+            setPhase("Unitialized");
+
+        } else if (phase === 1) {
+            setPhase("Proposal Creation");
+            
+        } else if (phase === 2) {
+            setPhase("Bean Placement");
+
+        } else if (phase === 3) {
+            setPhase("Gift Redemption");
+        }
     }
 
     const getRoles = async (selectedInstance)=> {
@@ -160,8 +184,9 @@ const Circles = (props)=> {
         return currentRoles;
     }
 
-    return <div><CenteredCard className="circles" title="Giving Circles">
-        <div>
+    let baseOutput;
+    if (circles.length > 0) {
+        baseOutput = <div>
         <select onChange={handleGivingCircleSelected} defaultValue="choose">
         <option value="choose" disabled>
          -- Select Giving Circle --
@@ -174,11 +199,14 @@ const Circles = (props)=> {
                 ))
             }
         </select>  
-        </div>
+        </div>;
+    } else {
+        baseOutput = <p>Loading Giving Circles...</p>
+    }
 
-        </CenteredCard>
-        { selectedCircleRolesOutput } 
-        <CenteredCard>
+    return <div><CenteredCard className="circles" title="Giving Circles">
+        
+        { baseOutput }
         { selectedCircleDisplayOutput }
             { navbarOutput }
             { output }

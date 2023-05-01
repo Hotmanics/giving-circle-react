@@ -1,11 +1,26 @@
+
+.tableContainer {
+    overflow-x:auto
+}
+
 table {
     margin-left: auto;
     margin-right: auto;
     color:white;
+    table-layout: fixed;
+    width:400px;
 }
 
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
     border-color:white;
+  }
+
+  th {
+    word-wrap: break-word;
+
+  }
+  td {
+    word-wrap: break-word;
   }

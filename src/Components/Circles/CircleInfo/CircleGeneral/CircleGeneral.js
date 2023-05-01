@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ethers } from "ethers"
+import "./CircleGeneral.css";
+import InfoCard from './InfoCard/InfoCard';
 
 const CircleGeneral = (props)=> {
 
@@ -90,64 +92,61 @@ const CircleGeneral = (props)=> {
             props.onBoastMessage("Granted Leader Role To " + beanPlacerManagerField + "!");
     }
 
-    
+    let admin;
+    if (props.hasAdminRole) {
+        admin =  <div>
 
-    return <div>
- <table>
-            <tbody>
-                <tr>
-                    <th>What</th>
-                    <th>Description</th>
-                    <th>Value</th>
-                    <th></th>
-                </tr>
-
-                <tr>
-                    <th>Address</th>
-                    <th>The smart contract of the Giving Circle.</th>
-                    <th>{ props.selectedInstance.address }</th>
-                </tr>
-                <tr>
-                    <th>Phase</th>
-                    <th>The current phase of the Giving Circle.</th>
-                    <th>{ phase }</th>
-                </tr>
-                <tr>
-                    <th>Total Beans To Dispurse</th>
-                    <th>The total number of beans to dispurse to each attendee.</th>
-                    <th>{ totalBeansToDispurse }</th>
-                </tr>
-
-                <tr>
-                    <th>Total Beans Dispursed</th>
-                    <th>The total number of beans dispursed across all attendees.</th>
-                    <th>{ totalBeansDispursed }</th>
-                </tr>
-
-            </tbody>
-        </table>
-
-<div>
-
+           <div>
         <input type="text" placeholder="Wallet" onChange={handleAdminField}/>
         <button onClick={handleAdminBtn}>Grant: Admin Role</button>
-</div>
+    </div>
         
-<div>
+    <div>
         <input type="text" placeholder="Wallet" onChange={handleLeaderField}/>
         <button onClick={handleLeaderBtn}>Grant: Leader Role</button>
-        </div>
-
-<div>
+    </div>
+    <div>
         <input type="text" placeholder="Wallet" onChange={handleBeanPlacerManagerField}/>
         <button onClick={handleBeanPlacerManagerBtn}>Grant: Bean Placement Manager Role</button>
         </div>
 
-<div>
+    <div>
         <input type="text" placeholder="Wallet" onChange={handleFundsManagerField}/>
         <button onClick={handleFundsManagerBtn}>Grant: Funds Manager Role</button>
     </div>
+    </div>
+    }
 
+
+
+
+
+    let addressCard = {};
+    addressCard.title = "Address";
+    addressCard.description = "The smart contract of the Giving Circle.";
+    addressCard.value = props.selectedInstance.address;
+
+    let phaseCard = {};
+    phaseCard.title = "Phase";
+    phaseCard.description = "The current phase of the Giving Circle.";
+    phaseCard.value = phase;
+
+    let totalBeans = {};
+    totalBeans.title = "Total Beans To Dispurse";
+    totalBeans.description = "The total number of beans to dispurse to each attendee.";
+    totalBeans.value = totalBeansToDispurse;
+
+    let totalDispursed = {};
+    totalDispursed.title = "Total Beans Dispursed";
+    totalDispursed.description = "The total number of beans dispursed across all attendees.";
+    totalDispursed.value = totalBeansDispursed;
+
+    return <div>
+        <InfoCard info = {addressCard}></InfoCard>
+        <InfoCard info = {phaseCard}></InfoCard>
+        <InfoCard info = {totalBeans}></InfoCard>
+        <InfoCard info = {totalDispursed}></InfoCard>
+        { admin }
     </div>
 }
 

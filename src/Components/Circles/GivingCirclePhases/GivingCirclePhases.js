@@ -117,8 +117,7 @@ const GivingCirclePhases = (props)=> {
         phaseNavigationOutput = <BeanPlacementNavBar onStateSet={handleStateSet} currentRoles={props.connectedWalletRoles}></BeanPlacementNavBar>;
     }
 
-    return <CenteredCard title="Interactions">
-        <p>Phase: { phase }</p>
+    return <CenteredCard className = "givingCircle">
         <div>
             {phaseNavigationOutput}
             {phaseOutput}

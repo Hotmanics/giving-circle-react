@@ -7,10 +7,42 @@
 }
 
 .addProposers textarea {
-    width: 400px;
+    max-width: 500px;
     height:75px;
 }
 
-.addProposers h1 {
-    color: rgb(255, 0, 0);
+.addProposers #buttonPlus{
+    background-color: #f48847;
+    color:white;
+    width: 100%;
+    min-width: 50px;
+    max-width: 50px; 
+    font-size:18px;
+    border-radius:12px;
+    margin:2.5px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    }
+    .addProposers #buttonPlus:hover,
+    .addProposers #buttonPlus:active{
+      background-color: #894b24;
+      border-color: #000000;
+}
+
+.addProposers #actionButton{
+    background-color: #f48847;
+    color:white;
+    width: 100%;
+    min-width: 50px;
+    max-width: 150px; 
+    font-size:18px;
+    border-radius:12px;
+    margin:2.5px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    }
+    .addProposers #actionButton:hover,
+    .addProposers #actionButton:active{
+      background-color: #894b24;
+      border-color: #000000;
 }

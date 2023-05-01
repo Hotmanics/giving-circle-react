@@ -15,8 +15,26 @@
 
 .factoryInteractions #description {
   width:200px;
+  
 }
 
 .factoryInteractions #nameField {
   margin-bottom: 20px;
+}
+
+.factoryInteractions #aContainer {
+  text-align: center;
+  min-width: none;
+  max-width: 400px;
+  background-color:#e2a681;
+  margin: auto;
+  border-radius: 12px;
+}
+
+.factoryInteractions #title {
+  margin-bottom: -20px;
+}
+
+.factoryInteractions #description2 {
+  margin-bottom: -5px;
 }

@@ -1,0 +1,26 @@
+.addNetwork {
+  background-color: #333333;
+  color: white;;
+    text-align: center;
+    margin:auto;
+    width: 100%;
+    min-width: 50px;
+    max-width: 450px; 
+    border-radius: 12px;
+}
+
+.addNetwork button{
+  text-align: center;
+  background-color: #f48847;
+  color:white;
+  min-width: 50px;
+  max-width: 200px; 
+  font-size:14px;
+  border-radius:12px;
+  margin:2.5px;
+  }
+  .addNetwork button:hover,
+  .addNetwork button:active{
+    background-color: #894b24;
+    border-color: #000000;
+  }

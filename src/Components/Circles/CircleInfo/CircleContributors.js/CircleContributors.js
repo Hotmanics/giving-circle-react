@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ethers } from "ethers"
+import ContributorCard from './ContributorCard/ContributorCard';
 
 const CircleContributors = (props)=> {
 
@@ -19,6 +20,21 @@ const CircleContributors = (props)=> {
     return <div>
 <h2>Contributors: </h2>
         <p>People who have dedicate time/energy/resources to the DAO.</p>
+
+
+        {
+            proposals.map((value, index) => {
+                return <ContributorCard key={index} proposal={value} decimals={decimals}></ContributorCard>
+            })
+        }
+
+
+        {/* <div className='tableContainer'> */}
+        
+
+
+
+{/* 
         <table>
             <tbody>
             <tr>
@@ -44,7 +60,9 @@ const CircleContributors = (props)=> {
                 })
             }
             </tbody>
-        </table>
+        </table> */}
+        {/* </div> */}
+
     </div>
 }
 

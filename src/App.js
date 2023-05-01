@@ -8,8 +8,9 @@ import "./Components/Table/Table.css";
 import "./Components/Inline/Inline.css";
 import { factoryAddress, factoryABI } from "./Smart Contracts Info/FactorySmartContractInfo";
 import { ethers } from "ethers"
-import RolesReader from "./Components/Roles Reader/RolesReader";
 import About from './Components/About/About';
+import AddNetwork from './Components/AddNetwork/AddNetwork';
+import Lost from './Components/Lost/Lost';
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
     document.title = "Giving Circles - ATX DAO"
     }, []);
 
-  const [connectedWalletInfo, setConnectedWalletInfo] = useState('');
+  const [connectedWalletInfo, setConnectedWalletInfo] = useState();
   const [factoryContract, setFactoryContract] = useState();
   const [message, setMessage] = useState('');
 
@@ -38,10 +39,8 @@ function App() {
     setMessage(message);
   }
 
-  const [rolesOutput, setRolesOutput] = useState();
-
   let loginComponents;
-  if (connectedWalletInfo.provider !== undefined) {
+  if (connectedWalletInfo !== undefined) {
     loginComponents = <LoggedInSection 
     onBoastMessage={handleLogger} 
     connectedWalletInfo={connectedWalletInfo}
@@ -51,12 +50,30 @@ function App() {
     loginComponents = <About></About>
   }
 
+  let extra;
+  if (connectedWalletInfo === undefined) {
+    extra = <Lost></Lost>;
+  }
+
   let output = <div>
-    <ConnectWallet onBoastMessage={handleLogger} onWalletConnected={handleLogin}></ConnectWallet>
-    <Logger boastMessage={message} connectedWalletInfo={connectedWalletInfo}></Logger>
-    { rolesOutput }
-    {loginComponents}
-  </div>;
+  <div id="margined">
+    <ConnectWallet onWalletConnected={handleLogin}></ConnectWallet>
+  </div>
+  <div id="margined">
+    {extra}
+  </div>
+  <div id="margined">
+    <AddNetwork></AddNetwork>
+  </div>
+  {loginComponents}
+</div>
+
+
+  // let output = <div>
+  //   <ConnectWallet onBoastMessage={handleLogger} onWalletConnected={handleLogin}></ConnectWallet>
+  //   <Logger boastMessage={message} connectedWalletInfo={connectedWalletInfo}></Logger>
+  //   {loginComponents}
+  // </div>;
 
   return (
     <div className='app'>

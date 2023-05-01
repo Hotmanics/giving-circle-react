@@ -9,12 +9,14 @@ import CircleContributors from "./CircleContributors.js/CircleContributors";
 import CircleFunds from "./CircleFunds/CircleFunds";
 import CircleKYC from "./CircleKYC/CircleKYC";
 import CircleGeneral from "./CircleGeneral/CircleGeneral";
+import CircleRolesReader from "../../Circle Roles Reader/CircleRolesReader";
 
 const CircleInfo = (props)=> {
 
     useEffect(()=> {
         if (props.onPageSet) {
           getInfo();
+          getRoles();
         }
     }, [props.onPageSet]);
 
@@ -36,6 +38,7 @@ const CircleInfo = (props)=> {
     const [output, setOutput] = useState(
         <CircleGeneral connectedWalletInfo={props.connectedWalletInfo} selectedInstance={props.selectedInstance} onBoastMessage={props.onBoastMessage}></CircleGeneral>
     );
+    
 
     const handleStateSet = (state) => {
         if (state === 'attendees') {
@@ -56,12 +59,25 @@ const CircleInfo = (props)=> {
             )
         } else if (state === 'general') {
             setOutput(
-                <CircleGeneral connectedWalletInfo={props.connectedWalletInfo} selectedInstance={props.selectedInstance} onBoastMessage={props.onBoastMessage}></CircleGeneral>
+                <CircleGeneral hasAdminRole={hasAdminRole} connectedWalletInfo={props.connectedWalletInfo} selectedInstance={props.selectedInstance} onBoastMessage={props.onBoastMessage}></CircleGeneral>
             )
         }
     }
 
-    return <CenteredCard className="circleInfo" title="Info">
+    const getRoles = async ()=> {
+
+        let ADMIN_ROLE = await props.selectedInstance.DEFAULT_ADMIN_ROLE();
+
+        let hasAdminRole = await props.selectedInstance.hasRole(ADMIN_ROLE, props.connectedWalletInfo.account);
+
+        setHasAdminRole(hasAdminRole);
+    }
+
+    const [hasAdminRole, setHasAdminRole] = useState(false);
+
+    return <CenteredCard className="circleInfo">
+    <CircleRolesReader connectedWalletInfo={props.connectedWalletInfo} circleContract={props.selectedInstance}></CircleRolesReader>
+
         <CircleInfoNavBar onStateSet={handleStateSet}></CircleInfoNavBar>
         {output}
         </CenteredCard>

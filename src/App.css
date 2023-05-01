@@ -3,3 +3,7 @@
   padding:10px;
   min-height: 100vh;
 }
+
+.app #margined {
+  margin-bottom:5px;
+}

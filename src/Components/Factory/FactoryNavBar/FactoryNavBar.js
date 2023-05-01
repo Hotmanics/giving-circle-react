@@ -131,7 +131,7 @@ const FactoryNavBar = (props)=> {
             </CenteredCard></div>    
     }
 
-    return <div>
+    return <div className='factoryNavBar'>
         {navOutput}
         <div>
             <RolesReader connectedWalletInfo={props.connectedWalletInfo} factoryContract={props.factoryContract} onBoastMessage={handleLogger} ></RolesReader>

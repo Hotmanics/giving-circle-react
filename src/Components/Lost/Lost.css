@@ -1,0 +1,10 @@
+.lost {
+    background-color: #939090;
+    color: white;;
+    text-align: center;
+    margin:auto;
+    width: 100%;
+    min-width: 50px;
+    max-width: 400px; 
+    border-radius: 12px;
+}

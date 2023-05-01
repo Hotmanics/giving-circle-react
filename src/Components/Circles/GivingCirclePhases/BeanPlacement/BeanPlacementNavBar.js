@@ -30,16 +30,18 @@ const BeanPlacementNavBar = (props)=> {
 
     if (isLeader) {
         output = <div id = "boxContainer">
-            <button className="semiBigButton" onClick={()=> {handleClick('placeBeans')}}>
+                    <p>Actions</p>
+                    <button className="semiBigButton" onClick={()=> {handleClick('placeBeans')}}>
                 Place Beans
             </button>
             <button className="semiBigButton" onClick={()=> {handleClick('progressToGiftRedemptionPhase')}}>
-                Progress To Gift Redemption Phase
+                Progress Phase
             </button>
             </div>;
     } else {
         output = <div id = "boxContainer">
-            <button className="semiBigButton" onClick={()=> {handleClick('placeBeans')}}>
+                    <p>Actions</p>
+                    <button className="semiBigButton" onClick={()=> {handleClick('placeBeans')}}>
                 Place Beans
             </button>
             </div>;

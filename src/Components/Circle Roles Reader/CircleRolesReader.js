@@ -47,7 +47,7 @@ const CircleRolesReader = (props)=> {
     let output;
 
     if (finalString.length !== 0) {
-        output = <div className="circleRolesReader"><h2>Your Roles For This Giving Circle:</h2>
+        output = <div className="circleRolesReader"><h3 className="header">Your Roles For This Giving Circle</h3>
         <p>{finalString}</p>
         </div>
     }

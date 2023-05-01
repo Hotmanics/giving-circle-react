@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from "ethers"
 import { kycControllerABI } from "../../../../Smart Contracts Info/KycControllerInfo";
+import KYCCard from './KYCCard/KYCCard';
 
 const CircleKYC = (props)=> {
 
@@ -74,7 +75,6 @@ const CircleKYC = (props)=> {
 
     const getRolesForKYC = async ()=> {
 
-
         let kycController = await props.selectedInstance.kycController();
         setKycAddress(kycController);
 
@@ -113,22 +113,58 @@ const CircleKYC = (props)=> {
 
     if (isPresent) {
         kycOutput = <div>
-                        <div id="in">
-                        Adds a wallet to the database and marks it as KYCed.
+                        <div>
+                        <p>Adds a wallet to the database and marks it as KYCed.</p>
                         <input type="text" placeholder="Wallet" onChange={handleUserToKycInput}/>
-                        <button onClick={kycUser}>KYC Wallet (KYC Admin)</button>
+                        <div><button onClick={kycUser}>KYC Wallet</button></div>
                         </div>
-                        <div id="in">
-                            The KYC Admin Role holds the responsibility of adding new wallets to the database.
+                        <div>
+                            <p>The KYC Admin Role holds the responsibility of adding new wallets to the database.</p>
                             <input type="text" placeholder="Wallet" onChange={handleKycAdmin}/>
-                            <button onClick={setUserToKycAdmin}>Grant: KYC Admin Role (KYC Admin)</button>
+                            <div><button onClick={setUserToKycAdmin}>Grant: Admin</button></div>
                         </div>
                     </div>
     } 
 
 
+    let template = {
+        title: "",
+        description: "",
+        value: ""
+    }
+
+    let isKYCRequired = kycAddress !== "0x0000000000000000000000000000000000000000" ? true : false;
+
+    let kycRequiredCard = {
+        title: "KYC Required",
+        description: "Does this circle require contributors to be KYCed?",
+        value: isKYCRequired ? "Yes" : "No"
+    }
+
+    let kycDatabaseCard = {
+        title: "KYC address",
+        description: "The smart contract containing the KYC database.",
+        value: kycAddress
+    }
+
+    let output;
+
+    if (isKYCRequired) {
+        output = <div>
+            <KYCCard info={kycDatabaseCard}></KYCCard>
+            {kycOutput}
+        </div>
+    }
 
     return <div>
+
+        <KYCCard info={kycRequiredCard}></KYCCard>
+        { output }
+        
+        
+        
+        {/* <div className='tableContainer'>
+
 <table>
             <tbody>
                 <tr>
@@ -164,6 +200,8 @@ const CircleKYC = (props)=> {
                     }
             </tbody>
         </table>
+        </div> */}
+
     </div>
 }
 

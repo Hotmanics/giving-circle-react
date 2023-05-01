@@ -1,6 +1,30 @@
 .circleNavBar #buttonContainer {
-    background-color:rgb(159, 144, 83);
-    width: 300px;
+    background-color:#eb9d6c;
+    min-width: 50px;
+    max-width: 350px;
     margin:auto;
     border-radius: 12px;
+}
+
+.circleNavBar p {
+    margin-bottom: -5px;
+    font-size: 24px;
+}
+
+.circleNavBar button{
+    background-color: #f48847;
+    color:white;
+    width: 100%;
+    min-width: 50px;
+    max-width: 150px; 
+    font-size:18px;
+    border-radius:12px;
+    margin:2.5px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    }
+    .circleNavBar button:hover,
+    .circleNavBar button:active{
+      background-color: #894b24;
+      border-color: #000000;
 }

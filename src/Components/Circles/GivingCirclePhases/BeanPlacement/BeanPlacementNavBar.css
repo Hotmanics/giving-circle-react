@@ -1,6 +1,33 @@
 .beanPlacementNavBar #boxContainer {
-    background-color:rgb(218, 197, 113);
-    width: 500px;
+    background-color:#e2a681;
+    min-width:200px;
+    max-width: 500px;
     margin:auto;
     border-radius: 12px;
+}
+
+.beanPlacementNavBar button{
+    vertical-align: top;
+    background-color: #f48847;
+    height:25px;
+    color:white;
+    width: 100%;
+    min-width: 50px;
+    max-width: 150px; 
+    font-size:16px;
+    border-radius:12px;
+    margin:2.5px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    }
+    .beanPlacementNavBar button:hover,
+    .beanPlacementNavBar button:active{
+      background-color: #894b24;
+      border-color: #000000;
+}
+
+
+.beanPlacementNavBar p {
+    margin-bottom: -5px;
+    font-size: 24px;
 }

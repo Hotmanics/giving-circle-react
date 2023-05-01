@@ -3,6 +3,7 @@ import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../../Cards/Centered Card/CenteredCard";
 import { factoryAddress, factoryABI } from "../../../Smart Contracts Info/FactorySmartContractInfo";
+import FactoryCard from "./FactoryCard/FactoryCard";
 
 const FactoryInfo = (props)=> {
 
@@ -110,9 +111,8 @@ const FactoryInfo = (props)=> {
                 <input type="text" placeholder="Wallet" onChange={handleIndexField}/>
                 <button onClick={handleAdmins}>Grant: Circle Creator Role</button></div>;
 
-                factoryAdminSection = <div>Please provide an updated blueprint address to be used by the Giving Cirlce Creator.
-                <br>
-                </br>
+                factoryAdminSection = <div>
+                    <p>Please provide an updated blueprint address to be used by the Giving Cirlce Creator.</p>
                 <input type="text" placeholder="Smart Contract" onChange={handleImplementationChanged}/>
                 <div><button id="marginedButton" onClick={setImplemenetationToChain}>Set New Blueprint</button></div>
                 </div>
@@ -122,8 +122,39 @@ const FactoryInfo = (props)=> {
         }
     }
 
+    let template = {
+        title: '',
+        description: '',
+        value: ''
+    }
+
+    let card1 = {
+        title: 'Factory Address',
+        description: 'The smart contract that is used to create giving circles.',
+        value: factoryAddress
+    }
+
+
+    let card2 = {
+        title: 'Blueprint Address',
+        description: 'The smart contract that is used as a blueprint by the Giving Circle Creator.',
+        value: onChainImplementation
+    }
+
+
+    let card3 = {
+        title: 'Instances Count',
+        description: 'The number of Giving Circles created by the Factory.',
+        value: instancesCount
+    }
+
     return <CenteredCard className="factoryInfo" title="Factory Configuration">
-        <table>
+
+        <FactoryCard info={card1}></FactoryCard>
+        <FactoryCard info={card2} customRendering={factoryAdminSection}></FactoryCard>
+        <FactoryCard info={card3}></FactoryCard>
+
+        {/* <table>
             <tbody>
                 <tr>
                     <th>What</th>
@@ -138,7 +169,7 @@ const FactoryInfo = (props)=> {
                 </tr>
                 <tr>
                     <th>Blueprint Address</th>
-                    <th>The smart contract that is used as a blueprint by the Giving Circle Creator. </th>
+                    <th>The smart contract that is used as a blueprint by the Factory. </th>
                     <th>{ onChainImplementation } (Smart Contract) </th>
                     <th>
                         {factoryAdminSection}
@@ -146,12 +177,12 @@ const FactoryInfo = (props)=> {
                 </tr>
                 <tr>
                     <th>Instances Count</th>
-                    <th>The number of Giving Circles created by the Giving Circle Creator.</th>
+                    <th>The number of Giving Circles created by the Factory.</th>
                     <th>{ instancesCount }</th>
                 </tr>
 
             </tbody>
-        </table>
+        </table> */}
         {
             circleCreatorAdminSection
         }

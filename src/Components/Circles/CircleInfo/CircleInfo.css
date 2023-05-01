@@ -3,3 +3,24 @@
     vertical-align:top;
     margin:10px;
   }
+
+
+.circleInfo button{
+  vertical-align: top;
+  background-color: #f48847;
+  height:25px;
+  color:white;
+  width: 100%;
+  min-width: 50px;
+  max-width: 125px; 
+  font-size:16px;
+  border-radius:12px;
+  margin:2.5px;
+  margin-top:10px;
+  margin-bottom: 10px;
+  }
+  .circleInfo button:hover,
+  .circleInfo button:active{
+    background-color: #894b24;
+    border-color: #000000;
+}

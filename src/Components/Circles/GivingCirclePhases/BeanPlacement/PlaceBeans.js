@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CenteredCard from "../../../Cards/Centered Card/CenteredCard";
 import "./PlaceBeans.css";
+import BeanCard from "./BeanCard/BeanCard";
 
 const PlaceBeans = (props)=> {
 
@@ -76,9 +77,9 @@ const PlaceBeans = (props)=> {
             }
 
             let tx = await props.selectedInstance.placeMyBeansMultiple(indices, amounts);
-            props.onBoastMessage(`Placing ${beansToPlace} bean(s) to index ${indexToGive}...`);
+            props.onBoastMessage("Placing Beans...");
             await tx.wait();
-            props.onBoastMessage(`Placed ${beansToPlace} bean(s) to index ${indexToGive}!`);
+            props.onBoastMessage("Placed Beans!");
             getInfo();
         } catch (e) {
             props.onBoastMessage(e.reason);
@@ -90,8 +91,12 @@ const PlaceBeans = (props)=> {
         <div>
         <p>Your Placeable Beans: {numOfPlaceableBeans} </p>    
             <h2>Contributors: </h2>
-
-
+            {
+                proposals.map((value, index) => {
+                   return <BeanCard onAmountFieldChange={handleAmountFieldChange} index={index} key={index} info={value}></BeanCard>
+                })
+            }
+{/* 
             <table>
                 <tbody>
                     <tr>
@@ -125,7 +130,7 @@ const PlaceBeans = (props)=> {
                     })
                 }
                 </tbody>
-            </table>
+            </table> */}
 
 
         {/* {
@@ -160,7 +165,7 @@ const PlaceBeans = (props)=> {
             <input type="number" defaultValue={0} onChange={handleBeansField}/>
         </div>
          */}
-        <div><button onClick={placeBeans}>Place Beans</button></div>
+        <div><button id="buttonAction" onClick={placeBeans}>Place Beans</button></div>
          
         </div>;
         </CenteredCard>

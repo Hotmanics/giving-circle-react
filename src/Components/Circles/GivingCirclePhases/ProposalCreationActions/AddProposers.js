@@ -106,6 +106,8 @@ const AddProposers = (props)=> {
 
     if (isLeader) {
         addContributorsOutput = <div><h2>Add Contributors!</h2>
+        <div><button id="buttonPlus" onClick={addProposerField}>+</button></div>
+
         {
             proposers.map((input, index) => {
                 return (
@@ -135,9 +137,8 @@ const AddProposers = (props)=> {
                     )
             })
         }
-        <div><button onClick={addProposerField}>+</button></div>
 
-        <div><button className="semiBigButton" onClick={addProposers}>Add Contributors</button></div>
+        <div><button id="actionButton" className="semiBigButton" onClick={addProposers}>Add Contributors</button></div>
         </div>
     }
      
@@ -167,8 +168,8 @@ const AddProposers = (props)=> {
                 placeholder="Contributions"
                 onChange= {handleContributionsChanged}
             /></div>
-            <button className="semiBigButton" onClick={handleAddClick}>
-                Become a contributor
+            <button id="actionButton" className="semiBigButton" onClick={handleAddClick}>
+                Add Your Contributions
             </button>
         </div>
         

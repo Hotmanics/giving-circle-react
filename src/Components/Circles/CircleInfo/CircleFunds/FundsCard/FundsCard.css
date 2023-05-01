@@ -1,0 +1,19 @@
+.fundsCard {
+    background-color: rgb(165, 93, 42);
+    margin:auto;
+    margin-bottom: 30px;
+    min-width: 10px;
+    max-width: 450px;
+    text-align: center;
+    border-radius: 12px;
+    word-wrap: break-word;
+}
+
+.fundsCard h2 {
+    margin-bottom: -20px;
+}
+
+.fundsCard #value {
+    margin-top: -20px;
+    font-weight: 800;
+}

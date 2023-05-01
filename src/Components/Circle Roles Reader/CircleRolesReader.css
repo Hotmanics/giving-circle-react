@@ -6,8 +6,12 @@
   margin:auto;
   margin-top:5px;  
   text-align:center;
+  
 }
-
+.circleRolesReader .header {
+  margin-bottom: -20px;
+}
+/* 
 .circleRolesReader h2 {
     padding: 5px;
     font-size: 15px;
@@ -22,4 +26,4 @@
     padding:.1rem;
     color:#ffffff;
     font-size: 13px;
-  }
+  } */

@@ -1,0 +1,17 @@
+.factoryNavBar button{
+    background-color: #f48847;
+    color:white;
+    width: 100%;
+    min-width: 50px;
+    max-width: 200px; 
+    font-size:18px;
+    border-radius:12px;
+    margin:2.5px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    }
+    .factoryNavBar button:hover,
+    .factoryNavBar button:active{
+      background-color: #894b24;
+      border-color: #000000;
+}

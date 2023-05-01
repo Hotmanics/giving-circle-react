@@ -11,7 +11,7 @@ const NavBar = (props)=> {
         props.onStateSet(_state);
     }   
 
-    return <CenteredCard>
+    return <CenteredCard className="navBar">
         <button className="bigButton" onClick={()=> {handleClick('givingCirclesFactory')}}>
             Giving Circles Factory
         </button>

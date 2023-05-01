@@ -32,8 +32,7 @@ const AddAttendees = (props)=> {
 
     return <CenteredCard className="addAttendees" title="Add Attendees">
         <div>
-            <p>Attendees To Add</p>
-            <div><button onClick={addAttendeeField}>+</button></div>
+            <div><button id="buttonPlus" onClick={addAttendeeField}>+</button></div>
             {
                 attendees.map((input, index) => {
                     return (
@@ -48,7 +47,7 @@ const AddAttendees = (props)=> {
                         )
                 })
             }
-            <div><button className="semiBigButton" onClick={addAttendees}>Add Attendees</button></div>
+            <div><button id="actionButton" className="semiBigButton" onClick={addAttendees}>Add Attendees</button></div>
         </div>;
         </CenteredCard>
 }

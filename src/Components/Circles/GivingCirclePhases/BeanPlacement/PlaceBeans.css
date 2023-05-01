@@ -1,3 +1,17 @@
-.placeBeans h1 {
-    color: rgb(255, 0, 0);
+.placeBeans #buttonAction{
+    background-color: #f48847;
+    color:white;
+    width: 100%;
+    min-width: 50px;
+    max-width: 150px; 
+    font-size:18px;
+    border-radius:12px;
+    margin:2.5px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    }
+    .placeBeans #buttonAction:hover,
+    .placeBeans #buttonAction:active{
+      background-color: #894b24;
+      border-color: #000000;
 }

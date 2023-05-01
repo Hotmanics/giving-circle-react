@@ -6,6 +6,38 @@
     margin:2.5px;
 }
 
-.addAttendees h1 {
-    color: rgb(255, 0, 0);
+.addAttendees #buttonPlus{
+    background-color: #f48847;
+    color:white;
+    width: 100%;
+    min-width: 50px;
+    max-width: 50px; 
+    font-size:18px;
+    border-radius:12px;
+    margin:2.5px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    }
+    .addAttendees #buttonPlus:hover,
+    .addAttendees #buttonPlus:active{
+      background-color: #894b24;
+      border-color: #000000;
+}
+
+.addAttendees #actionButton{
+    background-color: #f48847;
+    color:white;
+    width: 100%;
+    min-width: 50px;
+    max-width: 150px; 
+    font-size:18px;
+    border-radius:12px;
+    margin:2.5px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    }
+    .addAttendees #actionButton:hover,
+    .addAttendees #actionButton:active{
+      background-color: #894b24;
+      border-color: #000000;
 }

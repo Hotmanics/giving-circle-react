@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ethers } from "ethers"
 import { PartialIERC20InfoABI } from "../../../../Smart Contracts Info/IPartialERC20Info";
+import FundsCard from './FundsCard/FundsCard';
 
 const CircleFunds = (props)=> {
 
@@ -76,7 +77,70 @@ const CircleFunds = (props)=> {
 
     get();
 
-    return <div>
+    let usdcCard= {
+        title: "USDC",
+        description: "The smart contract of USDC used for funding.",
+        value: erc20TokenAddress
+    }
+
+    let minFundCard= {
+        title: "Min Fund Amount",
+        description: "The minimum amount of funds for the Giving Circle to be able to progress to the gift redemption phase.",
+        value: minFundAmount
+    }
+
+    let fundedCard= {
+        title: "Funded Amount",
+        description: "The current USDC balance of the smart contract.",
+        value: fundedAmount
+    }
+
+    let yourBalanceCard= {
+        title: "Your Balance",
+        description: "Your balance of USDC.",
+        value: yourERC20Balance
+    }
+
+    let leftOverFundsCard = {
+        title: "Leftover Funds",
+        description: "Extra funds that are not allocated anywhere.",
+        value: leftOverFunds
+    }
+
+    let totalRedeemedFundsCard = {
+        title: "Total Redeemed Funds",
+        description: "The total amount of funds that have been currently redeemed.",
+        value: totalRedeemedFunds
+    }
+    
+    let totalAllocatedFundsCard = {
+        title: "Total Allocated Funds",
+        description: "he total number of funds allocated to contributors.",
+        value: totalAllocatedFunds
+    }
+
+    let totalUnredeemedFundsCard = {
+        title: "Total Unredeemed Funds",
+        description: "The total amount of funds that have not yet been redeemed.",
+        value: totalUnredeemedFunds
+    }
+
+return <div>
+
+        <FundsCard info={usdcCard}></FundsCard>
+        <FundsCard info={minFundCard}></FundsCard>
+        <FundsCard info={fundedCard}></FundsCard>
+        <FundsCard info={yourBalanceCard}></FundsCard>
+        <input  defaultValue={0} type="number" onChange={handleFundAmount}/>
+        <button onClick={addFunds}>Add Funds</button>
+
+        <FundsCard info={leftOverFundsCard}></FundsCard>
+        <FundsCard info={totalRedeemedFundsCard}></FundsCard>
+        <FundsCard info={totalUnredeemedFundsCard}></FundsCard>
+        <FundsCard info={totalAllocatedFundsCard}></FundsCard>
+
+        {/* <div className='tableContainer'>
+
             <table>
             <tbody>
                 <tr>
@@ -111,7 +175,7 @@ const CircleFunds = (props)=> {
                     <th>
                         <div id="in">
                         <input  defaultValue={0} type="number" onChange={handleFundAmount}/>
-                        <button onClick={addFunds}>Add Funds To Circle</button>
+                        <button onClick={addFunds}>Add Funds</button>
                         </div>    
                     </th>
                 </tr>
@@ -137,6 +201,8 @@ const CircleFunds = (props)=> {
                 </tr>
             </tbody>
         </table>
+        </div> */}
+
     </div>
 }
 
